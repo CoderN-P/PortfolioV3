@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import NextTopLoader from "nextjs-toploader";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import "./globals.css";
 import Navbar from "@/app/components/nav";
 import Breadcrumb from "@/app/components/Breadcrumb";
@@ -54,23 +55,24 @@ export default function RootLayout({
 
   return (
     <html lang="en" className="bg-white">
-    <body className="bg-white">
-    <NextTopLoader />
-    <div
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
-    >
-        <Navbar/>
-        <div className="w-full lg:max-w-[800px] mb-20 mx-auto px-4 sm:px-8 bg-white text-black flex-grow">
-          <div className={'mt-12 mb-8'}>
-            <Breadcrumb/>
-          </div>
-          {children}
+      <body className="bg-white">
+        <NextTopLoader />
+        <SpeedInsights />
+        <div
+            className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
+        >
+            <Navbar/>
+            <div className="w-full lg:max-w-[800px] mb-20 mx-auto px-4 sm:px-8 bg-white text-black flex-grow">
+              <div className={'mt-12 mb-8'}>
+                <Breadcrumb/>
+              </div>
+              {children}
+            </div>
+            
+            {/* Global Footer */}
+            <Footer />
         </div>
-        
-        {/* Global Footer */}
-        <Footer />
-    </div>
-    </body>
+      </body>
     </html>
   );
 }

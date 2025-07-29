@@ -12,6 +12,7 @@
     "@mdx-js/loader": "^3.1.0",
     "@next/mdx": "^15.3.5",
     "@tailwindcss/typography": "^0.5.16",
+    "@vercel/speed-insights": "^1.2.0",
     "autosize": "^6.0.1",
     "highlight.js": "^11.11.1",
     "highlightjs": "^9.16.2",
