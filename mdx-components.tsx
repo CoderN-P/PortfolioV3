@@ -1,5 +1,6 @@
 import type { MDXComponents } from 'mdx/types'
 import {Blockquote, Code, Link} from "@/app/components/markdown";
+import Image from 'next/image';
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
     return {
@@ -10,7 +11,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         h4: (props) => <h4 className="prose text-black text-xl font-semibold" {...props} />,
         h5: (props) => <h5 className="prose text-black text-lg font-semibold" {...props} />,
         img: (props) => (
-            <img
+            <Image
                 className="max-w-1/2 mx-auto h-auto rounded-lg"
                 {...props}
             />

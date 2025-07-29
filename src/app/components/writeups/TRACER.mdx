@@ -1,4 +1,5 @@
 import { Formula, Info, Warning } from "@/app/components/markdown";
+import Image from "next/image";
 
 I started working on TRACER about a month after [GPTKitbot](/writeups/gpt-kitbot), in which I tried to make ChatGPT control an FRC Robot. 
 Unfortunately I didn't have enough time before robotics ended to fix the final few bugs I had, but the project was still a great learning experience. 
@@ -1732,7 +1733,7 @@ Just like the `Robot` class, this method reads input from the frontend, xbox con
 
 #### Frontend Dashboard
 
-<img src="https://github.com/CoderN-P/TRACER/blob/main/images/Dashboard.png?raw=true)" className="rounded-lg w-full" alt ="TRACER Dashboard" />
+<Image src="https://github.com/CoderN-P/TRACER/blob/main/images/Dashboard.png?raw=true)" className="rounded-lg w-full" alt ="TRACER Dashboard" />
 
 I tried to make the dashboard look as modern and sleek as possible, while still being functional. The dashboard is built with SvelteKit and uses Tailwind CSS for styling. Just like the laptop and the raspberry pi, the frontend connects to the laptop backend via socketio to receive sensor data and send commands.
 

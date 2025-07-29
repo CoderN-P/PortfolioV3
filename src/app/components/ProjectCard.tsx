@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Github, ExternalLink, Calendar, ArrowRight, Star, Badge } from "lucide-react";
+import { Github, ExternalLink, Calendar, ArrowRight, Badge } from "lucide-react";
 import skillsData from "@/app/data/skills.json";
 
 // Import skills data with a type cast to ensure proper typing
@@ -10,7 +10,7 @@ import skillsData from "@/app/data/skills.json";
 const createTechIconMap = () => {
   const iconMap: Record<string, { icon: string, color: string }> = {};
   
-  Object.entries(skillsData).forEach(([category, skills]) => {
+  Object.entries(skillsData).forEach(([, skills]) => {
     // Cast the skills array to the expected type to handle the parsing safely
     const typedSkills = skills as [string, string, string][];
     
@@ -65,7 +65,6 @@ interface ProjectCardProps {
   link?: string | null;
   image?: string;
   lastUpdated?: string;
-  featured?: boolean;
 }
 
 export default function ProjectCard({
@@ -79,7 +78,6 @@ export default function ProjectCard({
   link,
   image,
   lastUpdated,
-  featured = false,
 }: ProjectCardProps) {
   // Format the date if available
   const formattedDate = lastUpdated 

@@ -4,6 +4,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {default as hljsMain} from 'highlight.js';
 import 'highlight.js/styles/atom-one-light.css';
 import {Check, Copy} from 'lucide-react';
+import Image from 'next/image';
 
 interface CodeBlockProps {
     id?: string;
@@ -17,39 +18,28 @@ interface CodeBlockProps {
     lineSelector?: boolean;
     value?: string;
     lineNumberClass?: string;
-    caretColor?: string;
-    defaultTextClass?: string;
-    maxHeight?: string;
-    defaultText?: string;
     minHeight?: string;
-    langSelectorClass?: string;
     lineSelectorClass?: string;
     consoleOutput?: string;
     children?: React.ReactNode;
 }
 
-export const CodeBlock: React.FC<CodeBlockProps> = ({
+export default function CodeBlock({
     id = 'react-editor',
     lines = false,
     language = 'javascript',
     fileName = '',
     icon = '',
     url = '',
-    langSelector = false,
     dots = false,
     lineSelector = false,
     value = '',
     lineNumberClass = '',
-    caretColor = 'black',
-    defaultTextClass = 'text-slate-400 text-sm ml-2',
-    maxHeight = '100vh',
-    defaultText = 'Start typing or paste some code to see syntax highlighting!',
     minHeight = '80px',
-    langSelectorClass = '',
     lineSelectorClass = '',
     consoleOutput = '',
     children,
-}) => {
+}: CodeBlockProps) {
     const [showLines, setShowLines] = useState(lines);
     const editorRef = useRef<HTMLPreElement>(null);
     const linesDivRef = useRef<HTMLDivElement>(null);
@@ -78,10 +68,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
         return highlightedText;
     };
 
-    const syncScroll = () => {
-        if (!editorRef.current || !linesDivRef.current || !showLines) return;
-        linesDivRef.current.scrollTop = editorRef.current.scrollTop;
-    };
+   
 
     const copyToClipboard = () => {
         if (!isHydrated) return;
@@ -100,13 +87,18 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
         const editor = editorRef.current;
         if (!editor) return;
 
+        const syncScroll = () => {
+            if (!editorRef.current || !linesDivRef.current || !showLines) return;
+            linesDivRef.current.scrollTop = editorRef.current.scrollTop;
+        };
+
         editor.addEventListener('scroll', syncScroll);
         editor.scroll({top: editor.scrollHeight, behavior: 'auto'});
 
         return () => {
             editor.removeEventListener('scroll', syncScroll);
         };
-    }, [isHydrated, showLines, syncScroll]);
+    }, [isHydrated, showLines]);
     
     // Scroll to top on load
     
@@ -148,7 +140,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
                         className="flex flex-row  bg-white border-b border-slate-200 px-4 py-3 rounded-t-lg flex-1 items-center justify-between gap-2">
                         <div className="flex flex-row items-center gap-2">
                             {icon && (
-                                <img
+                                <Image
                                     src={icon}
                                     alt={validLanguage}
                                     className="w-4 h-4 object-contain grayscale !m-0"
@@ -176,6 +168,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
                                style={{fontSize: '0.7em'}}>{validLanguage}</p>
                             {lineSelector && (
                                 <button
+                                    aria-label="Toggle line numbers"
                                     className={` bg-white border border-slate-200  items-center hover:bg-slate-50 flex flex-row rounded-md px-2 py-1 text-sm ${lineSelectorClass}`}
                                     onClick={() => setShowLines(!showLines)}
                                 >
@@ -189,6 +182,7 @@ export const CodeBlock: React.FC<CodeBlockProps> = ({
                             <button
                                 onClick={copyToClipboard}
                                 className=""
+                                aria-label="Copy code to clipboard"
                             >
                                 <Copy className="w-4 h-4 text-slate-600 hover:text-slate-500"/>
                             </button>

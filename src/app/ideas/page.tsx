@@ -25,7 +25,7 @@ export default function IdeasPage() {
       <div className="mb-16">
         <h1 className="text-6xl font-bold mb-8">Ideas</h1>
         <p className="text-xl text-gray-600 max-w-2xl mb-12 leading-relaxed">
-          Future projects and concepts I'm excited to explore and build.
+          Future projects and concepts I&apos;m excited to explore and build.
         </p>
       </div>
 

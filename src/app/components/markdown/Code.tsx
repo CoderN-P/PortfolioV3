@@ -1,7 +1,7 @@
 // components/mdx/Code.tsx
 import type { HTMLAttributes } from "react";
 
-import {CodeBlock} from "./CodeBlock";
+import CodeBlock from "./CodeBlock";
 
 type Props = HTMLAttributes<HTMLElement> 
 
@@ -15,7 +15,7 @@ const extToIcon: Record<string, string> = {
 }
     
 
-export default function Code({ children, className, ...props }: Props) {
+export default function Code({ children, className }: Props) {
     const isBlock = className?.startsWith("language-");
 
     const rawCode = String(children).trim();
@@ -24,10 +24,10 @@ export default function Code({ children, className, ...props }: Props) {
         // Since className is optional (with ?), we need to provide a fallback
         const langMeta = className ? className.replace("language-", "") : "plaintext";
         const [language, fileName, potentialUrl] = langMeta.split(":");
-        const url = potentialUrl ? "https://" + potentialUrl : null;
+        const url = potentialUrl ? "https://" + potentialUrl : undefined;
         
         const ext = fileName?.split(".").pop()?.toLowerCase();
-        const iconSrc = ext ? extToIcon[ext] : null;
+        const iconSrc = ext ? extToIcon[ext] : undefined;
         
         if (language === "plaintext"){
             return (

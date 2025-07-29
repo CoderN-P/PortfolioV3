@@ -138,7 +138,6 @@ export default function Projects() {
               link={project.link}
               image={project.image}
               lastUpdated={project.lastUpdated}
-              featured={project.featured}
             />
           ))}
         </div>

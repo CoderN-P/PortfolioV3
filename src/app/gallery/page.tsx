@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import Image from 'next/image';
 import photosData from '@/app/data/photos.json';
-import { X, MapPin, Calendar, ChevronLeft, ChevronRight, Camera } from 'lucide-react';
+import { X, MapPin, Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface Photo {
   id: number;
@@ -31,17 +31,17 @@ export default function GalleryPage() {
     setSelectedPhoto(null);
   };
 
-  const nextPhoto = () => {
+  const nextPhoto = useCallback(() => {
     const nextIndex = (currentIndex + 1) % photos.length;
     setCurrentIndex(nextIndex);
     setSelectedPhoto(photos[nextIndex]);
-  };
+  }, [currentIndex]);
 
-  const prevPhoto = () => {
+  const prevPhoto = useCallback(() => {
     const prevIndex = (currentIndex - 1 + photos.length) % photos.length;
     setCurrentIndex(prevIndex);
     setSelectedPhoto(photos[prevIndex]);
-  };
+  }, [currentIndex]);
 
   useEffect(() => {
     // Prevent background scrolling when lightbox is open
@@ -68,11 +68,11 @@ export default function GalleryPage() {
       } else if (e.key === 'ArrowLeft') {
         prevPhoto();
       }
-    };
+    }
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [selectedPhoto, currentIndex]);
+  }, [selectedPhoto, currentIndex, nextPhoto, prevPhoto]);
 
   return (
     <div className="min-h-screen bg-white">
@@ -89,7 +89,7 @@ export default function GalleryPage() {
 
         {/* Photo Grid */}
         <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
-          {photos.map((photo, index) => (
+          {photos.map((photo) => (
             <div
               key={photo.id}
               className="group relative break-inside-avoid cursor-pointer overflow-hidden rounded-lg transition-all duration-200 hover:opacity-90"

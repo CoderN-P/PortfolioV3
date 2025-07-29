@@ -28,7 +28,7 @@ interface Project {
 const createTechIconMap = () => {
   const iconMap: Record<string, { icon: string, color: string }> = {};
   
-  Object.entries(skillsData).forEach(([category, skills]) => {
+  Object.entries(skillsData).forEach(([, skills]) => {
     const typedSkills = skills as [string, string, string][];
     
     typedSkills.forEach((skill) => {
@@ -56,8 +56,10 @@ const getTechInfo = (tech: string): { icon: string, color: string } => {
 
 // Define the params type for generateMetadata and page function
 type Props = {
-  params: { name: string };
-};
+  params: Promise<{
+    name: string;
+  }>
+}
 
 // Generate metadata for the page
 export async function generateMetadata(
@@ -75,27 +77,48 @@ export async function generateMetadata(
 
   // Get the base metadata from parent
   const previousImages = (await parent).openGraph?.images || [];
-
+  
+  const url = `https://example.com/writeups/${project.slug}`;
+  
   return {
-    title: `${project.name}`,
-    description: project.shortDescription,
+    title: `${project.name} | Neel Parpia`,
+        description: project.shortDescription,
+        alternates: {
+        canonical: url,
+    },
     openGraph: {
-      title: `${project.name}`,
-      type: "article",
-      siteName: "Neel Parpia",
-      authors: ["Neel Parpia"],
-      publishedTime: project.lastUpdated,
-      tags: project.tags,
-      description: project.shortDescription,
-      images: project.image ? [project.image, ...previousImages] : previousImages,
+      title: project.name,
+          description: project.shortDescription,
+          type: "article",
+          url,
+          siteName: "Neel Parpia",
+          authors: ["Neel Parpia"],
+          publishedTime: project.lastUpdated,
+          modifiedTime: project.lastUpdated,
+          tags: project.tags,
+          images: project.image
+          ? [project.image, ...previousImages]
+          : previousImages,
     },
     twitter: {
       card: "summary_large_image",
       title: project.name,
       description: project.shortDescription,
+      creator: "@your_twitter_handle",
       images: project.image ? [project.image] : [],
     },
-  };
+    metadataBase: new URL("https://your-site.com"),
+    keywords: project.tags,
+    robots: {
+      index: true, 
+        follow: true,
+    },
+    category: "technology",
+        other: {
+          "article:author": "Neel Parpia",
+          "article:published_time": project.lastUpdated,
+        },
+    };
 }
 
 // Generate static params for all projects
@@ -107,8 +130,9 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function WriteupPage({ params }: Props) {
-  const { name } = params;
+
+export default async function WriteupPage({ params }: Props) {
+  const { name } = await params;
   
   // Check if the project exists and has a corresponding component
   if (!name || !pageToComponent[name] || !(projects as Project[]).find((p) => p.slug === name)) {

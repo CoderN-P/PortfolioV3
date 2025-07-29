@@ -58,6 +58,7 @@ export default function Skills() {
       <div className="mb-16">
         <div className="flex flex-wrap gap-3">
           <button 
+              aria-label="Show all skills"
             onClick={() => {
               setFilter(null);
               setIsFiltering(false);
@@ -71,6 +72,7 @@ export default function Skills() {
           
           {categories.map((category) => (
             <button 
+                aria-label={`Filter skills by ${category.name}`}
               key={category.name}
               onClick={() => {
                 setFilter(category.name);

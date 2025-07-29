@@ -27,7 +27,7 @@ const projects: Project[] = projectsData as Project[];
 const createTechIconMap = () => {
   const iconMap: Record<string, { icon: string, color: string }> = {};
   
-  Object.entries(skillsData).forEach(([category, skills]) => {
+  Object.entries(skillsData).forEach(([, skills]) => {
     const typedSkills = skills as [string, string, string][];
     
     typedSkills.forEach((skill) => {

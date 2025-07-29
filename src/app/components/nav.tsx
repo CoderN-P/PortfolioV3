@@ -3,13 +3,13 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Navbar(){
     
-    let pathname = usePathname();
+    const pathname = usePathname();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-    console.log("Current Pathname:", pathname);
     
     const links = [
         { name: 'Home', href: '/' },
@@ -57,29 +57,29 @@ export default function Navbar(){
         <>
             <div className="w-full lg:max-w-[900px] z-50 mx-auto rounded-none lg:rounded-xl flex sticky top-0 lg:top-4 backdrop-blur-sm bg-white/30 border-b lg:border-none border-black/5 lg:ring-1 ring-black/5 flex-row justify-between items-center py-2 px-4">
                 <a href={'/'}>
-                    <img src={"/codern_pfp.gif"} alt="Profile" className="w-8 h-8 hover:opacity-80 rounded-full" />
+                    <Image src={"/codern_pfp.gif"} alt="Profile" className="w-8 h-8 hover:opacity-80 rounded-full" />
                 </a>
                 
                 {/* Desktop Navigation */}
                 <div className="hidden md:flex flex-row gap-4 items-center">
-                    <a href="/skills" className={getLinkClassName('/skills')}>Skills</a>
-                    <a href="/projects" className={getLinkClassName('/projects')}>Projects</a>
-                    <a href="/writeups" className={getLinkClassName('/writeups')}>Writeups</a>
-                    <a href="/ideas" className={getLinkClassName('/ideas')}>Ideas</a>
-                    <a href="/gallery" className={getLinkClassName('/gallery')}>Gallery</a>
+                    <Link href="/skills" className={getLinkClassName('/skills')}>Skills</Link>
+                    <Link href="/projects" className={getLinkClassName('/projects')}>Projects</Link>
+                    <Link href="/writeups" className={getLinkClassName('/writeups')}>Writeups</Link>
+                    <Link href="/ideas" className={getLinkClassName('/ideas')}>Ideas</Link>
+                    <Link href="/gallery" className={getLinkClassName('/gallery')}>Gallery</Link>
                 </div>
 
                 {/* Social Links - Always visible */}
                 <div className="flex flex-row gap-2 items-center">
                     <a href="https://github.com/CoderN-P">
-                        <img src={"/social/github.svg"} className={"w-6 h-6 md:w-8 md:h-8 hover:scale-110 transition-all"} alt="GitHub"/>
+                        <Image src={"/social/github.svg"} className={"w-6 h-6 md:w-8 md:h-8 hover:scale-110 transition-all"} alt="GitHub"/>
                     </a>
                     <a href="https://linkedin.com/in/neelparpia">
-                        <img src={"/social/linkedin.svg"} className={"w-5 h-5 md:w-6 md:h-6 rounded-md hover:scale-110 transition-all"}
+                        <Image src={"/social/linkedin.svg"} className={"w-5 h-5 md:w-6 md:h-6 rounded-md hover:scale-110 transition-all"}
                              alt="LinkedIn"/>
                     </a>
                     <a href="mailto:neel.parpia@gmail.com">
-                        <img src={"/social/email-fill.svg"} className={"w-7 h-7 md:w-9 md:h-9 rounded-md hover:scale-110 transition-all"}
+                        <Image src={"/social/email-fill.svg"} className={"w-7 h-7 md:w-9 md:h-9 rounded-md hover:scale-110 transition-all"}
                              alt="Email"/>
                     </a>
                     
@@ -105,7 +105,7 @@ export default function Navbar(){
                 {/* Header */}
                 <div className="flex justify-between items-center p-6 border-b">
                     <div className="flex items-center gap-3">
-                        <img src={"/codern_pfp.gif"} alt="Profile" className="w-10 h-10 rounded-full" />
+                        <Image src={"/codern_pfp.gif"} alt="Profile" className="w-10 h-10 rounded-full" />
                         <h2 className="text-xl font-bold text-gray-900">Neel Parpia</h2>
                     </div>
                     <button
@@ -144,13 +144,13 @@ export default function Navbar(){
                     <p className="text-sm text-gray-600 mb-2">Building the future, one project at a time</p>
                     <div className="flex justify-center gap-6">
                         <a href="https://github.com/CoderN-P" className="text-gray-500 hover:text-gray-700 transition-colors">
-                            <img src={"/social/github.svg"} className="w-6 h-6" alt="GitHub"/>
+                            <Image src={"/social/github.svg"} className="w-6 h-6" alt="GitHub"/>
                         </a>
                         <a href="https://linkedin.com/in/neelparpia" className="text-gray-500 hover:text-gray-700 transition-colors">
-                            <img src={"/social/linkedin.svg"} className="w-6 h-6" alt="LinkedIn"/>
+                            <Image src={"/social/linkedin.svg"} className="w-6 h-6" alt="LinkedIn"/>
                         </a>
                         <a href="mailto:neel.parpia@gmail.com" className="text-gray-500 hover:text-gray-700 transition-colors">
-                            <img src={"/social/email-fill.svg"} className="w-6 h-6" alt="Email"/>
+                            <Image src={"/social/email-fill.svg"} className="w-6 h-6" alt="Email"/>
                         </a>
                     </div>
                 </div>
