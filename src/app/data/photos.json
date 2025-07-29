@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "src": "/photos/Angel's Landing Chains.JPG",
+    "alt": "A narrow rock fin with chains for support on the Angel's Landing hike",
+    "title": "Angel's Landing Chains",
+    "location": "Zion National Park, UT",
+    "date": "2024-07-20",
+    "description": "The final, thrilling ascent of Angel's Landing, relying on chains bolted into the rock to navigate the narrow spine."
+  },
+  {
+    "id": 2,
+    "src": "/photos/Bryce Canyon.JPG",
+    "alt": "An overlook of the Bryce Canyon amphitheater with its hoodoos",
+    "title": "Bryce Amphitheater",
+    "location": "Bryce Canyon National Park, UT",
+    "date": "2024-07-18",
+    "description": "A wide view of the iconic hoodoos and spires that make Bryce Canyon so unique."
+  },
+  {
+    "id": 3,
+    "src": "/photos/Carmel Beach.JPG",
+    "alt": "White sands and gentle waves at Carmel Beach on a clear day",
+    "title": "Carmel Shores",
+    "location": "Carmel-by-the-Sea, CA",
+    "date": "2025-06-15",
+    "description": "A peaceful afternoon on the beautiful white sand beaches of Carmel."
+  },
+  {
+    "id": 4,
+    "src": "/photos/Bryce Canyon 2.jpg",
+    "alt": "A different angle of the hoodoos in Bryce Canyon",
+    "title": "Canyon Hoodoos",
+    "location": "Bryce Canyon National Park, UT",
+    "date": "2024-07-18",
+    "description": "A closer look at the intricate formations of the hoodoos, showing the vibrant red and orange rock."
+  },
+  {
+    "id": 5,
+    "src": "/photos/Mission Peak.jpg",
+    "alt": "View from the summit of Mission Peak overlooking the Bay Area",
+    "title": "Mission Peak Summit",
+    "location": "Fremont, CA",
+    "date": "2024-09-05",
+    "description": "The classic view from the top of Mission Peak, with the iconic pole and a panoramic look at the South Bay."
+  },
+  {
+    "id": 6,
+    "src": "/photos/Sequoia NP - Mountains.JPG",
+    "alt": "Majestic view of the Sierra Nevada mountains from within Sequoia National Park",
+    "title": "Sierra Nevada Vista",
+    "location": "Sequoia National Park, CA",
+    "date": "2024-11-10",
+    "description": "A breathtaking landscape showing the rugged, snow-dusted peaks of the Sierra Nevada mountain range."
+  },
+  {
+    "id": 7,
+    "src": "/photos/Sequoia NP Snow.JPG",
+    "alt": "A giant sequoia tree in a forest covered in fresh snow",
+    "title": "Winter Giants",
+    "location": "Sequoia National Park, CA",
+    "date": "2024-11-11",
+    "description": "The serene and silent beauty of the giant sequoias after a fresh snowfall."
+  },
+  {
+    "id": 8,
+    "src": "/photos/SF - Angel Island.PNG",
+    "alt": "View of the San Francisco skyline and Alcatraz from Angel Island",
+    "title": "View from the Island",
+    "location": "Angel Island, San Francisco, CA",
+    "date": "2025-04-12",
+    "description": "A clear day offering a perfect view of the San Francisco cityscape and Alcatraz Island from across the bay."
+  },
+  {
+    "id": 9,
+    "src": "/photos/Sierra Nevadas Above - Plane.jpg",
+    "alt": "The Sierra Nevada mountain range viewed from an airplane window",
+    "title": "Sierras from Above",
+    "location": "Above California",
+    "date": "2025-07-21",
+    "description": "Flying over the vast and rugged Sierra Nevada range, with snow-capped peaks stretching as far as the eye can see."
+  },
+  {
+    "id": 10,
+    "src": "/photos/SF - Plane.JPG",
+    "alt": "The city of San Francisco and the Bay Bridge viewed from an airplane window",
+    "title": "Approach to SFO",
+    "location": "San Francisco, CA",
+    "date": "2025-04-11",
+    "description": "Flying into San Francisco, with a clear view of the city skyline and the Bay Bridge from the plane."
+  }
+]

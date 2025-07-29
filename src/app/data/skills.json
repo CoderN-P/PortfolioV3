@@ -1,0 +1,47 @@
+{
+  "Programming Languages": [
+    ["python", "bg-yellow-500", "/tech-icons/python.svg"],
+    ["typescript", "bg-blue-500", "/tech-icons/typescript-icon.svg"],
+    ["java", "bg-red-500", "/tech-icons/java.svg"],
+    ["c++", "bg-blue-500", "/tech-icons/c-plusplus.svg"],
+    ["javascript", "bg-yellow-500", "/tech-icons/javascript.svg"],
+    ["html", "bg-orange-500", "/tech-icons/html-5.svg"],
+    ["css", "bg-blue-500", "/tech-icons/css-3.svg"],
+    ["swift", "bg-orange-500", "/tech-icons/swift.svg"],
+    ["node.js", "bg-green-500", "/tech-icons/nodejs-icon.svg"],
+    ["c", "bg-blue-500", "/tech-icons/c.svg"]
+  ],
+  "Backend Tools + DBs": [
+    ["flask", "bg-yellow-500", "/tech-icons/flask.svg"],
+    ["mongodb", "bg-green-500", "/tech-icons/mongodb-icon.svg"],
+    ["sqlite", "bg-yellow-500", "/tech-icons/sqlite.svg"],
+    ["socket.io", "bg-gray-400", "/tech-icons/socket.io.svg"],
+    ["nginx", "bg-green-500", "/tech-icons/nginx.svg"],
+    ["graphql", "bg-pink-500", "/tech-icons/graphql.svg"],
+    ["docker", "bg-blue-500", "/tech-icons/docker-icon.svg"],
+    ["next.js", "bg-gray-600", "/tech-icons/nextjs-icon.svg"],
+    ["FastAPI", "bg-green-500", "/tech-icons/fastapi.svg"]
+  ],
+  "Frontend Tools/Frameworks": [
+    ["svelte", "bg-red-500", "/tech-icons/svelte-icon.svg"],
+    ["react", "bg-blue-500", "/tech-icons/react.svg"],
+    ["tailwindcss", "bg-teal-500", "/tech-icons/tailwindcss-icon.svg"],
+    ["jquery", "bg-blue-500", "/tech-icons/jquery.svg"]
+  ],
+  "ML/AI": [
+    ["tensorflow", "bg-orange-500", "/tech-icons/tensorflow.svg"],
+    ["numpy", "bg-blue-500", "/tech-icons/numpy.svg"],
+    ["pandas", "bg-yellow-500", "/tech-icons/pandas.svg"],
+    ["PyTorch", "bg-red-500", "/tech-icons/pytorch-icon.svg"]
+  ],
+  "Hardware/Robotics": [
+    ["arduino", "bg-blue-500", "/tech-icons/arduino.svg"],
+    ["raspberry pi", "bg-red-500", "/tech-icons/raspberry-pi.svg"],
+    ["wpilib", "bg-blue-500", "/tech-icons/wpilib.png"],
+    ["risc-v", "bg-green-500", "/tech-icons/risc-v.png"]
+  ],
+  "Other": [
+    ["qt", "bg-green-500", "/tech-icons/qt.svg"],
+    ["git", "bg-red-500", "/tech-icons/git.svg"]
+  ]
+}

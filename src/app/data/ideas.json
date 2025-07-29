@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Gamified Habit Tracker",
+    "concept": "A mobile-first web app that turns building habits into a role-playing game. Users create a character, choose habits (quests), and earn XP and level up for consistency.",
+    "problem": "Standard habit trackers can be boring and lack motivation. It's easy to fall off track when there are no engaging feedback loops.",
+    "solution": "By incorporating game mechanics like XP, levels, and skill trees (e.g., 'Strength' for gym habits), the app provides a fun and rewarding experience that encourages long-term engagement.",
+    "potentialTech": ["Next.js", "React Native Web", "TailwindCSS", "Supabase", "TypeScript"],
+    "learningGoals": ["Mobile-first design", "PostgreSQL database design", "User authentication and data persistence"],
+    "status": "Idea"
+  },
+  {
+    "name": "Summit Seeker",
+    "concept": "A modern, minimalist take on 'The Oregon Trail,' but focused on mountaineering. Players manage resources, make critical decisions, and navigate procedurally generated mountain environments.",
+    "problem": "Many survival games are complex and graphically intensive. There's a niche for a strategy-focused, text-and-icon-driven game that is highly replayable.",
+    "solution": "Using procedural generation for terrain and events ensures no two expeditions are the same. The core gameplay loop would focus on risk management and storytelling through emergent events.",
+    "potentialTech": ["SvelteKit", "TypeScript", "p5.js", "WASM (Rust)"],
+    "learningGoals": ["Procedural content generation (PCG)", "Game state management", "Integrating WebAssembly for performance-critical logic"],
+    "status": "Idea"
+  },
+  {
+    "name": "Automated Solar Tracker",
+    "concept": "A physical device that automatically orients a solar panel towards the sun throughout the day to maximize energy capture.",
+    "problem": "Stationary solar panels are only optimally efficient for a small portion of the day. Simple timed systems don't account for weather or seasonal changes.",
+    "solution": "Using photoresistors to detect the brightest point in the sky and servo motors to adjust the panel's tilt and yaw, the system can dynamically track the sun for maximum power generation.",
+    "potentialTech": ["Arduino", "C++", "PlatformIO", "3D Printing"],
+    "learningGoals": ["Embedded systems programming", "Sensor integration (LDRs)", "Control systems logic", "Hardware prototyping"],
+    "status": "Idea"
+  },
+  {
+    "name": "Computer Vision Sentry Turret",
+    "concept": "A robotic arm or turret equipped with a Nerf launcher that uses computer vision to automatically detect and aim at targets.",
+    "problem": "This is a classic robotics challenge that combines hardware, software, and AI. It's a fun way to learn about real-time object detection and mechatronics.",
+    "solution": "A webcam feeds video to a Raspberry Pi running OpenCV. The software identifies targets based on color or shape, calculates their coordinates, and translates them into servo motor movements to aim and fire the launcher.",
+    "potentialTech": ["Python", "OpenCV", "Raspberry Pi", "Servo Motors", "NumPy"],
+    "learningGoals": ["Real-time computer vision", "Object detection algorithms", "Mapping 2D camera space to 3D motor control", "Mechatronics"],
+    "status": "Idea"
+  }
+]
