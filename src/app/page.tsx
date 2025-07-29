@@ -67,7 +67,7 @@ export const metadata: Metadata = {
     siteName: "Neel Parpia Portfolio",
     images: [
       {
-        url: "/codern_pfp.gif",
+        url: "/codern_pfp.jpeg",
         width: 800,
         height: 800,
         alt: "Neel Parpia Profile Picture",
@@ -80,7 +80,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Neel Parpia - High School Developer",
     description: "Portfolio of Neel Parpia, a passionate high school developer specializing in AI, Web Development, Robotics, and innovative technology solutions.",
-    images: ["/codern_pfp.gif"],
+    images: ["/codern_pfp.jpeg"],
   },
   robots: {
     index: true,
@@ -119,7 +119,7 @@ export default function Home() {
           {/* Profile Image */}
           <div className="relative w-32 h-32 mx-auto mb-12">
             <Image
-              src="/codern_pfp.gif"
+              src="/codern_pfp.jpeg"
               alt="Neel Parpia"
               fill
               className="object-cover rounded-full"

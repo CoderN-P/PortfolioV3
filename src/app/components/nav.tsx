@@ -57,7 +57,7 @@ export default function Navbar(){
         <>
             <div className="w-full lg:max-w-[900px] z-50 mx-auto rounded-none lg:rounded-xl flex sticky top-0 lg:top-4 backdrop-blur-sm bg-white/30 border-b lg:border-none border-black/5 lg:ring-1 ring-black/5 flex-row justify-between items-center py-2 px-4">
                 <a href={'/'}>
-                    <Image src={"/codern_pfp.gif"} alt="Profile" className="w-8 h-8 hover:opacity-80 rounded-full" />
+                    <Image src={"/codern_pfp.jpeg"} alt="Profile" className="w-8 h-8 hover:opacity-80 rounded-full" />
                 </a>
                 
                 {/* Desktop Navigation */}
@@ -105,7 +105,7 @@ export default function Navbar(){
                 {/* Header */}
                 <div className="flex justify-between items-center p-6 border-b">
                     <div className="flex items-center gap-3">
-                        <Image src={"/codern_pfp.gif"} alt="Profile" className="w-10 h-10 rounded-full" />
+                        <Image src={"/codern_pfp.jpeg"} alt="Profile" className="w-10 h-10 rounded-full" />
                         <h2 className="text-xl font-bold text-gray-900">Neel Parpia</h2>
                     </div>
                     <button
