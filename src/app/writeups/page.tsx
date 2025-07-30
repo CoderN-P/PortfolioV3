@@ -92,11 +92,11 @@ export default function WriteupsPage() {
                         <span className="text-sm">{formattedDate}</span>
                       </div>
                       <div className="flex gap-2">
-                        {project.tags.slice(0, 4).map((tag: string) => {
+                        {project.tags.slice(0, 4).map((tag: string, index: number) => {
                           const techInfo = getTechInfo(tag);
                           return (
                             <div 
-                              key={tag}
+                              key={index}
                               className="flex items-center gap-1.5 bg-gray-50 border border-gray-200 px-3 py-1.5 rounded-full"
                             >
                               <Image 

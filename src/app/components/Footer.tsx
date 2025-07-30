@@ -26,8 +26,8 @@ export default function Footer() {
           </div>
           
           <div className="text-center md:text-right">
-            <p className="text-gray-500 text-sm">© 2025 Neel Parpia</p>
-            <p className="text-gray-400 text-xs">Built with Next.js & Tailwind CSS</p>
+            <p className="text-gray-600 text-sm">© 2025 Neel Parpia</p>
+            <p className="text-gray-500 text-xs">Built with Next.js & Tailwind CSS</p>
           </div>
         </div>
       </div>

@@ -147,12 +147,6 @@ ol {
   margin-top: 1.25rem !important; /* 20px */
 }
 
-/* Images */
-.mdx-content img {
-  margin-top: 2rem !important; /* 32px */
-  margin-bottom: 0 !important;
-}
-
 /* Image after heading gets reduced spacing */
 .mdx-content h1 + img,
 .mdx-content h2 + img,

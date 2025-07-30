@@ -4,7 +4,24 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Ideas & Concepts | Neel Parpia',
-  description: 'A collection of project ideas, concepts, and future explorations in AI, Web Development, and Robotics.',
+  description: 'A collection of project ideas, concepts, and future explorations I\'m working on in AI, Web Development, and Robotics.',
+  alternates: {
+    canonical: 'https://www.neelparpia.me/ideas',
+  },
+  openGraph: {
+    title: 'Ideas & Concepts | Neel Parpia',
+    description: 'A collection of project ideas, concepts, and future explorations I\'m working on in AI, Web Development, and Robotics.',
+    type: 'website',
+    locale: 'en_US',
+    siteName: 'Neel Parpia Portfolio',
+    url: 'https://www.neelparpia.me/ideas',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Ideas & Concepts | Neel Parpia',
+    description: 'A collection of project ideas, concepts, and future explorations I\'m working on in AI, Web Development, and Robotics.',
+    creator: '@neelparpia',
+  },
 };
 
 interface Idea {

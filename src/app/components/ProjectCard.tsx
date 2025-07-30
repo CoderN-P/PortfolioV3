@@ -56,7 +56,7 @@ const getProjectImageFallback = (projectName: string, colors: string): string =>
 
 interface ProjectCardProps {
   name: string;
-  slug: string;
+  slug?: string;
   shortDescription: string;
   description?: string;
   tags: string[];
@@ -187,12 +187,12 @@ export default function ProjectCard({
               <Badge size={16}/> Technologies
             </h3>
             <div className="flex flex-wrap gap-2">
-              {tags.map((tag) => {
+              {tags.map((tag: string, index: number) => {
                 const techInfo = getTechInfo(tag);
 
                 return (
                     <div
-                        key={tag}
+                        key={index}
                         className="flex items-center px-2 py-1 rounded-lg bg-gray-50 border border-gray-200 hover:bg-gray-100 transition-all"
                         title={tag}
                     >

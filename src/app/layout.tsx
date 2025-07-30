@@ -5,7 +5,7 @@ import "./globals.css";
 import Navbar from "@/app/components/nav";
 import Breadcrumb from "@/app/components/Breadcrumb";
 import Footer from "@/app/components/Footer";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,8 +17,13 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
+  width: "device-width",
+  initialScale: 1,
+};
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.neelparpia.me'),
   icons: {
     icon: [
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
@@ -39,7 +44,6 @@ export const metadata: Metadata = {
     ],
   },
   manifest: "/manifest.json",
-  themeColor: "#ffffff",
   other: {
     "msapplication-TileColor": "#ffffff",
     "msapplication-TileImage": "/ms-icon-144x144.png",

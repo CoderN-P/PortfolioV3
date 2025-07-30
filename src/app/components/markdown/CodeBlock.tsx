@@ -140,11 +140,14 @@ export default function CodeBlock({
                         className="flex flex-row  bg-white border-b border-slate-200 px-4 py-3 rounded-t-lg flex-1 items-center justify-between gap-2">
                         <div className="flex flex-row items-center gap-2">
                             {icon && (
-                                <Image
-                                    src={icon}
-                                    alt={validLanguage}
-                                    className="w-4 h-4 object-contain grayscale !m-0"
-                                />
+                                <div className="w-4 h-4 relative ">
+                                    <Image
+                                        src={icon}
+                                        alt={validLanguage}
+                                        fill
+                                        className="object-contain grayscale mt-0! "
+                                    />
+                                </div>
                             )}
                             
                                 {fileName && (
@@ -202,7 +205,7 @@ export default function CodeBlock({
                         {lineArray.map((_, i) => (
                             <div
                                 key={i}
-                                className="text-slate-400 h-5 pt-0.5 flex items-end relative justify-center px-1 text-sm"
+                                className="text-gray-600 h-5 pt-0.5 flex items-end relative justify-center px-1 text-sm"
                             >
                                 {i + 1}
                             </div>

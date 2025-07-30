@@ -56,14 +56,17 @@ const getTechInfo = (tech: string): { icon: string, color: string } => {
 
 export const metadata: Metadata = {
   title: "Neel Parpia - High School Developer",
-  description: "Portfolio of Neel Parpia, a passionate high school developer specializing in AI, Web Development, Robotics, and innovative technology solutions. Explore my projects and skills.",
+  description: "I'm a passionate high school developer specializing in AI, Web Development, Robotics, and innovative technology solutions. Explore my projects and skills.",
   keywords: ["Neel Parpia", "developer", "portfolio", "AI", "web development", "robotics", "high school developer", "programming", "software engineer"],
   authors: [{ name: "Neel Parpia", url: "https://github.com/CoderN-P" }],
   creator: "Neel Parpia",
+  alternates: {
+    canonical: "https://www.neelparpia.me",
+  },
   openGraph: {
     title: "Neel Parpia - High School Developer",
-    description: "Portfolio of Neel Parpia, a passionate high school developer specializing in AI, Web Development, Robotics, and innovative technology solutions.",
-    url: "/",
+    description: "I'm a passionate high school developer specializing in AI, Web Development, Robotics, and innovative technology solutions.",
+    url: "https://www.neelparpia.me",
     siteName: "Neel Parpia Portfolio",
     images: [
       {
@@ -79,7 +82,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Neel Parpia - High School Developer",
-    description: "Portfolio of Neel Parpia, a passionate high school developer specializing in AI, Web Development, Robotics, and innovative technology solutions.",
+    description: "I'm a passionate high school developer specializing in AI, Web Development, Robotics, and innovative technology solutions.",
     images: ["/codern_pfp.jpeg"],
   },
   robots: {

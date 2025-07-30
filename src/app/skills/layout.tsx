@@ -2,13 +2,16 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Skills & Technologies - Neel Parpia",
-  description: "Discover Neel Parpia's technical skills and expertise across programming languages, frameworks, and tools including Python, TypeScript, React, Svelte, AI/ML technologies, robotics, and more.",
+  description: "Discover my technical skills and expertise across programming languages, frameworks, and tools including Python, TypeScript, React, Svelte, AI/ML technologies, robotics, and more.",
   keywords: ["skills", "technologies", "programming", "Python", "TypeScript", "React", "Svelte", "AI", "machine learning", "robotics", "web development", "Neel Parpia"],
   authors: [{ name: "Neel Parpia", url: "https://github.com/CoderN-P" }],
+  alternates: {
+    canonical: "https://www.neelparpia.me/skills",
+  },
   openGraph: {
     title: "Skills & Technologies - Neel Parpia",
-    description: "Discover Neel Parpia's technical skills and expertise across programming languages, frameworks, and tools including Python, TypeScript, React, Svelte, AI/ML technologies, robotics, and more.",
-    url: "/skills",
+    description: "Discover my technical skills and expertise across programming languages, frameworks, and tools including Python, TypeScript, React, Svelte, AI/ML technologies, robotics, and more.",
+    url: "https://www.neelparpia.me/skills",
     siteName: "Neel Parpia Portfolio",
     images: [
       {
@@ -24,7 +27,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Skills & Technologies - Neel Parpia",
-    description: "Discover Neel Parpia's technical skills and expertise across programming languages, frameworks, and tools including Python, TypeScript, React, Svelte, AI/ML technologies, robotics, and more.",
+    description: "Discover my technical skills and expertise across programming languages, frameworks, and tools including Python, TypeScript, React, Svelte, AI/ML technologies, robotics, and more.",
     images: ["/tech-icons/python.svg"],
   },
   robots: {

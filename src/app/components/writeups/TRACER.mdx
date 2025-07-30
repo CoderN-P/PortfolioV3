@@ -35,7 +35,7 @@ I first started with the hardware which was a bit of a challenge since the last 
 Assembling the chassis was easy, but then I had to wire the motors, sensors, and arduino.
 After a bit of trial and error, I finally figured out how to wire the TB6612FNG motor driver.
 
-![](https://abacasstorageaccnt.blob.core.windows.net/cirkit/eea73b66-0f0f-4a71-b725-5136b862e6f4.jpg) 
+![](/projects/TRACER/TB6612FNG.jpg) 
 
 The motor driver was fairly simple, it can control 2 motors and has one PWM pin for each motor, `PWM A` and `PWM B`, and two direction pins for each, `AIN1`, `AIN2`, and `BIN1`, `BIN2`.
 The PWM pins control the speed of the motors and can take values from 0 to 255. In arduino this is just done with the `analogWrite` function which generates a PWM signal on the defined pin.
@@ -129,7 +129,7 @@ I wanted TRACER to have some sort of obstacle avoidance, even if it was very bas
 
 #### Ultrasonic Sensor
 
-![](https://soldered.com/productdata/2015/02/751276-Edit-1024x683.jpg)
+![](/projects/TRACER/HCSR04.jpg)
 
 The ultrasonic sensor has 4 pins, `VCC`, `GND`, `TRIG`, and `ECHO`. 
 The `VCC` pin is connected to 5V, the `GND` pin is connected to ground, the `TRIG` pin is used to send out the sound wave, and the `ECHO` pin is used to receive the sound wave.
@@ -196,7 +196,7 @@ The IR sensor works by emitting IR light and then measuring the amount of light 
 
 This isn't the best since the IR sensor has to be tuned based on the surface using the potentiometer on it. It also will change its readings in different lighting conditions, so it works for a rough estimation of a cliff, but not for precise measurements.
 
-![](https://makerselectronics.com/wp-content/uploads/2016/08/MH-infrared-Obstacle-Sensor-Module-3-800x800.jpg)
+![](/projects/TRACER/IR.jpg)
 
 The IR sensor has 3 pins, `VCC`, `GND`, and `OUT`. The `VCC` pin is connected to 5V, the `GND` pin is connected to ground, and the `OUT` pin is connected to any arduino pin, and can be read with `digitalRead`.
 
@@ -222,7 +222,7 @@ Again, later on this is used for automatic stopping and haptic feedback if we en
 
 The MPU-6050 is a 6-axis motion tracking device that combines a 3-axis gyroscope and a 3-axis accelerometer. Since it is an I2C device, the code is a bit more complicated than the other sensors. At first, it seemed kind of confusing, but the Arduino `Wire.h` library makes reading I2C much easier than coding with bare metal (which I had to do later on for another board).
 
-![](https://www.hwlibre.com/wp-content/uploads/2019/11/mpu6050.jpg.webp)
+![](/projects/TRACER/MPU6050.webp)
 
 The MPU-6050 also has a DMP (Digital Motion Processor) which does sensor fusion onboard to get orientation, but I didn't end up use it, or the accelerometer yet. I just have this in case I use it later for estimating relative position and pose for path following algorithms.
 
@@ -284,7 +284,7 @@ bool initMPU6050()
 #### LCD Display
 I also had a small 16x2 LCD, so I decided to use it to show some current state (e.g. "Ready", "Moving", "Stopped", etc.). Also, this could be used to allow the robot to "say" things like "Hello World!" or "I am TRACER!".
 
-![](https://cdn11.bigcommerce.com/s-ybeckn7x79/images/stencil/1280x1280/products/191/1522/LCD-Character-02x16-K1Z-STN-blue-white-backlight-display-front__82545.1732044652.jpg?c=1)
+![](/projects/TRACER/LCD.jpg)
 
 The LCD has a lot of pins, but with an I2C backpack, we can make the LCD an I2C device and just use the 4 pins from earlier. Luckily there are already libraries for this, so the code isn't as complicated as the MPU-6050.
 
@@ -342,7 +342,7 @@ So, I first looked into using bluetooth. My plan was to connect the bluetooth mo
 I bought the HC-05 bluetooth module, which is a very common bluetooth module for arduino projects. It can be used to send and receive data over bluetooth, and it has a simple serial interface. However, what I didn't realize was that the HC-05 did not support Bluetooth Low Energy (BLE). The HC-05 is pretty old, and as a result it doesn't work with ios devices which explicitly require BLE for bluetooth communication.
 After doing some research I got mixed answers on whether the HC-05 would work with a Mac or not. So I just decided to try it out and see if it works.
 
-![](https://eleberric.com/wp-content/uploads/2024/05/Bluetooth-Module-HC-05-4.jpg)
+![](/projects/TRACER/HC05.jpg)
 
 The golden zigzag line is the antenna. The power pins are of course `VCC` and `GND`, and the other pins are `TX` (transmit) and `RX` (receive) which are used for serial communication. The `EN` pin is used to enable the module, but I didn't end up using it since I just connected it to power.
 
@@ -568,7 +568,7 @@ Finally, the laptop backend would have to serve as both a socketio server and cl
 
 ### The final architecture
 
-![](https://raw.githubusercontent.com/CoderN-P/TRACER/main/images/SoftwareArchitecture.png)
+![](/projects/TRACER/SoftwareArchitecture.png)
 
 Expressed in more specific language, the architecture is as follows (taken from the [repository docs](https://github.com/CoderN-P/TRACER/blob/main/docs/SoftwareArchitecture.md))
 
@@ -1733,7 +1733,15 @@ Just like the `Robot` class, this method reads input from the frontend, xbox con
 
 #### Frontend Dashboard
 
-<Image src="https://github.com/CoderN-P/TRACER/blob/main/images/Dashboard.png?raw=true)" className="rounded-lg w-full" alt ="TRACER Dashboard" />
+<div className="w-full relative">
+    <Image
+        src="/projects/TRACER/Dashboard.png"
+        alt="TRACER Dashboard"
+        fill
+        className="object-contain"
+        sizes="(max-width: 768px) 100vw, 50vw"
+    />
+</div>
 
 I tried to make the dashboard look as modern and sleek as possible, while still being functional. The dashboard is built with SvelteKit and uses Tailwind CSS for styling. Just like the laptop and the raspberry pi, the frontend connects to the laptop backend via socketio to receive sensor data and send commands.
 

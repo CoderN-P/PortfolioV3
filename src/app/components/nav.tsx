@@ -57,7 +57,9 @@ export default function Navbar(){
         <>
             <div className="w-full lg:max-w-[900px] z-50 mx-auto rounded-none lg:rounded-xl flex sticky top-0 lg:top-4 backdrop-blur-sm bg-white/30 border-b lg:border-none border-black/5 lg:ring-1 ring-black/5 flex-row justify-between items-center py-2 px-4">
                 <a href={'/'}>
-                    <Image src={"/codern_pfp.jpeg"} alt="Profile" className="w-8 h-8 hover:opacity-80 rounded-full" />
+                    <div className="w-8 h-8 relative hover:opacity-80 rounded-full overflow-hidden">
+                        <Image src={"/codern_pfp.jpeg"} alt="Profile" fill className="object-cover" />
+                    </div>
                 </a>
                 
                 {/* Desktop Navigation */}
@@ -72,15 +74,19 @@ export default function Navbar(){
                 {/* Social Links - Always visible */}
                 <div className="flex flex-row gap-2 items-center">
                     <a href="https://github.com/CoderN-P">
-                        <Image src={"/social/github.svg"} className={"w-6 h-6 md:w-8 md:h-8 hover:scale-110 transition-all"} alt="GitHub"/>
+                        <div className="w-6 h-6 md:w-8 md:h-8 relative hover:scale-110 transition-all">
+                            <Image src={"/social/github.svg"} alt="GitHub" fill className="object-contain" />
+                        </div>
                     </a>
                     <a href="https://linkedin.com/in/neelparpia">
-                        <Image src={"/social/linkedin.svg"} className={"w-5 h-5 md:w-6 md:h-6 rounded-md hover:scale-110 transition-all"}
-                             alt="LinkedIn"/>
+                        <div className="w-5 h-5 md:w-6 md:h-6 relative hover:scale-110 transition-all">
+                            <Image src={"/social/linkedin.svg"} alt="LinkedIn" fill className="object-contain rounded-md" />
+                        </div>
                     </a>
                     <a href="mailto:neel.parpia@gmail.com">
-                        <Image src={"/social/email-fill.svg"} className={"w-7 h-7 md:w-9 md:h-9 rounded-md hover:scale-110 transition-all"}
-                             alt="Email"/>
+                        <div className="w-7 h-7 md:w-9 md:h-9 relative rounded-md hover:scale-110 transition-all">
+                            <Image src={"/social/email-fill.svg"} alt="Email" fill className="object-contain" />
+                        </div>
                     </a>
                     
                     {/* Mobile Menu Button */}
@@ -105,7 +111,9 @@ export default function Navbar(){
                 {/* Header */}
                 <div className="flex justify-between items-center p-6 border-b">
                     <div className="flex items-center gap-3">
-                        <Image src={"/codern_pfp.jpeg"} alt="Profile" className="w-10 h-10 rounded-full" />
+                        <div className="w-10 h-10 relative rounded-full overflow-hidden">
+                            <Image src={"/codern_pfp.jpeg"} alt="Profile" fill className="object-cover" />
+                        </div>
                         <h2 className="text-xl font-bold text-gray-900">Neel Parpia</h2>
                     </div>
                     <button
@@ -144,13 +152,19 @@ export default function Navbar(){
                     <p className="text-sm text-gray-600 mb-2">Building the future, one project at a time</p>
                     <div className="flex justify-center gap-6">
                         <a href="https://github.com/CoderN-P" className="text-gray-500 hover:text-gray-700 transition-colors">
-                            <Image src={"/social/github.svg"} className="w-6 h-6" alt="GitHub"/>
+                            <div className="w-6 h-6 relative">
+                                <Image src={"/social/github.svg"} alt="GitHub" fill className="object-contain" />
+                            </div>
                         </a>
                         <a href="https://linkedin.com/in/neelparpia" className="text-gray-500 hover:text-gray-700 transition-colors">
-                            <Image src={"/social/linkedin.svg"} className="w-6 h-6" alt="LinkedIn"/>
+                            <div className="w-6 h-6 relative">
+                                <Image src={"/social/linkedin.svg"} alt="LinkedIn" fill className="object-contain" />
+                            </div>
                         </a>
                         <a href="mailto:neel.parpia@gmail.com" className="text-gray-500 hover:text-gray-700 transition-colors">
-                            <Image src={"/social/email-fill.svg"} className="w-6 h-6" alt="Email"/>
+                            <div className="w-6 h-6 relative">
+                                <Image src={"/social/email-fill.svg"} alt="Email" fill className="object-contain" />
+                            </div>
                         </a>
                     </div>
                 </div>

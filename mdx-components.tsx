@@ -12,8 +12,11 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         h5: (props) => <h5 className="prose text-black text-lg font-semibold" {...props} />,
         img: (props) => (
             <Image
-                className="max-w-1/2 mx-auto h-auto rounded-lg"
                 {...props}
+                width={800}
+                height={600}
+                sizes="(max-width: 768px) 50vw, 400px"
+                className="max-w-1/2 h-auto mt-4 mx-auto object-contain rounded-lg"
             />
         ),
         

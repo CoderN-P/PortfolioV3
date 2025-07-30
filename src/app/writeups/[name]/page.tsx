@@ -78,47 +78,46 @@ export async function generateMetadata(
   // Get the base metadata from parent
   const previousImages = (await parent).openGraph?.images || [];
   
-  const url = `https://example.com/writeups/${project.slug}`;
+  const url = `https://www.neelparpia.me/writeups/${project.slug}`;
   
   return {
     title: `${project.name} | Neel Parpia`,
-        description: project.shortDescription,
-        alternates: {
-        canonical: url,
+    description: project.shortDescription,
+    alternates: {
+      canonical: url,
     },
     openGraph: {
       title: project.name,
-          description: project.shortDescription,
-          type: "article",
-          url,
-          siteName: "Neel Parpia",
-          authors: ["Neel Parpia"],
-          publishedTime: project.lastUpdated,
-          modifiedTime: project.lastUpdated,
-          tags: project.tags,
-          images: project.image
-          ? [project.image, ...previousImages]
-          : previousImages,
+      description: project.shortDescription,
+      type: "article",
+      url,
+      siteName: "Neel Parpia Portfolio",
+      authors: ["Neel Parpia"],
+      publishedTime: project.lastUpdated,
+      modifiedTime: project.lastUpdated,
+      tags: project.tags,
+      images: project.image
+        ? [project.image, ...previousImages]
+        : previousImages,
     },
     twitter: {
       card: "summary_large_image",
       title: project.name,
       description: project.shortDescription,
-      creator: "@your_twitter_handle",
+      creator: "@neelparpia",
       images: project.image ? [project.image] : [],
     },
-    metadataBase: new URL("https://your-site.com"),
     keywords: project.tags,
     robots: {
       index: true, 
-        follow: true,
+      follow: true,
     },
     category: "technology",
-        other: {
-          "article:author": "Neel Parpia",
-          "article:published_time": project.lastUpdated,
-        },
-    };
+    other: {
+      "article:author": "Neel Parpia",
+      "article:published_time": project.lastUpdated,
+    },
+  };
 }
 
 // Generate static params for all projects
@@ -195,20 +194,21 @@ export default async function WriteupPage({ params }: Props) {
           
           {/* Tech Stack Tags */}
           <div className="flex flex-wrap gap-2 max-w-full">
-            {project.tags.map((tag: string) => {
+            {project.tags.map((tag: string, index: number) => {
               const techInfo = getTechInfo(tag);
               return (
                 <div 
-                  key={tag}
+                  key={index}
                   className="flex items-center gap-1.5 bg-white border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all px-3 py-1.5 rounded-full group"
                 >
-                  <Image 
-                    src={techInfo.icon} 
-                    alt={tag}
-                    width={16}
-                    height={16}
-                    className="object-contain group-hover:scale-110 transition-transform"
-                  />
+                  <div className="w-4 h-4 relative group-hover:scale-110 transition-transform">
+                    <Image 
+                      src={techInfo.icon} 
+                      alt={tag}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
                   <span className="text-xs font-medium text-gray-700">{tag}</span>
                 </div>
               );
