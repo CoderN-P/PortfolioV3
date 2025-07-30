@@ -77,6 +77,19 @@ export async function generateMetadata(
 
   // Get the base metadata from parent
   const previousImages = (await parent).openGraph?.images || [];
+  let ogImageUrl: string;
+  
+  if (project.image) {
+    ogImageUrl = new URL(
+        `/api/og?name=${encodeURIComponent(project.name)}&desc=${encodeURIComponent(project.shortDescription)}&tags=${encodeURIComponent(project.tags.join(","))}&image=${encodeURIComponent(project.image)}&v=${encodeURIComponent(project.lastUpdated)}`,
+        process.env.SITE_URL || "https://www.neelparpia.me"
+    ).toString();
+  } else {
+    ogImageUrl = new URL(
+        `/api/og?name=${encodeURIComponent(project.name)}&desc=${encodeURIComponent(project.shortDescription)}&tags=${encodeURIComponent(project.tags.join(","))}&v=${encodeURIComponent(project.lastUpdated)}`,
+        process.env.SITE_URL || "https://www.neelparpia.me"
+    ).toString();
+  }
   
   const url = `https://www.neelparpia.me/writeups/${project.slug}`;
   
@@ -96,8 +109,8 @@ export async function generateMetadata(
       publishedTime: project.lastUpdated,
       modifiedTime: project.lastUpdated,
       tags: project.tags,
-      images: project.image
-        ? [project.image, ...previousImages]
+      images: ogImageUrl
+        ? [ogImageUrl, ...previousImages]
         : previousImages,
     },
     twitter: {
@@ -105,7 +118,7 @@ export async function generateMetadata(
       title: project.name,
       description: project.shortDescription,
       creator: "@neelparpia",
-      images: project.image ? [project.image] : [],
+      images: ogImageUrl ? [ogImageUrl] : [],
     },
     keywords: project.tags,
     robots: {
