@@ -3,6 +3,6 @@ import { toHexColor } from "@/app/utils/toHexColor";
 
 export function getColorHex(colorShade: string): string {
     const [color, shade] = colorShade.split("-");
-    // @ts-ignore
-    return toHexColor(colors[color]?.[shade]) || "#000000";
+    // Use type assertions to tell TypeScript this is valid
+    return toHexColor((colors as never)[color]?.[shade]) || "#000000";
 }
