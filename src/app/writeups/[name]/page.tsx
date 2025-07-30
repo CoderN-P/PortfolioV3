@@ -85,7 +85,7 @@ export async function generateMetadata(
   
   if (project.image) {
     ogImageUrl = new URL(
-        `/api/og?name=${encodeURIComponent(project.name)}&desc=${encodeURIComponent(project.shortDescription)}&colors=${encodeURIComponent(colorArray.join(","))}&tags=${encodeURIComponent(project.tags.join(","))}&image=${encodeURIComponent("https://www.neelparpia.me/" + project.image)}&v=${encodeURIComponent(project.lastUpdated)}`,
+        `/api/og?name=${encodeURIComponent(project.name)}&desc=${encodeURIComponent(project.shortDescription)}&colors=${encodeURIComponent(colorArray.join(","))}&tags=${encodeURIComponent(project.tags.join(","))}&image=${encodeURIComponent("https://www.neelparpia.me" + project.image)}&v=${encodeURIComponent(project.lastUpdated)}`,
         process.env.SITE_URL || "https://www.neelparpia.me"
     ).toString();
   } else {
