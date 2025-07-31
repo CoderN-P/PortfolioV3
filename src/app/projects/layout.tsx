@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Projects - Neel Parpia",
+  title: "Projects | Neel Parpia",
   description: "Explore my portfolio of  projects including TRACER, Stellar, GPT-Kitbot, and more",
   keywords: ["projects", "portfolio", "TRACER", "Stellar", "GPT-Kitbot", "robotics", "AI", "web development", "Neel Parpia"],
   authors: [{ name: "Neel Parpia", url: "https://github.com/CoderN-P" }],
@@ -9,10 +9,10 @@ export const metadata: Metadata = {
     canonical: "https://www.neelparpia.me/projects",
   },
   openGraph: {
-    title: "Projects - Neel Parpia",
+    title: "Projects | Neel Parpia",
     description: "Explore my portfolio of projects including TRACER, Stellar, GPT-Kitbot, and more.",
     url: "https://www.neelparpia.me/projects",
-    siteName: "Neel Parpia Portfolio",
+    siteName: "Neel Parpia's Portfolio",
     images: [
       {
         url: "/projects/TRACER.jpg",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Projects - Neel Parpia",
+    title: "Projects | Neel Parpia",
     description: "Explore my portfolio of projects including TRACER, Stellar, GPT-Kitbot, and more.",
     images: ["/projects/TRACER.jpg"],
   },

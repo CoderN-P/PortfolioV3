@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     url: 'https://www.neelparpia.me/gallery',
     type: 'website',
     locale: 'en_US',
-    siteName: 'Neel Parpia Portfolio',
+    siteName: 'Neel Parpia\'s Portfolio',
   },
   twitter: {
     card: 'summary_large_image',

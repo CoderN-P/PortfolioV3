@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     description: 'A collection of moments I\'ve captured during my travels and hikes.',
     type: 'website',
     locale: 'en_US',
-    siteName: 'Neel Parpia Portfolio',
+    siteName: 'Neel Parpia\'s Portfolio',
     url: 'https://www.neelparpia.me/gallery',
     images: ['/photos/Angel\'s Landing Chains.JPG'],
   },

@@ -97,7 +97,7 @@ export async function generateMetadata(
       description: project.shortDescription,
       type: "article",
       url,
-      siteName: "Neel Parpia Portfolio",
+      siteName: "Neel Parpia's Portfolio",
       authors: ["Neel Parpia"],
       publishedTime: project.lastUpdated,
       modifiedTime: project.lastUpdated,

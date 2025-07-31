@@ -26,7 +26,7 @@ export default function getJSONLD(project: Project) {
                 },
                 publisher: {
                     "@type": "Organization",
-                    name: "Neel Parpia Portfolio",
+                    name: "Neel Parpia's Portfolio",
                     logo: {
                         "@type": "ImageObject",
                         url: "https://www.neelparpia.me/codern_pfp.jpeg"
@@ -45,9 +45,9 @@ export default function getJSONLD(project: Project) {
                 image: "https://www.neelparpia.me/codern_pfp.jpeg",
                 sameAs: [
                     project.github || "https://github.com/CoderN-P",
-                    "https://www.linkedin.com/in/neel-parpia"
+                    "https://www.linkedin.com/in/neel-parpia-17a04721b/"
                 ],
-                jobTitle: "Software Engineer",
+                jobTitle: "Student",
                 knowsAbout: project.tags
             },
             {
@@ -60,7 +60,7 @@ export default function getJSONLD(project: Project) {
                 dateModified: project.lastUpdated,
                 isPartOf: {
                     "@type": "WebSite",
-                    name: "Neel Parpia Portfolio",
+                    name: "Neel Parpia's Portfolio",
                     url: "https://www.neelparpia.me"
                 },
                 primaryImageOfPage: {

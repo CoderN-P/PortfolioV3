@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     description: 'Technologies and tools I use to build projects and solve problems.',
     type: 'website',
     locale: 'en_US',
-    siteName: 'Neel Parpia Portfolio',
+    siteName: 'Neel Parpia\' Portfolio',
     url: 'https://www.neelparpia.me/skills',
   },
   twitter: {

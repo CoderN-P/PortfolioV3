@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     description: 'A collection of project ideas, concepts, and future explorations I\'m working on in AI, Web Development, and Robotics.',
     type: 'website',
     locale: 'en_US',
-    siteName: 'Neel Parpia Portfolio',
+    siteName: 'Neel Parpia\'s Portfolio',
     url: 'https://www.neelparpia.me/ideas',
   },
   twitter: {

@@ -67,7 +67,7 @@ export const metadata: Metadata = {
     title: "Neel Parpia - High School Developer",
     description: "I'm a passionate high school developer specializing in AI, Web Development, Robotics, and innovative technology solutions.",
     url: "https://www.neelparpia.me",
-    siteName: "Neel Parpia Portfolio",
+    siteName: "Neel Parpia\'s Portfolio",
     images: [
       {
         url: "/codern_pfp.jpeg",
