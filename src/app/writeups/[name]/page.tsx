@@ -6,7 +6,7 @@ import type { Metadata, ResolvingMetadata } from "next";
 import Image from "next/image";
 import skillsData from "@/app/data/skills.json";
 import {gradientToHexArray} from "@/app/utils/gradientToHexArray";
-import Project from "./project";
+import Project from "@/app/types/Project";
 import getJSONLD from "@/app/writeups/[name]/getJSONLD";
 
 

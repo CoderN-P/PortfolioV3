@@ -1,4 +1,4 @@
-import Project from "./project";
+import Project from "@/app/types/Project";
 
 export default function getJSONLD(project: Project) {
     return {
