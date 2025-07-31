@@ -6,24 +6,13 @@ import type { Metadata, ResolvingMetadata } from "next";
 import Image from "next/image";
 import skillsData from "@/app/data/skills.json";
 import {gradientToHexArray} from "@/app/utils/gradientToHexArray";
+import Project from "./project";
+import getJSONLD from "@/app/writeups/[name]/getJSONLD";
 
 
 // Import skills data to get tech icons
 
 // Define Project interface
-interface Project {
-  name: string;
-  slug: string;
-  lastUpdated: string;
-  description: string;
-  shortDescription: string;
-  tags: string[];
-  colors: string;
-  github?: string;
-  link?: string;
-  image?: string;
-  featured?: boolean;
-}
 
 // Create a flattened map of all technologies and their icons from skills.json
 const createTechIconMap = () => {
@@ -163,84 +152,91 @@ export default async function WriteupPage({ params }: Props) {
   const formattedDate = date.toLocaleDateString('en-US', options);
 
   const WriteupComponent = pageToComponent[name];
-
+  const structuredData = JSON.stringify(getJSONLD(project), null, 2);
+  
   return (
-      <div className="max-w-4xl mx-auto">
-        {/* Header Section */}
-        <div className="mb-16">
-          <h1 className="text-6xl font-bold mt-8 mb-8 text-gray-900 leading-tight">{project.name}</h1>
-          <p className="text-xl text-gray-600 leading-relaxed mb-12 max-w-3xl">
-            {project.shortDescription}
-          </p>
-
-          {/* Project Image */}
-          {project.image && (
-              <div className="mb-12">
-                <div className="relative w-full h-96 rounded-2xl overflow-hidden shadow-lg border border-gray-200">
-                  <Image
-                      src={project.image}
-                      alt={`${project.name} project screenshot`}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
-                      priority
-                  />
+      <>
+        <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: structuredData }} />
+      
+        <div className="max-w-4xl mx-auto">
+          {/* Header Section */}
+          <div className="mb-16">
+            <h1 className="text-6xl font-bold mt-8 mb-8 text-gray-900 leading-tight">{project.name}</h1>
+            <p className="text-xl text-gray-600 leading-relaxed mb-12 max-w-3xl">
+              {project.shortDescription}
+            </p>
+  
+            {/* Project Image */}
+            {project.image && (
+                <div className="mb-12">
+                  <div className="relative w-full h-96 rounded-2xl overflow-hidden shadow-lg border border-gray-200">
+                    <Image
+                        src={project.image}
+                        alt={`${project.name} project screenshot`}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+                        priority
+                    />
+                  </div>
                 </div>
-              </div>
-          )}
-
-          {/* Metadata and Actions */}
-          <div className="space-y-6 py-8 border-y border-gray-200">
-            <div className="flex flex-wrap items-center gap-6">
-              <div className="flex items-center gap-3 text-gray-600">
-                <Calendar className="h-5 w-5" />
-                <span className="font-medium text-lg">{formattedDate}</span>
-              </div>
-              {project.github && (
-                  <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-3 text-gray-600 hover:text-gray-900 transition-colors group"
-                  >
-                    <Github className="h-5 w-5 group-hover:scale-110 transition-transform" />
-                    <span className="font-medium text-lg">View Source</span>
-                  </a>
-              )}
-            </div>
-
-            {/* Tech Stack Tags */}
-            <div className="flex flex-wrap gap-2 max-w-full">
-              {project.tags.map((tag: string, index: number) => {
-                const techInfo = getTechInfo(tag);
-                return (
-                    <div
-                        key={index}
-                        className="flex items-center gap-1.5 bg-white border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all px-3 py-1.5 rounded-full group"
+            )}
+  
+            {/* Metadata and Actions */}
+            <div className="space-y-6 py-8 border-y border-gray-200">
+              <div className="flex flex-wrap items-center gap-6">
+                <div className="flex items-center gap-3 text-gray-600">
+                  <Calendar className="h-5 w-5" />
+                  <span className="font-medium text-lg">{formattedDate}</span>
+                </div>
+                {project.github && (
+                    <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 text-gray-600 hover:text-gray-900 transition-colors group"
                     >
-                      <div className="w-4 h-4 relative group-hover:scale-110 transition-transform">
-                        <Image
-                            src={techInfo.icon}
-                            alt={tag}
-                            fill
-                            className="object-contain"
-                        />
+                      <Github className="h-5 w-5 group-hover:scale-110 transition-transform" />
+                      <span className="font-medium text-lg">View Source</span>
+                    </a>
+                )}
+              </div>
+  
+              {/* Tech Stack Tags */}
+              <div className="flex flex-wrap gap-2 max-w-full">
+                {project.tags.map((tag: string, index: number) => {
+                  const techInfo = getTechInfo(tag);
+                  return (
+                      <div
+                          key={index}
+                          className="flex items-center gap-1.5 bg-white border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all px-3 py-1.5 rounded-full group"
+                      >
+                        <div className="w-4 h-4 relative group-hover:scale-110 transition-transform">
+                          <Image
+                              src={techInfo.icon}
+                              alt={tag}
+                              fill
+                              className="object-contain"
+                          />
+                        </div>
+                        <span className="text-xs font-medium text-gray-700">{tag}</span>
                       </div>
-                      <span className="text-xs font-medium text-gray-700">{tag}</span>
-                    </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
           </div>
+  
+          {/* Content */}
+          <div className="mdx-content prose prose-lg prose-gray max-w-none prose-headings:text-gray-900 prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-code:text-gray-800 prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-strong:text-gray-900">
+            <WriteupComponent />
+          </div>
+  
+          {/* Bottom padding for better spacing */}
+          <div className="h-24"></div>
         </div>
-
-        {/* Content */}
-        <div className="mdx-content prose prose-lg prose-gray max-w-none prose-headings:text-gray-900 prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-code:text-gray-800 prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-strong:text-gray-900">
-          <WriteupComponent />
-        </div>
-
-        {/* Bottom padding for better spacing */}
-        <div className="h-24"></div>
-      </div>
+      </>
   );
 }
