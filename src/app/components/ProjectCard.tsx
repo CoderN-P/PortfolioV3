@@ -37,22 +37,6 @@ const getTechInfo = (tech: string): { icon: string, color: string } => {
   };
 };
 
-// Generate a fallback image for projects without images
-const getProjectImageFallback = (projectName: string, colors: string): string => {
-  // Extract color values from the gradient string (from-color-xxx to-color-xxx)
-  const fromColor = colors.split(' ')[0].replace('from-', '');
-  const toColor = colors.split(' ')[1].replace('to-', '');
-  
-  // Return a data URL for an SVG with a gradient background and project initials
-  const initials = projectName
-    .split(' ')
-    .map(word => word[0])
-    .join('')
-    .substring(0, 2)
-    .toUpperCase();
-    
-  return `/api/project-image?name=${encodeURIComponent(initials)}&from=${fromColor}&to=${toColor}`;
-};
 
 interface ProjectCardProps {
   name: string;
@@ -60,7 +44,6 @@ interface ProjectCardProps {
   shortDescription: string;
   description?: string;
   tags: string[];
-  colors: string;
   github?: string | null;
   link?: string | null;
   image?: string;
@@ -73,7 +56,6 @@ export default function ProjectCard({
   shortDescription,
   description,
   tags,
-  colors,
   github,
   link,
   image,
@@ -90,11 +72,8 @@ export default function ProjectCard({
   
   // Check if there's a writeup available
   const hasWriteup = slug && slug.trim().length > 0;
-  
-  // Determine image source
-  const imageSource = (image && image !== "..." && image !== "")
-    ? image
-    : getProjectImageFallback(name, colors);
+
+  const imageSrc = image || '/default-fallback-image.png'; 
   
   return (
       <div className="w-full mb-24 relative">
@@ -110,7 +89,7 @@ export default function ProjectCard({
         <div className="relative w-full mb-8">
           <div className="relative w-full aspect-video rounded-xl overflow-hidden">
             <Image
-                src={imageSource}
+                src={imageSrc}
                 alt={`${name} project screenshot`}
                 priority
                 fill

@@ -222,7 +222,6 @@ export default function ProjectsClient({ projects }: ProjectsClientProps) {
               shortDescription={project.shortDescription || ""}
               description={project.description}
               tags={project.tags}
-              colors={project.colors || "from-blue-500 to-purple-500"}
               github={project.github}
               link={project.link}
               image={project.image}
