@@ -2,7 +2,7 @@
   {
     "name": "TRACER",
     "slug": "tracer",
-    "lastUpdated": "7/19/2025",
+    "lastUpdated": "2025-07-28",
     "description": "TRACER (Telemetry-driven Robot with Advanced Control and Execution Routines) is an open-source robotics platform that combines hardware telemetry with advanced control systems. It features real-time data collection, wireless communication, and a Svelte-based dashboard for monitoring and control.",
     "tags": [
       "robotics", 
@@ -28,7 +28,7 @@
   {
     "name": "Stellar",
     "slug": "stellar",
-    "lastUpdated": "7/18/2025",
+    "lastUpdated": "2025-07-20",
     "description": "Stellar uses advanced AI to personalize your learning experience. Through personalized questions and lessons, interactive projects, and more, Stellar makes your learning experience just so much better.",
     "tags": ["svelte", "typescript", "tailwindcss", "flask", "python", "mongodb"],
     "colors": "from-blue-500 to-purple-500",
@@ -41,7 +41,7 @@
   {
     "name": "RISC-V Gesture Controller",
     "slug": "risc-v-gesture-controller",
-    "lastUpdated": "7/17/2025",
+    "lastUpdated": "2025-07-18",
     "description": "In this project I take an unused, barely documented Risc-V education board, and turn it into a compass and gesture controller for TRACER.",
     "tags": ["risc-v", "c", "esp-idf", "python"],
     "colors": "from-blue-500 to-green-500",
@@ -53,7 +53,7 @@
   {
     "name": "GPT-Kitbot",
     "slug": "gpt-kitbot",
-    "lastUpdated": "7/15/2025",
+    "lastUpdated": "2025-07-15",
     "description": "GPT-Kitbot is a modified version of the FRC kitbot that includes a web dashboard and backend for AI control. The project uses local LLMs and socketio to provide natural language control of the robot.",
     "tags": ["python", "flask", "svelte", "html", "typescript", "java", "tailwindcss", "socket.io", "wpilib"],
     "colors": "from-blue-500 to-purple-500",
@@ -64,7 +64,7 @@
   },
   {
     "name": "EventSync",
-    "lastUpdated": "7/12/2025",
+    "lastUpdated": "2025-07-10",
     "description": "EventSync makes it easy to plan gatherings, get-togethers or even simple hangouts with your friends. No more confusion and no more getting ghosted by the group chat.",
     "tags": ["react", "nextjs", "typescript", "tailwindcss", "html", "nodejs", "mongodb"],
     "shortDescription": "Plan events with ease",
@@ -76,7 +76,7 @@
   {
     "name": "Foodlyze",
     "slug": "foodlyze",
-    "lastUpdated": "7/13/2025",
+    "lastUpdated": "2025-07-08",
     "description": "Foodlyze is a web app that scans food product barcodes and provides nutritional information, a health score, and a summary. The app uses openfoodfacts, ZXing, and GPT-4o-mini to provide the information. Foodlyze was submitted to the 2025 BISV Hacks hackathon.",
     "tags": ["svelte", "typescript", "tailwindcss", "python", "FastAPI"],
     "colors": "from-green-500 to-blue-500",
@@ -88,7 +88,7 @@
   },
   {
     "name": "Research Tool",
-    "lastUpdated": "7/5/2025",
+    "lastUpdated": "2025-07-01",
     "description": "ResearchTool uses the power of web scraping and AI to speed up the process of researching. Just enter a prompt and ResearchTool will find the most relevant information for you.",
     "tags": ["typescript", "svelte", "flask", "python", "tailwindcss"],
     "colors": "from-blue-500 to-orange-500",
@@ -98,7 +98,7 @@
   },
   {
     "name": "SvelteEditor",
-    "lastUpdated": "6/28/2025",
+    "lastUpdated": "2025-06-25",
     "description": "SvelteEditor is a simple code editor built using svelte and highlight.js.",
     "tags": ["svelte", "typescript", "tailwindcss", "css", "javascript", "html"],
     "colors": "from-gray-500 to-red-500",
@@ -110,7 +110,7 @@
   {
     "name": "TrekTracker",
     "slug": "trek-tracker",
-    "lastUpdated": "6/20/2025",
+    "lastUpdated": "2025-06-20",
     "description": "TrekTracker is a simple ios app that uses MapKit and HealthKit to track steps and simple workouts. (It's not that great, but it was my first ios app)",
     "tags": ["swift"],
     "colors": "from-green-500 to-green-700",
@@ -120,7 +120,7 @@
   },
   {
     "name": "ProjectNebulus",
-    "lastUpdated": "6/10/2025",
+    "lastUpdated": "2025-06-15",
     "shortDescription": "[ARCHIVED] A solution for all your learning needs",
     "description": "Nebulus consolidates all of your learning sites into one easy to use tool. It features a chat in which you can communicate, a study session timer, and many other useful tools.",
     "tags": ["flask", "python", "html", "css", "javascript", "mongodb", "jquery", "tailwindcss"],
@@ -130,7 +130,7 @@
   },
   {
     "name": "NextChat",
-    "lastUpdated": "7/14/2025",
+    "lastUpdated": "2025-06-10",
     "description": "NextChat is a chat application that uses the Next.js framework and Socket.io to provide real-time messaging. Users can create chats and invite members through a share code. The app uses MongoDB to store user data and tailwindcss for styling.",
     "tags": ["typescript", "nextjs", "socket.io", "tailwindcss", "mongodb", "nodejs", "react"],
     "colors": "from-gray-600 to-blue-500",
@@ -142,7 +142,7 @@
   {
     "name": "Curve Path Simulator",
     "slug": "curve-path-simulator",
-    "lastUpdated": "6/5/2025",
+    "lastUpdated": "2025-06-05",
     "description": "This simulation uses the Pure Pursuit algorithm to follow paths defined by quintic hermite splines. The GUI allows you to create splines and visualize the path following. Next steps are to implement the path following on a robot.",
     "tags": ["c++", "qt"],
     "colors": "from-red-500 to-blue-500",
@@ -153,7 +153,7 @@
   {
     "name": "Country Bot",
     "slug": "country-bot",
-    "lastUpdated": "5/25/2025",
+    "lastUpdated": "2025-05-20",
     "description": "Country Bot is a Discord bot that provides information about countries through fun games using the discord.py library. The bot uses the REST Countries API to get information about countries. Users can also create their own countries and work to increase its population.",
     "tags": ["python", "mongodb"],
     "colors": "from-green-500 to-blue-500",
@@ -164,7 +164,7 @@
   {
     "name": "Raspberry Pi Smart Irrigation System",
     "slug": "raspberry-pi-smart-irrigation",
-    "lastUpdated": "5/15/2025",
+    "lastUpdated": "2025-05-15",
     "description": "This project uses a Raspberry Pi to control a water pump to automatically water your plants. The system uses a soil moisture sensor to detect when the plants need water and accordingly waters the plants. The system can be controlled through a web interface.",
     "tags": ["python", "raspberry pi", "flask", "html", "css", "javascript"],
     "shortDescription": "Automated watering system",
@@ -174,7 +174,7 @@
   },
   {
     "name": "AI Stocks",
-    "lastUpdated": "5/5/2025",
+    "lastUpdated": "2025-05-10",
     "description": "AI Stocks is a stock prediction tool that uses machine learning to predict stock prices. The tool uses historical stock data to train a model and predict future stock prices. The tool uses the Yahoo Finance API to get stock data and runs machine learning models using the TensorFlow library.",
     "tags": ["python", "tensorflow", "numpy"],
     "colors": "from-gray-500 to-stone-500",
@@ -184,7 +184,7 @@
   },
   {
     "name": "Neural Network",
-    "lastUpdated": "4/25/2025",
+    "lastUpdated": "2025-05-01",
     "description": "This project is a simple neural network implementation in Python. The neural network is trained on the MNIST dataset and can recognize handwritten digits. The neural network uses the numpy library for matrix operations.",
     "tags": ["python", "numpy"],
     "colors": "from-blue-500 to-red-500",
@@ -194,7 +194,7 @@
   },
   {
     "name": "Pycolor",
-    "lastUpdated": "4/15/2025",
+    "lastUpdated": "2025-04-15",
     "shortDescription": "Colors made simple",
     "description": "Pycolor is a Python library that provides easy access to color codes and names. It is a simple wrapper around thecolorapi.com",
     "tags": ["python"],
@@ -205,7 +205,7 @@
   },
   {
     "name": "WorldInfo",
-    "lastUpdated": "4/1/2025",
+    "lastUpdated": "2025-04-01",
     "shortDescription": "Get information about any country",
     "description": "WorldInfo is a web app that provides information about any country. Users can search for a country and get information such as population, area, and more. This was my first hackathon project, submitted to GunHacks 8.0",
     "tags": ["python", "flask", "html", "tailwindcss", "javascript"],
@@ -215,7 +215,7 @@
   },
   {
     "name": "Portfolio v3",
-    "lastUpdated": "7/16/2025",
+    "lastUpdated": "2025-07-30",
     "shortDescription": "The website you're looking at right now!",
     "description": "My personal portfolio website built with Next.js 14, TypeScript, and Tailwind CSS. Features server-side rendering, a markdown blog engine, dynamic project showcase, and a modern, responsive design.",
     "tags": ["nextjs", "typescript", "tailwindcss", "react", "mdx"],
