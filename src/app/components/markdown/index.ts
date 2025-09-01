@@ -5,3 +5,5 @@ export {default as Code} from "@/app/components/markdown/Code";
 export {default as Warning} from "@/app/components/markdown/Warning";
 export {default as Blockquote} from "@/app/components/markdown/Blockquote";
 export {default as CodeBlock} from "@/app/components/markdown/CodeBlock";
+export { Table, THead, TD, TH, TR, TBody } from "@/app/components/markdown/Table";
+export { default as Function } from "@/app/components/markdown/Function";

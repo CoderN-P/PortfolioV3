@@ -1,6 +1,7 @@
 import type { MDXComponents } from 'mdx/types'
-import {Blockquote, Code, Link} from "@/app/components/markdown";
+import {Blockquote, Code, Link, Warning, Info, Table, TR, TH, TBody, TD, THead, Function} from "@/app/components/markdown";
 import Image from 'next/image';
+
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
     return {
@@ -34,5 +35,14 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         ),
         a: Link,
         blockquote: Blockquote,
+        Warning,
+        Info,
+        table: Table,
+        thead: THead,
+        tbody: TBody,
+        tr: TR,
+        th: TH,
+        td: TD,
+        Function,
     }
 }

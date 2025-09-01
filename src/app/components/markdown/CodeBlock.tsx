@@ -195,7 +195,7 @@ export default function CodeBlock({
                 <div
                     className={`flex flex-row ${
                         consoleOutput ? 'border-b border-slate-200' : ''
-                    } mt-1 gap-4 mb-4 mt-4 px-2 pb-2 overflow-hidden `}
+                    } gap-4 mb-4 mt-4 px-2 pb-2 overflow-hidden `}
                 >
                     <div
                         ref={linesDivRef}

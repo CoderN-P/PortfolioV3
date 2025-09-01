@@ -1,6 +1,6 @@
 // components/mdx/Code.tsx
 import type { HTMLAttributes } from "react";
-
+import Formula from "./Formula";
 import CodeBlock from "./CodeBlock";
 
 type Props = HTMLAttributes<HTMLElement> 
@@ -22,6 +22,7 @@ export default function Code({ children, className }: Props) {
     
     if (isBlock) {
         // Since className is optional (with ?), we need to provide a fallback
+       
         const langMeta = className ? className.replace("language-", "") : "plaintext";
         const [language, fileName, potentialUrl] = langMeta.split(":");
         const url = potentialUrl ? "https://" + potentialUrl : undefined;
@@ -29,6 +30,12 @@ export default function Code({ children, className }: Props) {
         const ext = fileName?.split(".").pop()?.toLowerCase();
         const iconSrc = ext ? extToIcon[ext] : undefined;
         
+        if (className?.includes('language-math')){
+            if (className.includes('math-inline')){
+                return <Formula formula={rawCode} />
+            }
+            return <Formula block formula={rawCode} />
+        }
         if (language === "plaintext"){
             return (
                 <div className="rounded-md overflow-x-scroll max-h-[400px] code-block border border-gray-300 bg-gray-100 p-4">{rawCode}</div>

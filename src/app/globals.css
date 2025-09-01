@@ -88,7 +88,7 @@ ol {
 .mdx-content h4 + p,
 .mdx-content h5 + p,
 .mdx-content h6 + p {
-  margin-top: 1rem !important; /* 16px */
+  margin-top: 1rem; /* 16px */
 }
 
 /* Lists */
@@ -217,6 +217,43 @@ ol {
 .mdx-content h3 + h4 {
   margin-top: 2rem !important; /* 32px */
 }
+
+/* Tables - spacing only */
+.mdx-content table {
+  margin-top: 2rem !important; /* 32px */
+  margin-bottom: 0 !important;
+}
+
+/* Table after heading gets reduced spacing */
+.mdx-content h1 + table,
+.mdx-content h2 + table,
+.mdx-content h3 + table,
+.mdx-content h4 + table,
+.mdx-content h5 + table,
+.mdx-content h6 + table {
+  margin-top: 1.25rem !important; /* 20px */
+}
+
+/* Tighter spacing between paragraph and table */
+.mdx-content p + table {
+  margin-top: 1.5rem !important; /* 24px */
+}
+
+/* Spacing after table */
+.mdx-content table + p {
+  margin-top: 1.5rem !important; /* 24px */
+}
+
+.info-component p {
+    @apply text-sm;
+    margin-top: 0 !important;
+}
+
+.info-component h3 {
+    margin-top: 0 !important;
+    margin-bottom: 0.25rem !important;
+}
+
 
 /* ===========================
    END MDX SPACING SYSTEM
