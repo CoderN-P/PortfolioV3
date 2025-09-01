@@ -58,14 +58,18 @@ export default function Function({
                 data: [
                     ...(fn ? [{ 
                         fn,
-                        ...(derivative ? { derivative: {fn: derivative, updateOnMouseMove: true }} : {}),
+                        ...(derivative ? { 
+                            derivative: {
+                                fn: derivative, 
+                                updateOnMouseMove: true }
+                        } : {}),
                     }] : []),
                     ...(points.length
                         ? [
                             {
                                 points: points.map(([x, y]) => [x, y]),
-                                fnType: "points",
-                                graphType: "scatter",
+                                fnType: "points" as const,
+                                graphType: "scatter" as const,
                                 attr: { r: 6, fill: "blue" }, // bigger, styled points
                             },
                         ]
