@@ -1,0 +1,19 @@
+[
+  {
+    "name": "Lines to Neural Networks",
+    "slug": "lines-to-neural-networks",
+    "lastUpdated": "2025-09-01",
+    "shortDescription": " ",
+    "tags": [
+      "Machine Learning",
+      "Neural Networks",
+      "Python",
+      "Data Science",
+      "Linear Regression",
+      "Optimization",
+      "Gradient Descent",
+      "Backpropagation"
+    ],
+    "image": "/projects/LinesNeuralNetworks/neural-net.png"
+  }
+]

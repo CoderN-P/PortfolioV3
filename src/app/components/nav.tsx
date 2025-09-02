@@ -109,7 +109,7 @@ export default function Navbar(){
                 isMobileMenuOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'
             }`}>
                 {/* Header */}
-                <div className="flex justify-between items-center p-6 border-b">
+                <div className="flex justify-between items-center px-4 py-2 border-b border-gray-200">
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 relative rounded-full overflow-hidden">
                             <Image src={"/codern_pfp.jpeg"} alt="Profile" fill className="object-cover" />

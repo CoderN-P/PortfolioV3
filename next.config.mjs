@@ -13,7 +13,8 @@ const withMdx = createMDX({
 const nextConfig = {
     pageExtensions: ["ts", "tsx", "js", "jsx", "mdx"],
     experimental: {
-        mdxRs: false
+        mdxRs: false,
+        globalNotFound: true,
     }
     // …other Next.js config options
 };
