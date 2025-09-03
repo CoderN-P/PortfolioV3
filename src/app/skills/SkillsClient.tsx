@@ -2,17 +2,8 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
+import type { SkillCategory } from '@/app/types';
 
-interface Skill {
-  name: string;
-  color: string;
-  icon: string;
-}
-
-interface SkillCategory {
-  name: string;
-  skills: Skill[];
-}
 
 interface SkillsClientProps {
   initialCategories: SkillCategory[];

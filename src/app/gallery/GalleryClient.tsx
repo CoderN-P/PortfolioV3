@@ -3,16 +3,7 @@
 import {useState, useEffect, useCallback} from 'react';
 import Image from 'next/image';
 import { X, MapPin, Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
-
-interface Photo {
-  id: number;
-  src: string;
-  alt: string;
-  title: string;
-  location: string;
-  date: string;
-  description: string;
-}
+import type { Photo } from '@/app/types';
 
 interface GalleryClientProps {
   photos: Photo[];

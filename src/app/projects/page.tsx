@@ -1,20 +1,6 @@
 import type { Metadata } from 'next';
-import projectsJson from "@/app/data/projects.json";
+import { projects } from "@/app/data";
 import ProjectsClient from './ProjectsClient';
-
-interface Project {
-  name: string;
-  slug?: string;
-  lastUpdated: string;
-  description?: string;
-  shortDescription?: string;
-  tags: string[];
-  colors?: string;
-  github?: string | null;
-  link?: string | null;
-  image?: string;
-  featured?: boolean;
-}
 
 export const metadata: Metadata = {
   title: 'Projects | Neel Parpia',
@@ -50,9 +36,7 @@ export const metadata: Metadata = {
   },
 };
 
-// Type assertion to make TypeScript happy with the imported JSON
-const projectsData = projectsJson as Project[];
 
 export default function Projects() {
-  return <ProjectsClient projects={projectsData} />;
+  return <ProjectsClient projects={projects} />;
 }

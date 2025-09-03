@@ -1,17 +1,7 @@
 import type { Metadata } from 'next';
-import skills from '@/app/data/skills.json';
 import SkillsClient from './SkillsClient';
+import { skillCategories } from "@/app/data";
 
-interface Skill {
-  name: string;
-  color: string;
-  icon: string;
-}
-
-interface SkillCategory {
-  name: string;
-  skills: Skill[];
-}
 
 export const metadata: Metadata = {
   title: 'Skills & Technologies | Neel Parpia',
@@ -49,18 +39,6 @@ export const metadata: Metadata = {
 
 export default function Skills() {
   // Transform skills data on server
-  const categories: SkillCategory[] = Object.entries(skills).map(([categoryName, skillsList]) => {
-    const transformedSkills = skillsList.map((skill) => ({
-      name: skill[0],
-      color: skill[1],
-      icon: skill[2]
-    }));
-    
-    return {
-      name: categoryName,
-      skills: transformedSkills
-    };
-  });
 
-  return <SkillsClient initialCategories={categories} />;
+  return <SkillsClient initialCategories={skillCategories} />;
 }

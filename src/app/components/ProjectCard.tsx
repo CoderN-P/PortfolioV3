@@ -1,41 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Github, ExternalLink, Calendar, ArrowRight, Badge } from "lucide-react";
-import skillsData from "@/app/data/skills.json";
-
-// Import skills data with a type cast to ensure proper typing
-
-
-// Create a flattened map of all technologies and their icons from skills.json
-const createTechIconMap = () => {
-  const iconMap: Record<string, { icon: string, color: string }> = {};
-  
-  Object.entries(skillsData).forEach(([, skills]) => {
-    // Cast the skills array to the expected type to handle the parsing safely
-    const typedSkills = skills as [string, string, string][];
-    
-    typedSkills.forEach((skill) => {
-      const [name, bgColor, iconPath] = skill;
-      iconMap[name.toLowerCase()] = { 
-        icon: iconPath,
-        color: bgColor
-      };
-    });
-  });
-  
-  return iconMap;
-};
-
-const TECH_ICON_MAP = createTechIconMap();
-
-// Get icon and color for a technology or return defaults if not found
-const getTechInfo = (tech: string): { icon: string, color: string } => {
-  const normalizedTech = tech.toLowerCase();
-  return TECH_ICON_MAP[normalizedTech] || { 
-    icon: '/tech-icons/code.svg',
-    color: 'bg-gray-400'
-  };
-};
+import { getTechInfo } from "@/app/utils";
 
 
 interface ProjectCardProps {

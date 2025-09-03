@@ -1,6 +1,6 @@
 import ProjectIdeaCard from "@/app/components/ProjectIdeaCard";
-import ideasData from "@/app/data/ideas.json";
 import type { Metadata } from 'next';
+import { ideas } from "@/app/data";
 
 export const metadata: Metadata = {
   title: 'Ideas & Concepts | Neel Parpia',
@@ -24,17 +24,6 @@ export const metadata: Metadata = {
   },
 };
 
-interface Idea {
-  name: string;
-  concept: string;
-  problem: string;
-  solution: string;
-  potentialTech: string[];
-  learningGoals: string[];
-  status: string;
-}
-
-const ideas: Idea[] = ideasData;
 
 export default function IdeasPage() {
   return (

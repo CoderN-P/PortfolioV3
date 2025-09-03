@@ -1,57 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Calendar, ArrowRight } from "lucide-react";
-import projectsData from "@/app/data/projects.json";
-import skillsData from "@/app/data/skills.json";
+import { projects } from "@/app/data";
+import { getTechInfo } from "@/app/utils";
 
-
-interface Project {
-  name: string;
-  slug?: string;
-  lastUpdated: string;
-  description: string;
-  tags: string[];
-  colors: string;
-  shortDescription: string;
-  github?: string;
-  link?: string;
-  image?: string;
-  featured?: boolean;
-}
-
-const projects: Project[] = projectsData as Project[];
-
-// Import skills data to get tech icons
-
-// Create a flattened map of all technologies and their icons from skills.json
-const createTechIconMap = () => {
-  const iconMap: Record<string, { icon: string, color: string }> = {};
-  
-  Object.entries(skillsData).forEach(([, skills]) => {
-    const typedSkills = skills as [string, string, string][];
-    
-    typedSkills.forEach((skill) => {
-      const [name, bgColor, iconPath] = skill;
-      iconMap[name.toLowerCase()] = { 
-        icon: iconPath,
-        color: bgColor
-      };
-    });
-  });
-  
-  return iconMap;
-};
-
-const TECH_ICON_MAP = createTechIconMap();
-
-// Get icon and color for a technology or return defaults if not found
-const getTechInfo = (tech: string): { icon: string, color: string } => {
-  const normalizedTech = tech.toLowerCase();
-  return TECH_ICON_MAP[normalizedTech] || { 
-    icon: '/tech-icons/code.svg',
-    color: 'bg-gray-400'
-  };
-};
 
 export default function WriteupsPage() {
   const projectsWithWriteups = projects.filter(p => p.slug && p.slug.trim() !== '');

@@ -1,58 +1,13 @@
 import { pageToComponent } from "@/app/components/writeups";
-import projects from "@/app/data/projects.json";
 import { notFound } from "next/navigation";
 import { Calendar, Github } from "lucide-react";
 import type { Metadata, ResolvingMetadata } from "next";
 import Image from "next/image";
-import skillsData from "@/app/data/skills.json";
+import { projects } from "@/app/data";
+import { getTechInfo } from "@/app/utils";
 
 
-// Import skills data to get tech icons
 
-// Define Project interface
-interface Project {
-  name: string;
-  slug: string;
-  lastUpdated: string;
-  description: string;
-  shortDescription: string;
-  tags: string[];
-  colors: string;
-  github?: string;
-  link?: string;
-  image?: string;
-  featured?: boolean;
-}
-
-// Create a flattened map of all technologies and their icons from skills.json
-const createTechIconMap = () => {
-  const iconMap: Record<string, { icon: string, color: string }> = {};
-  
-  Object.entries(skillsData).forEach(([, skills]) => {
-    const typedSkills = skills as [string, string, string][];
-    
-    typedSkills.forEach((skill) => {
-      const [name, bgColor, iconPath] = skill;
-      iconMap[name.toLowerCase()] = { 
-        icon: iconPath,
-        color: bgColor
-      };
-    });
-  });
-  
-  return iconMap;
-};
-
-const TECH_ICON_MAP = createTechIconMap();
-
-// Get icon and color for a technology or return defaults if not found
-const getTechInfo = (tech: string): { icon: string, color: string } => {
-  const normalizedTech = tech.toLowerCase();
-  return TECH_ICON_MAP[normalizedTech] || { 
-    icon: '/tech-icons/code.svg',
-    color: 'bg-gray-400'
-  };
-};
 
 // Define the params type for generateMetadata and page function
 type Props = {
@@ -68,7 +23,7 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   // Find the project data
   const { name } = await params;
-  const project = (projects as Project[]).find((p) => p.slug === name);
+  const project = projects.find((p) => p.slug === name);
   
   // Return 404 if project doesn't exist
   if (!project) {
@@ -123,8 +78,8 @@ export async function generateMetadata(
 // Generate static params for all projects
 export async function generateStaticParams() {
   // filter projects to only include those with a slug
-    const filteredProjects = (projects as Project[]).filter((project) => project.slug);
-  return (filteredProjects as Project[]).map((project) => ({
+    const filteredProjects = projects.filter((project) => project.slug);
+  return filteredProjects.map((project) => ({
     name: project.slug,
   }));
 }
@@ -134,11 +89,11 @@ export default async function WriteupPage({ params }: Props) {
   const { name } = await params;
   
   // Check if the project exists and has a corresponding component
-  if (!name || !pageToComponent[name] || !(projects as Project[]).find((p) => p.slug === name)) {
+  if (!name || !pageToComponent[name] || !projects.find((p) => p.slug === name)) {
     notFound();
   }
   
-  const project = (projects as Project[]).find((p) => p.slug === name)!;
+  const project = projects.find((p) => p.slug === name)!;
   
   // Get Month Name, Day, Year from Date
   const date = new Date(project.lastUpdated);

@@ -1,22 +1,8 @@
 import { pageToArticle } from "@/app/components/articles";
-import articles from "@/app/data/articles.json";
 import { notFound } from "next/navigation";
 import { Calendar } from "lucide-react";
 import type { Metadata, ResolvingMetadata } from "next";
-
-
-// Import skills data to get tech icons
-
-// Define Project interface
-interface Article {
-    name: string;
-    slug: string;
-    lastUpdated: string;
-    description: string;
-    shortDescription: string;
-    tags: string[];
-    image?: string;
-}
+import { articles } from "@/app/data";
 
 // Define the params type for generateMetadata and page function
 type Props = {
@@ -32,7 +18,7 @@ export async function generateMetadata(
 ): Promise<Metadata> {
     // Find the project data
     const { name } = await params;
-    const article = (articles as Article[]).find((p) => p.slug === name);
+    const article = articles.find((p) => p.slug === name);
 
     // Return 404 if project doesn't exist
     if (!article) {
@@ -87,9 +73,9 @@ export async function generateMetadata(
 // Generate static params for all article
 export async function generateStaticParams() {
     // filter articles to only include those with a slug
-    const filteredArticles = (articles as Article[]).filter((project) => project.slug);
-    return (filteredArticles as Article[]).map((project) => ({
-        name: project.slug,
+    const filteredArticles = articles.filter((project) => project.slug);
+    return filteredArticles.map((article) => ({
+        name: article.slug,
     }));
 }
 
@@ -98,11 +84,11 @@ export default async function ArticlePage({ params }: Props) {
     const { name } = await params;
 
     // Check if the project exists and has a corresponding component
-    if (!name || !pageToArticle[name] || !(articles as Article[]).find((p) => p.slug === name)) {
+    if (!name || !pageToArticle[name] || !articles.find((p) => p.slug === name)) {
         notFound();
     }
 
-    const article = (articles as Article[]).find((p) => p.slug === name)!;
+    const article = articles.find((p) => p.slug === name)!;
 
     // Get Month Name, Day, Year from Date
     const date = new Date(article.lastUpdated);

@@ -561,7 +561,22 @@ $$
 Now that we have the gradients with respect to the weights and biases of the second layer, we can continue this process backwards through the network to compute the gradients for all layers.
 First, we need to compute the gradient of the loss function with respect to the input ($a1$) of the second layer.
 
-Formally, we neeed to find $\nabla_{a_1} L = \frac{\partial L}{ \partial a_1}$. Since we already have $\nabla_{z_2} L = \frac{\partial L}{ \partial z_2}$, by the chain rule we need to compute $\frac{\partial z_2}{\partial a_1}$.
+Formally, we need to find $\nabla_{a_1} L = \frac{\partial L}{ \partial a_1}$. Since we already have $\nabla_{z_2} L = \frac{\partial L}{ \partial z_2}$, by the chain rule we need to compute $\frac{\partial z_2}{\partial a_1}$.
+
+Again, we can use the equation for the second layer:
+
+$$
+z_2 = W_2 a_1 + b_2
+$$
+The Jacobian of $z_2$ with respect to $a_1$ is just the weight matrix $W_2$, because each element of $z_2$ changes by the same amount as the corresponding element of $a_1$ scaled by the weights.
+
+We know that the shape of $W_2$ is (m, n), and the shape of $\nabla_{z_2} L$ is (m, 1). Therefore, we can't multiply them directly because the inner dimensions don't match (m != 1). However, if we transpose $W_2$ to have shape (n, m), then the inner dimensions match (1 == 1) and we can do the multiplication to get a vector of shape (n, 1).
+
+Then, the gradient of the loss function with respect to the input of the second layer is:
+
+$$
+\nabla_{a_1} L = \nabla_{z_2} L \cdot W_2^T
+$$
 
 Then we can compute the gradient with respect to the weights and biases of the first layer using the same method as before.
 

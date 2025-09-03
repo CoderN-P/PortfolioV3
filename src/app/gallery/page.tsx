@@ -1,16 +1,6 @@
 import type { Metadata } from 'next';
-import photosData from '@/app/data/photos.json';
 import GalleryClient from './GalleryClient';
-
-interface Photo {
-  id: number;
-  src: string;
-  alt: string;
-  title: string;
-  location: string;
-  date: string;
-  description: string;
-}
+import { photos } from '@/app/data';
 
 export const metadata: Metadata = {
   title: 'Gallery | Neel Parpia',
@@ -35,8 +25,6 @@ export const metadata: Metadata = {
     creator: '@neelparpia',
   },
 };
-
-const photos: Photo[] = photosData;
 
 export default function GalleryPage() {
   return <GalleryClient photos={photos} />;

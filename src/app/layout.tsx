@@ -67,7 +67,7 @@ export default function RootLayout({
         >
             <Navbar/>
             <div className="w-full lg:max-w-[800px] mb-20 mx-auto px-4 sm:px-8 bg-white text-black flex-grow">
-              <div className={'mt-12 mb-8'}>
+              <div className={'mt-12 mb-8' }>
                 <Breadcrumb/>
               </div>
               {children}
