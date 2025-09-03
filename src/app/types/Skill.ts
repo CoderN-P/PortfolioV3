@@ -1,5 +1,5 @@
 export default interface Skill {
-    name: string;
-    color: string;
-    icon: string;
+  name: string;
+  color: string;
+  icon: string;
 }

@@ -33,15 +33,11 @@ export default function ProjectIdeaCard({
         {/* Problem & Solution */}
         <div className="grid md:grid-cols-2 gap-8">
           <div>
-            <h3 className="font-semibold text-gray-800 mb-3">
-              Problem
-            </h3>
+            <h3 className="font-semibold text-gray-800 mb-3">Problem</h3>
             <p className="text-gray-600 leading-relaxed">{problem}</p>
           </div>
           <div>
-            <h3 className="font-semibold text-gray-800 mb-3">
-              Solution
-            </h3>
+            <h3 className="font-semibold text-gray-800 mb-3">Solution</h3>
             <p className="text-gray-600 leading-relaxed">{solution}</p>
           </div>
         </div>
@@ -49,21 +45,20 @@ export default function ProjectIdeaCard({
         {/* Tech Stack & Learning Goals */}
         <div className="grid md:grid-cols-2 gap-8">
           <div>
-            <h3 className="font-semibold text-gray-800 mb-3">
-              Tech Stack
-            </h3>
+            <h3 className="font-semibold text-gray-800 mb-3">Tech Stack</h3>
             <div className="flex flex-wrap gap-2">
               {potentialTech.map((tech) => (
-                <span key={tech} className="text-sm bg-gray-50 text-gray-700 px-3 py-1 rounded border border-gray-200">
+                <span
+                  key={tech}
+                  className="text-sm bg-gray-50 text-gray-700 px-3 py-1 rounded border border-gray-200"
+                >
                   {tech}
                 </span>
               ))}
             </div>
           </div>
           <div>
-            <h3 className="font-semibold text-gray-800 mb-3">
-              Learning Goals
-            </h3>
+            <h3 className="font-semibold text-gray-800 mb-3">Learning Goals</h3>
             <ul className="text-gray-600 space-y-2">
               {learningGoals.map((goal) => (
                 <li key={goal} className="flex items-start">

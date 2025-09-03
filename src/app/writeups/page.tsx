@@ -4,9 +4,10 @@ import { Calendar, ArrowRight } from "lucide-react";
 import { projects } from "@/app/data";
 import { getTechInfo } from "@/app/utils";
 
-
 export default function WriteupsPage() {
-  const projectsWithWriteups = projects.filter(p => p.slug && p.slug.trim() !== '');
+  const projectsWithWriteups = projects.filter(
+    (p) => p.slug && p.slug.trim() !== "",
+  );
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -18,14 +19,14 @@ export default function WriteupsPage() {
       <div className="space-y-6">
         {projectsWithWriteups.map((project) => {
           const date = new Date(project.lastUpdated);
-          const formattedDate = date.toLocaleDateString('en-US', { 
-            month: 'long', 
-            day: 'numeric', 
-            year: 'numeric' 
+          const formattedDate = date.toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
           });
-          
+
           return (
-            <Link 
+            <Link
               key={project.slug}
               href={`/writeups/${project.slug}`}
               className="block group"
@@ -36,36 +37,45 @@ export default function WriteupsPage() {
                     <h2 className="font-bold text-2xl text-gray-900 group-hover:text-blue-600 transition-colors mb-2">
                       {project.name}
                     </h2>
-                    <p className="text-gray-600 mb-4 leading-relaxed">{project.shortDescription}</p>
-                    
+                    <p className="text-gray-600 mb-4 leading-relaxed">
+                      {project.shortDescription}
+                    </p>
+
                     <div className="flex items-center gap-6 mb-4">
                       <div className="flex items-center gap-2 text-gray-500">
                         <Calendar size={16} />
                         <span className="text-sm">{formattedDate}</span>
                       </div>
                       <div className="flex gap-2">
-                        {project.tags.slice(0, 4).map((tag: string, index: number) => {
-                          const techInfo = getTechInfo(tag);
-                          return (
-                            <div 
-                              key={index}
-                              className="flex items-center gap-1.5 bg-gray-50 border border-gray-200 px-3 py-1.5 rounded-full"
-                            >
-                              <Image 
-                                src={techInfo.icon} 
-                                alt={tag}
-                                width={14}
-                                height={14}
-                                className="object-contain"
-                              />
-                              <span className="text-xs font-medium text-gray-700">{tag}</span>
-                            </div>
-                          );
-                        })}
+                        {project.tags
+                          .slice(0, 4)
+                          .map((tag: string, index: number) => {
+                            const techInfo = getTechInfo(tag);
+                            return (
+                              <div
+                                key={index}
+                                className="flex items-center gap-1.5 bg-gray-50 border border-gray-200 px-3 py-1.5 rounded-full"
+                              >
+                                <Image
+                                  src={techInfo.icon}
+                                  alt={tag}
+                                  width={14}
+                                  height={14}
+                                  className="object-contain"
+                                />
+                                <span className="text-xs font-medium text-gray-700">
+                                  {tag}
+                                </span>
+                              </div>
+                            );
+                          })}
                       </div>
                     </div>
                   </div>
-                  <ArrowRight size={20} className="text-gray-400 group-hover:text-gray-600 group-hover:translate-x-1 transition-all mt-2 ml-4" />
+                  <ArrowRight
+                    size={20}
+                    className="text-gray-400 group-hover:text-gray-600 group-hover:translate-x-1 transition-all mt-2 ml-4"
+                  />
                 </div>
               </div>
             </Link>

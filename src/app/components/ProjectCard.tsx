@@ -1,8 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Github, ExternalLink, Calendar, ArrowRight, Badge } from "lucide-react";
+import {
+  Github,
+  ExternalLink,
+  Calendar,
+  ArrowRight,
+  Badge,
+} from "lucide-react";
 import { getTechInfo } from "@/app/utils";
-
 
 interface ProjectCardProps {
   name: string;
@@ -28,138 +33,135 @@ export default function ProjectCard({
   lastUpdated,
 }: ProjectCardProps) {
   // Format the date if available
-  const formattedDate = lastUpdated 
-    ? new Date(lastUpdated).toLocaleDateString('en-US', { 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
-      }) 
+  const formattedDate = lastUpdated
+    ? new Date(lastUpdated).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
     : null;
-  
+
   // Check if there's a writeup available
   const hasWriteup = slug && slug.trim().length > 0;
 
-  const imageSrc = image || '/default-fallback-image.png'; 
-  
+  const imageSrc = image || "/default-fallback-image.png";
+
   return (
-      <div className="w-full mb-24 relative">
-        <div className="mb-8">
-          <h2 className="text-4xl font-bold mb-2 text-gray-800">
-            {name}
-          </h2>
-          <p className="text-xl font-medium text-gray-600 max-w-2xl">
-            {shortDescription}
-          </p>
+    <div className="w-full mb-24 relative">
+      <div className="mb-8">
+        <h2 className="text-4xl font-bold mb-2 text-gray-800">{name}</h2>
+        <p className="text-xl font-medium text-gray-600 max-w-2xl">
+          {shortDescription}
+        </p>
+      </div>
+      {/* Full Width Image Section with subtle border */}
+      <div className="relative w-full mb-8">
+        <div className="relative w-full aspect-video rounded-xl overflow-hidden">
+          <Image
+            src={imageSrc}
+            alt={`${name} project screenshot`}
+            priority
+            fill
+            className="object-cover transition-transform duration-300 ease-in-out hover:scale-105"
+          />
         </div>
-        {/* Full Width Image Section with subtle border */}
-        <div className="relative w-full mb-8">
-          <div className="relative w-full aspect-video rounded-xl overflow-hidden">
-            <Image
-                src={imageSrc}
-                alt={`${name} project screenshot`}
-                priority
-                fill
-                className="object-cover transition-transform duration-300 ease-in-out hover:scale-105"
-            />
+      </div>
+
+      {/* Project Title & Links Section - Moved below the image */}
+      <div className="w-full mb-8">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div className="flex gap-3">
+            {github && (
+              <a
+                href={github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 transition-colors px-4 py-2.5 rounded-lg text-gray-800"
+                aria-label={`GitHub repository for ${name}`}
+              >
+                <Github size={18} />
+                <span className="text-sm font-medium">GitHub</span>
+              </a>
+            )}
+
+            {link && (
+              <a
+                href={link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 transition-colors px-4 py-2.5 rounded-lg text-gray-800"
+                aria-label={`Live demo for ${name}`}
+              >
+                <ExternalLink size={18} />
+                <span className="text-sm font-medium">Live Demo</span>
+              </a>
+            )}
+
+            {hasWriteup && (
+              <Link
+                href={`/writeups/${slug}`}
+                className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-medium text-gray-800 bg-gray-100 hover:bg-gray-200 transition-colors`}
+              >
+                <span>View Writeup</span>
+                <ArrowRight size={16} />
+              </Link>
+            )}
           </div>
         </div>
+      </div>
 
-        {/* Project Title & Links Section - Moved below the image */}
-        <div className="w-full mb-8">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-
-            <div className="flex gap-3">
-              {github && (
-                  <a
-                      href={github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 transition-colors px-4 py-2.5 rounded-lg text-gray-800"
-                      aria-label={`GitHub repository for ${name}`}
-                  >
-                    <Github size={18}/>
-                    <span className="text-sm font-medium">GitHub</span>
-                  </a>
-              )}
-
-              {link && (
-                  <a
-                      href={link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 transition-colors px-4 py-2.5 rounded-lg text-gray-800"
-                      aria-label={`Live demo for ${name}`}
-                  >
-                    <ExternalLink size={18}/>
-                    <span className="text-sm font-medium">Live Demo</span>
-                  </a>
-              )}
-
-              {hasWriteup && (
-                  <Link
-                      href={`/writeups/${slug}`}
-                      className={`flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm font-medium text-gray-800 bg-gray-100 hover:bg-gray-200 transition-colors`}
-                  >
-                    <span>View Writeup</span>
-                    <ArrowRight size={16}/>
-                  </Link>
-              )}
+      {/* Content Section */}
+      <div className="space-y-8">
+        {/* Description */}
+        <div>
+          {description && description.trim().length > 0 && (
+            <div className="prose prose-gray max-w-none text-gray-700 text-lg leading-relaxed">
+              <p>{description}</p>
             </div>
-          </div>
+          )}
+
+          {formattedDate && (
+            <div className="flex items-center text-gray-500 text-sm mt-6">
+              <Calendar size={16} className="mr-1.5" />
+              <span>Last updated: {formattedDate}</span>
+            </div>
+          )}
         </div>
 
-        {/* Content Section */}
-        <div className="space-y-8">
-          {/* Description */}
-          <div>
-            {description && description.trim().length > 0 && (
-                <div className="prose prose-gray max-w-none text-gray-700 text-lg leading-relaxed">
-                  <p>{description}</p>
-                </div>
-            )}
+        {/* Technologies Section - Full width */}
+        <div>
+          <h3 className="text-sm font-semibold text-gray-500 uppercase mb-4 flex items-center gap-1.5">
+            <Badge size={16} /> Technologies
+          </h3>
+          <div className="flex flex-wrap gap-2">
+            {tags.map((tag: string, index: number) => {
+              const techInfo = getTechInfo(tag);
 
-            {formattedDate && (
-                <div className="flex items-center text-gray-500 text-sm mt-6">
-                  <Calendar size={16} className="mr-1.5"/>
-                  <span>Last updated: {formattedDate}</span>
-                </div>
-            )}
-          </div>
-
-          {/* Technologies Section - Full width */}
-          <div>
-            <h3 className="text-sm font-semibold text-gray-500 uppercase mb-4 flex items-center gap-1.5">
-              <Badge size={16}/> Technologies
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {tags.map((tag: string, index: number) => {
-                const techInfo = getTechInfo(tag);
-
-                return (
-                    <div
-                        key={index}
-                        className="flex items-center px-2 py-1 rounded-lg bg-gray-50 border border-gray-200 hover:bg-gray-100 transition-all"
-                        title={tag}
-                    >
-                      <Image
-                          src={techInfo.icon}
-                          alt={tag}
-                          width={12}
-                          height={12}
-                          className="mr-2"
-                      />
-                      <span className="text-xs text-gray-800 font-medium whitespace-nowrap">
+              return (
+                <div
+                  key={index}
+                  className="flex items-center px-2 py-1 rounded-lg bg-gray-50 border border-gray-200 hover:bg-gray-100 transition-all"
+                  title={tag}
+                >
+                  <Image
+                    src={techInfo.icon}
+                    alt={tag}
+                    width={12}
+                    height={12}
+                    className="mr-2"
+                  />
+                  <span className="text-xs text-gray-800 font-medium whitespace-nowrap">
                     {tag}
                   </span>
-                    </div>
-                );
-              })}
-            </div>
+                </div>
+              );
+            })}
           </div>
         </div>
-
-        {/* Separator - More subtle */}
-        <div className="h-px w-full mt-12 bg-gray-200 mx-auto"></div>
       </div>
+
+      {/* Separator - More subtle */}
+      <div className="h-px w-full mt-12 bg-gray-200 mx-auto"></div>
+    </div>
   );
 }

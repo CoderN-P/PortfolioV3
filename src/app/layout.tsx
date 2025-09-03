@@ -1,6 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import NextTopLoader from "nextjs-toploader";
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import Navbar from "@/app/components/nav";
 import Breadcrumb from "@/app/components/Breadcrumb";
@@ -23,7 +23,9 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://www.neelparpia.me'),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "https://www.neelparpia.me",
+  ),
   icons: {
     icon: [
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
@@ -50,31 +52,29 @@ export const metadata: Metadata = {
   },
 };
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="en" className="bg-white">
       <body className="bg-white">
         <NextTopLoader />
         <SpeedInsights />
         <div
-            className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
         >
-            <Navbar/>
-            <div className="w-full lg:max-w-[800px] mb-20 mx-auto px-4 sm:px-8 bg-white text-black flex-grow">
-              <div className={'mt-12 mb-8' }>
-                <Breadcrumb/>
-              </div>
-              {children}
+          <Navbar />
+          <div className="w-full lg:max-w-[800px] mb-20 mx-auto px-4 sm:px-8 bg-white text-black flex-grow">
+            <div className={"mt-12 mb-8"}>
+              <Breadcrumb />
             </div>
-            
-            {/* Global Footer */}
-            <Footer />
+            {children}
+          </div>
+
+          {/* Global Footer */}
+          <Footer />
         </div>
       </body>
     </html>

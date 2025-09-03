@@ -1,9 +1,8 @@
 "use client";
 
-import Image from 'next/image';
-import { useState } from 'react';
-import type { SkillCategory } from '@/app/types';
-
+import Image from "next/image";
+import { useState } from "react";
+import type { SkillCategory } from "@/app/types";
 
 interface SkillsClientProps {
   initialCategories: SkillCategory[];
@@ -15,8 +14,8 @@ export default function SkillsClient({ initialCategories }: SkillsClientProps) {
   const [filter, setFilter] = useState<string | null>(null);
 
   // Filter skills by category if filter is set
-  const filteredCategories = filter 
-    ? initialCategories.filter(category => category.name === filter) 
+  const filteredCategories = filter
+    ? initialCategories.filter((category) => category.name === filter)
     : initialCategories;
 
   return (
@@ -32,30 +31,34 @@ export default function SkillsClient({ initialCategories }: SkillsClientProps) {
       {/* Category Filter Buttons */}
       <div className="mb-16">
         <div className="flex flex-wrap gap-3">
-          <button 
+          <button
             aria-label="Show all skills"
             onClick={() => {
               setFilter(null);
               setIsFiltering(false);
             }}
-            className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-colors ${!isFiltering 
-              ? 'bg-gray-800 text-white' 
-              : 'bg-gray-100 text-gray-800 hover:bg-gray-200'}`}
+            className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+              !isFiltering
+                ? "bg-gray-800 text-white"
+                : "bg-gray-100 text-gray-800 hover:bg-gray-200"
+            }`}
           >
             All Skills
           </button>
-          
+
           {initialCategories.map((category) => (
-            <button 
+            <button
               aria-label={`Filter skills by ${category.name}`}
               key={category.name}
               onClick={() => {
                 setFilter(category.name);
                 setIsFiltering(true);
               }}
-              className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-colors ${isFiltering && filter === category.name
-                ? 'bg-gray-800 text-white' 
-                : 'bg-gray-100 text-gray-800 hover:bg-gray-200'}`}
+              className={`px-5 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+                isFiltering && filter === category.name
+                  ? "bg-gray-800 text-white"
+                  : "bg-gray-100 text-gray-800 hover:bg-gray-200"
+              }`}
             >
               {category.name}
             </button>
@@ -67,30 +70,36 @@ export default function SkillsClient({ initialCategories }: SkillsClientProps) {
       <div className="space-y-20">
         {filteredCategories.map((category) => (
           <div key={category.name}>
-            <h2 className="text-2xl font-bold mb-4 text-gray-800 pb-4">{category.name}</h2>
+            <h2 className="text-2xl font-bold mb-4 text-gray-800 pb-4">
+              {category.name}
+            </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {category.skills.map((skill) => (
-                <div 
+                <div
                   key={`${category.name}-${skill.name}`}
                   className="relative flex flex-col items-center justify-center bg-gray-50 p-6 rounded-xl hover:bg-gray-100 border border-gray-200 transition-all"
-                  onMouseEnter={() => setShowTooltip(`${category.name}-${skill.name}`)}
+                  onMouseEnter={() =>
+                    setShowTooltip(`${category.name}-${skill.name}`)
+                  }
                   onMouseLeave={() => setShowTooltip(null)}
                 >
                   {/* Clean icon container without color background */}
                   <div className="relative w-14 h-14 flex items-center justify-center mb-4">
                     {/* Icon */}
                     <div className="w-8 h-8 relative">
-                      <Image 
-                        src={skill.icon} 
+                      <Image
+                        src={skill.icon}
                         alt={skill.name}
                         fill
                         className="object-contain"
                       />
                     </div>
                   </div>
-                  
-                  <span className="text-sm font-medium text-center">{skill.name}</span>
-                  
+
+                  <span className="text-sm font-medium text-center">
+                    {skill.name}
+                  </span>
+
                   {/* Tooltip */}
                   {showTooltip === `${category.name}-${skill.name}` && (
                     <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 -translate-y-full bg-gray-900 text-white text-xs rounded py-1 px-2 pointer-events-none z-10 whitespace-nowrap">

@@ -1,9 +1,9 @@
 import { Quote } from "lucide-react";
 
-export default function Blockquote({ 
-  children, 
-  author 
-}: { 
+export default function Blockquote({
+  children,
+  author,
+}: {
   children: React.ReactNode;
   author?: string;
 }) {
@@ -12,9 +12,7 @@ export default function Blockquote({
       <div className="flex gap-3 items-start">
         <Quote className="h-5 w-5 text-gray-400 flex-shrink-0 mt-1" />
         <div>
-          <div className="text-gray-700 italic">
-            {children}
-          </div>
+          <div className="text-gray-700 italic">{children}</div>
           {author && (
             <cite className="text-sm text-gray-500 mt-2 block not-italic">
               — {author}

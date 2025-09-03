@@ -1,5 +1,5 @@
 import Image from "next/image";
-import {Function} from "@/app/components/markdown";
+import { Function } from "@/app/components/markdown";
 
 You have a row of houses in your street and you’ve just measured their square footage and their price. What you have now is a set of data points, and what you really want to do is be able to predict the price of another house from just its square footage. To do this, you need to devise a model, or a function which takes square footage as an input, and calculates the house cost as an output. But this can’t be any random function, it must also accurately predict the prices of the houses down the street.
 
@@ -16,7 +16,7 @@ Where:
 - $n$ is the number of data points
 - $y_i$ is the actual value (price of the house)
 - $\hat{y}_i$ is the predicted value (price of the house based
-on the model)
+  on the model)
 
 MSE works by going over each data point and subtracting the predicted value from the actual value and then squaring the result.
 
@@ -50,7 +50,15 @@ This is guaranteed to give us the minimum point / vertex of the MSE function bec
 
 If we take a look at a normal quadratic function:
 
-<Function fn="x^2" domain={[-5, 5 ]} range={[-1, 10]} xlabel={"x"} ylabel={"f(x)"} derivative={"2x"} width={400}/>
+<Function
+  fn="x^2"
+  domain={[-5, 5]}
+  range={[-1, 10]}
+  xlabel={"x"}
+  ylabel={"f(x)"}
+  derivative={"2x"}
+  width={400}
+/>
 
 We can see that it has a single minima at $x = 0$. At this point, the derivative of the function is zero, and this makes sense because the slope of the tangent line at this point is horizontal.
 
@@ -77,6 +85,7 @@ Therefore, we can evaluate the MSE function for our data points:
 
 $$
 E(m, b) = \frac{1}{4}(((300000 - (1500m + b))^2  + ...   (600000 - (3000m + b))^2)
+
 
 $$
 
@@ -136,15 +145,22 @@ $$
 b = 0
 $$
 
-
 Verifying the results, we can see that this line perfectly fits our data points:
 
-<Function fn="200x" domain={[0, 3500]} range={[0, 700000]} xlabel={"Area (sq. ft)"} ylabel={"Price ($)"} width={800} points={[
+<Function
+  fn="200x"
+  domain={[0, 3500]}
+  range={[0, 700000]}
+  xlabel={"Area (sq. ft)"}
+  ylabel={"Price ($)"}
+  width={800}
+  points={[
     [1500, 300000],
     [2000, 400000],
     [2500, 500000],
     [3000, 600000],
-]}/>
+  ]}
+/>
 
 ## Generalizing to multiple features
 
@@ -183,6 +199,7 @@ $$
 $$
 
 Where:
+
 - $W$ is the weight matrix
 - $x_i$ is the vector of features for the $i^{th}$ data point
 - $b$ is the bias vector
@@ -202,19 +219,16 @@ $$
 A single neuron gets its value from the dot product of the weights and the inputs, plus a bias.
 
 <div className="w-full relative">
-    <Image
-        src="/projects/LinesNeuralNetworks/neural-net.png"
-        alt="Neural Network Diagram"
-        fill
-        className="object-contain"
-        sizes="(max-width: 768px) 100vw, 50vw"
-    />
+  <Image
+    src="/projects/LinesNeuralNetworks/neural-net.png"
+    alt="Neural Network Diagram"
+    fill
+    className="object-contain"
+    sizes="(max-width: 768px) 100vw, 50vw"
+  />
 </div>
 
-
-
 ![](/projects/LinesNeuralNetworks/neural-net.png)
-
 
 After repeating this for multiple neurons in a layer, we get a vector of outputs. In effect, each layer of a neural network is performing a linear transformation on the input data.
 
@@ -223,13 +237,21 @@ After repeating this for multiple neurons in a layer, we get a vector of outputs
 However, if we only stack layers of linear transformations, the entire network would still be equivalent to a single linear transformation. This is where activation functions come into play. Activation functions introduce non-linearity into the model, allowing it to learn complex patterns in the data.
 
 Some common activation functions include:
+
 - ReLU (Rectified Linear Unit): $f(x) = max(0, x)$
 - Sigmoid: $f(x) = \frac{1}{1 + e^{-x}}$
 - Tanh: $f(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}$
 
 For example, the sigmoid function maps any input value to a value between 0 and 1, which is useful for binary classification tasks:
 
-<Function fn="1/(1+exp(-x))" domain={[-10, 10]} range={[0, 1]} xlabel={"x"} ylabel={"sigmoid(x)"} width={400}/>
+<Function
+  fn="1/(1+exp(-x))"
+  domain={[-10, 10]}
+  range={[0, 1]}
+  xlabel={"x"}
+  ylabel={"sigmoid(x)"}
+  width={400}
+/>
 
 Another cool thing about activation functions is that they can apply operations that depend on the entire input vector, not just element-wise operations. For example, the softmax function is often used in the output layer of classification networks to convert raw scores into probabilities.
 
@@ -246,9 +268,10 @@ In a simple linear function, we can get the output by just plugging in the input
 First, the input vector is passed to the first layer of neurons. Each neuron computes its output by taking the dot product of the input vector and its weight vector, adding the bias, and then applying the activation function.
 
 <Info>
-    Often the input vector is normalized or standardized before being fed into the network to ensure that all features are on a similar scale. This helps with the convergence of the training process.
+  Often the input vector is normalized or standardized before being fed into the
+  network to ensure that all features are on a similar scale. This helps with
+  the convergence of the training process.
 </Info>
-
 
 This produces an output vector for the first layer, which then becomes the input vector for the next layer. This process is repeated for each layer in the network until we reach the final output layer.
 
@@ -320,6 +343,7 @@ $$
 $$
 
 Where:
+
 - $x$ is the input vector
 - $W_1$ and $W_2$ are the weight matrices for the first and second layers
 - $b_1$ and $b_2$ are the bias vectors
@@ -402,6 +426,7 @@ So, the gradient of $z_{2i}$ with respect to the weights in the $i^{th}$ row of 
     ### Intuition check
 
     The $i^{th}$ element of $z_2$ is computed as the dot product of the $i^{th}$ row of $W_2$ and the input vector $a_1$. Therefore, if we change any element in the $i^{th}$ row of $W_2$, it will affect the value of $z_{2i}$. However, changing any element in a different row of $W_2$ will not affect $z_{2i}$, because it is not involved in the computation of that element. Therefore, the derivative of $z_{2i}$ with respect to elements in other rows is zero.
+
 </Info>
 
 If we repeat this for each element of $z_2$ we get a rank-3 tensor representing the derivative of $z_2$ with respect to $W_2$. However, only the $i^{th}$ row of the $i^{th}$ matrix/slice is non-zero, and is equal to the input vector $a_1$.
@@ -422,6 +447,7 @@ What does it mean to take all rows in the same spot in the tensor? This just mea
     ### Intuition check
 
     Remember that each slice of the tensor is the Jacobian of a single element of $z_2$ with respect to $W_2$. Then one row in one slice represents the gradient of a single element of $z_2$ with respect to one row of $W_2$. Therefore, when we take the same row from each slice, we are getting the gradient of all elements of $z_2$ with respect to one row of $W_2$. Then, by multiplying each of these rows by the corresponding element in the gradient vector $\nabla_{z_2} L$, we are weighting the contribution of each element of $z_2$ to the overall gradient with respect to that row of $W_2$. Finally, summing these weighted contributions together gives us the total gradient of the loss with respect to that row of $W_2$.
+
 </Info>
 
 Now we repeat this operation for all the remaining rows to capture how the loss changes with respect to each row of $W_2$. The result is a matrix of the same shape as $W_2$, which is exactly what we wanted.
@@ -491,8 +517,8 @@ The goal is basically to have one row vector and one column vector, so when we m
     ### Intuition check
 
     Why can't we just transpose the first vector instead of the second? This is because the first vector has shape (m, 1), so transposing it would give it shape (1, m). Then when we multiply it with the second vector of shape (n, 1), the inner dimensions don't match (m != n) and we can't do the multiplication. However, if we transpose the second vector to have shape (1, n), then the inner dimensions match (1 == 1) and we can do the multiplication to get a matrix of shape (m, n).
-</Info>
 
+</Info>
 
 Therefore, we can compute the gradient of the loss function with respect to the weights of the second layer as:
 
@@ -568,6 +594,7 @@ Again, we can use the equation for the second layer:
 $$
 z_2 = W_2 a_1 + b_2
 $$
+
 The Jacobian of $z_2$ with respect to $a_1$ is just the weight matrix $W_2$, because each element of $z_2$ changes by the same amount as the corresponding element of $a_1$ scaled by the weights.
 
 We know that the shape of $W_2$ is (m, n), and the shape of $\nabla_{z_2} L$ is (m, 1). Therefore, we can't multiply them directly because the inner dimensions don't match (m != 1). However, if we transpose $W_2$ to have shape (n, m), then the inner dimensions match (1 == 1) and we can do the multiplication to get a vector of shape (n, 1).
@@ -601,9 +628,3 @@ b_2 = b_2 - \alpha \nabla_{b_2} L
 $$
 
 The weight matrix is simply updated by subtracting the gradient of the loss scaled by the learning rate.
-
-
-
-
-
-

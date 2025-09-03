@@ -1,34 +1,32 @@
 @import "tailwindcss";
 @plugin '@tailwindcss/typography';
 
-
-
 .prose code::before {
-    content: none;
+  content: none;
 }
 .prose code::after {
-    content: none;
+  content: none;
 }
 
 ul li::marker {
-    color: currentColor;
+  color: currentColor;
 }
 ul {
-    margin-left: 24px !important;
+  margin-left: 24px !important;
 }
 .prose pre {
-    color: inherit;
-    background-color: transparent;
-    padding: 0;
-    margin: 0;
-    line-height: inherit;
+  color: inherit;
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+  line-height: inherit;
 }
 
 ol li::marker {
-    color: currentColor;
+  color: currentColor;
 }
 ol {
-    margin-left: 24px !important;
+  margin-left: 24px !important;
 }
 
 /* ===========================
@@ -70,7 +68,8 @@ ol {
   margin-bottom: 0 !important;
 }
 
-.mdx-content h5, .mdx-content h6 {
+.mdx-content h5,
+.mdx-content h6 {
   margin-top: 1.5rem !important; /* 24px */
   margin-bottom: 0 !important;
 }
@@ -245,17 +244,15 @@ ol {
 }
 
 .info-component p {
-    @apply text-sm;
-    margin-top: 0 !important;
+  @apply text-sm;
+  margin-top: 0 !important;
 }
 
 .info-component h3 {
-    margin-top: 0 !important;
-    margin-bottom: 0.25rem !important;
+  margin-top: 0 !important;
+  margin-bottom: 0.25rem !important;
 }
-
 
 /* ===========================
    END MDX SPACING SYSTEM
    =========================== */
-

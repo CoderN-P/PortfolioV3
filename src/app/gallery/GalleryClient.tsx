@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import {useState, useEffect, useCallback} from 'react';
-import Image from 'next/image';
-import { X, MapPin, Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
-import type { Photo } from '@/app/types';
+import { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
+import { X, MapPin, Calendar, ChevronLeft, ChevronRight } from "lucide-react";
+import type { Photo } from "@/app/types";
 
 interface GalleryClientProps {
   photos: Photo[];
@@ -14,7 +14,7 @@ export default function GalleryClient({ photos }: GalleryClientProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const openLightbox = (photo: Photo) => {
-    const index = photos.findIndex(p => p.id === photo.id);
+    const index = photos.findIndex((p) => p.id === photo.id);
     setCurrentIndex(index);
     setSelectedPhoto(photo);
   };
@@ -38,13 +38,13 @@ export default function GalleryClient({ photos }: GalleryClientProps) {
   useEffect(() => {
     // Prevent background scrolling when lightbox is open
     if (selectedPhoto) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
     }
     // Cleanup function to restore scrolling
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
     };
   }, [selectedPhoto]);
 
@@ -52,18 +52,18 @@ export default function GalleryClient({ photos }: GalleryClientProps) {
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (!selectedPhoto) return;
-      
-      if (e.key === 'Escape') {
+
+      if (e.key === "Escape") {
         closeLightbox();
-      } else if (e.key === 'ArrowRight') {
+      } else if (e.key === "ArrowRight") {
         nextPhoto();
-      } else if (e.key === 'ArrowLeft') {
+      } else if (e.key === "ArrowLeft") {
         prevPhoto();
       }
-    }
+    };
 
-    window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
+    window.addEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
   }, [selectedPhoto, nextPhoto, prevPhoto]);
 
   return (
@@ -71,9 +71,7 @@ export default function GalleryClient({ photos }: GalleryClientProps) {
       <div className="">
         {/* Header Section */}
         <div className="mb-16">
-          <h1 className="text-6xl font-bold mb-8">
-            Gallery
-          </h1>
+          <h1 className="text-6xl font-bold mb-8">Gallery</h1>
           <p className="text-xl text-gray-600 max-w-2xl mb-12 leading-relaxed">
             A collection of moments captured during my travels and hikes.
           </p>
@@ -96,7 +94,7 @@ export default function GalleryClient({ photos }: GalleryClientProps) {
                   className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
                 />
-                
+
                 {/* Simple overlay */}
                 <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   <div className="absolute bottom-0 left-0 right-0 p-3 text-white">
@@ -166,25 +164,34 @@ export default function GalleryClient({ photos }: GalleryClientProps) {
             <div className="w-full lg:w-80 bg-white/5 border border-white/10 p-6 rounded-lg text-white/95 overflow-y-auto flex-shrink-0">
               <div className="space-y-4">
                 <div>
-                  <h2 className="text-xl font-bold mb-2">{selectedPhoto.title}</h2>
+                  <h2 className="text-xl font-bold mb-2">
+                    {selectedPhoto.title}
+                  </h2>
                   <div className="flex items-center gap-2 text-white/70 mb-2">
                     <MapPin size={14} />
                     <span>{selectedPhoto.location}</span>
                   </div>
                   <div className="flex items-center gap-2 text-white/70">
                     <Calendar size={14} />
-                    <span>{new Date(selectedPhoto.date).toLocaleDateString('en-US', { 
-                      year: 'numeric', 
-                      month: 'long', 
-                      day: 'numeric' 
-                    })}</span>
+                    <span>
+                      {new Date(selectedPhoto.date).toLocaleDateString(
+                        "en-US",
+                        {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        },
+                      )}
+                    </span>
                   </div>
                 </div>
-                
+
                 <div className="h-px bg-white/10"></div>
-                
+
                 <div>
-                  <p className="leading-relaxed text-white/90">{selectedPhoto.description}</p>
+                  <p className="leading-relaxed text-white/90">
+                    {selectedPhoto.description}
+                  </p>
                 </div>
 
                 <div className="h-px bg-white/10"></div>

@@ -1,29 +1,31 @@
 import ProjectIdeaCard from "@/app/components/ProjectIdeaCard";
-import type { Metadata } from 'next';
+import type { Metadata } from "next";
 import { ideas } from "@/app/data";
 
 export const metadata: Metadata = {
-  title: 'Ideas & Concepts | Neel Parpia',
-  description: 'A collection of project ideas, concepts, and future explorations I\'m working on in AI, Web Development, and Robotics.',
+  title: "Ideas & Concepts | Neel Parpia",
+  description:
+    "A collection of project ideas, concepts, and future explorations I'm working on in AI, Web Development, and Robotics.",
   alternates: {
-    canonical: 'https://www.neelparpia.me/ideas',
+    canonical: "https://www.neelparpia.me/ideas",
   },
   openGraph: {
-    title: 'Ideas & Concepts | Neel Parpia',
-    description: 'A collection of project ideas, concepts, and future explorations I\'m working on in AI, Web Development, and Robotics.',
-    type: 'website',
-    locale: 'en_US',
-    siteName: 'Neel Parpia\'s Portfolio',
-    url: 'https://www.neelparpia.me/ideas',
+    title: "Ideas & Concepts | Neel Parpia",
+    description:
+      "A collection of project ideas, concepts, and future explorations I'm working on in AI, Web Development, and Robotics.",
+    type: "website",
+    locale: "en_US",
+    siteName: "Neel Parpia's Portfolio",
+    url: "https://www.neelparpia.me/ideas",
   },
   twitter: {
-    card: 'summary',
-    title: 'Ideas & Concepts | Neel Parpia',
-    description: 'A collection of project ideas, concepts, and future explorations I\'m working on in AI, Web Development, and Robotics.',
-    creator: '@neelparpia',
+    card: "summary",
+    title: "Ideas & Concepts | Neel Parpia",
+    description:
+      "A collection of project ideas, concepts, and future explorations I'm working on in AI, Web Development, and Robotics.",
+    creator: "@neelparpia",
   },
 };
-
 
 export default function IdeasPage() {
   return (
