@@ -59,7 +59,10 @@ export default function Breadcrumb() {
       </nav>
     );
   }
-
+  if (pathname === "/") {
+    return null; // No breadcrumb on home page
+  }
+  
   return (
     <nav className="flex flex-row gap-2 text-sm" aria-label="Breadcrumb">
       {items.map((item, index) => (
