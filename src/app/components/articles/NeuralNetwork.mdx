@@ -627,4 +627,84 @@ $$
 b_2 = b_2 - \alpha \nabla_{b_2} L
 $$
 
-The weight matrix is simply updated by subtracting the gradient of the loss scaled by the learning rate.
+Both the weights and biases are updated by subtracting the learning rate multiplied by the respective gradients.
+
+### Backpropagation Algorithm
+
+From what we have done so far, we can make some psuedocode for the backpropagation algorithm:
+
+```plaintext
+
+layers = [ (W1, b1, f1), (W2, b2, f2), ..., (Wn, bn, fn) ]  # List of layers with weights, biases, and activation functions
+
+# forward pass
+layers_output = []  # To store outputs of each layer
+input = x          # Initial input to the network
+
+for (W, b, f) in layers:
+    z = W * input + b  # Linear transformation
+    a = f(z)           # Activation function
+    layers_output.append((z, a))  # Store pre-activation and post-activation outputs
+    input = a         # Output becomes input for next layer
+
+a2 = input  # Final output after last layer
+
+# Compute loss
+L = loss(a2, y)  # Loss function comparing output to true labels
+# Backward pass
+# Compute gradients for output layer
+
+loss_grad = loss_derivative(a2, y)  # Gradient of loss with respect to output
+
+for index in range(len(layers)-1, -1, -1):
+    W, b, f = layers[index]
+    z = layers_output[index][0]  # Pre-activation output of current layer
+    f_jacobian = activation_jacobian(f, z)  # Jacobian of activation function
+
+    # Gradient with respect to pre-activation output
+    grad_z = loss_grad * f_jacobian
+
+    # Gradients with respect to weights and biases
+    grad_W = grad_z * input.T  # Outer product
+    grad_b = grad_z             # Gradient with respect to bias
+
+    # Update weights and biases
+    W -= learning_rate * grad_W
+    b -= learning_rate * grad_b
+
+    # Update loss gradient for next layer
+    loss_grad = grad_z * W.T  # Backpropagate through weights
+
+```
+
+### Iterating over the dataset
+
+There are multiple strategies for updating the weights and biases using gradient descent + backprop. The approach we covered is known as stochastic gradient descent (SGD), where we update the parameters after computing the gradients for a single data point. Then we loop over all the data points in the dataset, updating the parameters after each one. 
+
+In practice, we often use mini-batches of data points instead of a single point to compute the gradients. This is known as mini-batch gradient descent, where we update the parameters using the average of the gradients for a small batch of data points. This is a good balance between the efficiency of using the entire dataset (batch gradient descent) and the noise reduction of using a single data point (SGD).
+
+After going through all data points (or mini-batches), we have completed one epoch of training. We can then repeat this process for multiple epochs until the model converges to a good set of parameters and low enough error.
+
+### Overfitting and Regularization
+
+A major challenge in training neural networks is overfitting, where the model learns to memorize the training data instead of generalizing to new data. This can happen when the model is too complex relative to the amount of training data, or when the training process goes on for too long. 
+
+To combat overfitting, we can use various regularization techniques:
+
+- **L2 Regularization**: This involves adding a penalty term to the loss function that is proportional to the sum of the squares of the weights. This encourages the model to learn smaller weights, which can help prevent overfitting.
+
+$$
+L_{reg} = L + \lambda \sum_{i} W_i^2
+$$
+
+- **Dropout**: This involves randomly "dropping out" (setting to zero) a fraction of the neurons in the network during training. This forces the model to learn redundant representations and prevents it from relying too heavily on any single neuron.
+- **Early Stopping**: This involves monitoring the performance of the model on a validation set during training, and stopping the training process when the performance starts to degrade. This prevents the model from overfitting to the training data.
+
+## Summary
+
+
+In this post, we started with a simple linear regression example and derived the optimal parameters using calculus. We then generalized this to multiple features and outputs, which led us to the concept of neural networks. We saw how each layer of a neural network performs a linear transformation followed by a non-linear activation function.
+
+
+
+

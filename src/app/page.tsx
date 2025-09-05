@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { projects, articles } from "@/app/data";
-import {ArrowBigDown, ArrowRight} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
 export const metadata: Metadata = {

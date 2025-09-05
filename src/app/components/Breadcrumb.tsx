@@ -2,6 +2,7 @@
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import projects from "@/app/data/projects.json";
+import articles from "@/app/data/articles.json";
 import { ChevronRight } from "lucide-react";
 
 export default function Breadcrumb() {
@@ -38,6 +39,16 @@ export default function Breadcrumb() {
       items.push({ label: project.name, href: pathname });
     }
   }
+    if (pathname && pathname.includes("/articles")) {
+        items.push({ label: "Articles", href: "/articles" });
+    
+        const articleName = pathname.split("/").pop();
+    
+        const article = articles.find((article) => article.slug === articleName);
+        if (article) {
+          items.push({ label: article.name, href: pathname });
+        }
+    }
 
   // Skeleton loader for non-hydrated state
   if (!isHydrated) {

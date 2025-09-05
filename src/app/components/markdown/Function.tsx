@@ -91,7 +91,7 @@ export default function Function({
           })),
       });
     })();
-  }, [fn, domain, height, width, points]);
+  }, [fn, domain, height, width, points, xlabel, range, ylabel, derivative]);
 
   return <div ref={rootRef} />;
 }
