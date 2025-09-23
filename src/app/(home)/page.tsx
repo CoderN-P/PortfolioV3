@@ -80,8 +80,16 @@ export default function Home() {
             </Link>
             
             <div className="md:row-span-2 md:col-span-4 lg:col-span-6 flex items-center border-b border-gray-200 md:border-0 flex-col h-full  pt-0 px-4 pb-4 md:p-4 ">
-              <div className="relative w-full h-full rounded-lg overflow-hidden">
-                <Image fill src={combinedItems[0].image || "/default_project_image.png"} alt={combinedItems[0].name} className="object-cover"/>
+              <div className="w-full shrink-0 relative rounded-lg overflow-hidden">
+                <Image
+                    src={combinedItems[0].image || "/default_project_image.png"}
+                    alt={combinedItems[0].name}
+                    width={0} 
+                    height={0}
+                    sizes="100vw"
+                    style={{ height: "auto", width: "100%" }}
+                    className="rounded-lg object-cover"
+                />
               </div>
             </div>
 
@@ -105,9 +113,17 @@ export default function Home() {
               <p className="uppercase  text-sm font-semibold">{combinedItems[4].type} &bull; <span className="text-gray-700">{new Date(combinedItems[4].lastUpdated).toLocaleDateString()}</span></p>
               <p className="group-hover:underline decoration-2 md:text-2xl text-3xl lg:text-3xl font-bold mb-4">{combinedItems[4].name}</p>
               <p className="text-sm md:text-xs lg:text-sm text-gray-700 mb-6">{combinedItems[4].description}</p>
-              <div className="md:flex flex-col justify-center h-full hidden ">
-                <div className="relative w-full rounded-lg h-full overflow-hidden border border-gray-200">
-                  <Image fill src={combinedItems[4].image || "/default_project_image.png"} alt={combinedItems[4].name} className="object-cover"/>
+              <div className="md:flex flex-col shrink-0 justify-center  hidden ">
+                <div className="w-full shrink-0 relative rounded-lg border border-gray-200 overflow-hidden">
+                  <Image
+                      src={combinedItems[4].image || "/default_project_image.png"}
+                      alt={combinedItems[4].name}
+                      width={0} 
+                      height={0}
+                      sizes="100vw"
+                      style={{ height: "auto", width: "100%" }}
+                      className="rounded-lg object-cover"
+                  />
                 </div>
               </div>
             </Link>
@@ -120,8 +136,16 @@ export default function Home() {
                   <p className="group-hover:underline decoration-2 text-3xl md:text-2xl lg:text-3xl font-bold mb-4">{combinedItems[1].name}</p>
                   <p className="text-sm md:text-xs lg:text-sm text-gray-700 mb-6">{combinedItems[1].description}</p>
                 </div>
-                <div className="w-full md:w-1/3 relative rounded-lg overflow-hidden">
-                  <Image fill src={combinedItems[1].image || "/default_project_image.png"} alt={combinedItems[1].name} className="object-cover"/>
+                <div className="w-full md:w-1/3 shrink-0 relative rounded-lg overflow-hidden">
+                  <Image
+                      src={combinedItems[1].image || "/default_project_image.png"}
+                      alt={combinedItems[1].name}
+                      width={0} 
+                      height={0}
+                      sizes="100vw"
+                      style={{ height: "auto", width: "100%" }}
+                      className="rounded-lg object-cover"
+                  />
                 </div>
               </div>
             </Link>
@@ -134,12 +158,15 @@ export default function Home() {
                   <p className="md:text-2xl text-3xl lg:text-3xl font-bold mb-4 transition decoration-2 group-hover:underline">{combinedItems[3].name}</p>
                   <p className="text-sm md:text-xs lg:text-sm text-gray-700 mb-6">{combinedItems[3].description}</p>
                 </div>
-                <div className="w-full md:w-1/3 relative rounded-lg overflow-hidden">
+                <div className="w-full md:w-1/3 shrink-0 relative rounded-lg overflow-hidden">
                   <Image
-                      fill
                       src={combinedItems[3].image || "/default_project_image.png"}
                       alt={combinedItems[3].name}
-                      className="object-cover"
+                      width={0} 
+                      height={0}
+                      sizes="100vw"
+                      style={{ height: "auto", width: "100%" }}
+                      className="rounded-lg object-cover"
                   />
                 </div>
               </div>
