@@ -90,6 +90,10 @@ ol {
   margin-top: 1rem; /* 16px */
 }
 
+.home {
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif !important;
+}
+
 /* Lists */
 .mdx-content ul,
 .mdx-content ol {

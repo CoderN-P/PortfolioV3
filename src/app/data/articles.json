@@ -14,6 +14,8 @@
       "Gradient Descent",
       "Backpropagation"
     ],
-    "image": "/projects/LinesNeuralNetworks/neural-net.png"
+    "importance": 10,
+    "image": "/projects/LinesNeuralNetworks/neural-net.png",
+    "description": "A comprehensive guide and implementation of neural networks from scratch using Python, focusing on understanding the underlying mathematics and algorithms."
   }
 ]

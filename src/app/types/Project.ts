@@ -10,4 +10,5 @@ export default interface Project {
   link?: string;
   image?: string;
   featured?: boolean;
+  importance: number;
 }

@@ -6,4 +6,5 @@ export default interface Article {
   shortDescription: string;
   tags: string[];
   image?: string;
+  importance: number;
 }

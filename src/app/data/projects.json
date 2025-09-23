@@ -2,6 +2,7 @@
   {
     "name": "TRACER",
     "slug": "tracer",
+    "importance": 9,
     "lastUpdated": "2025-07-28",
     "description": "TRACER (Telemetry-driven Robot with Advanced Control and Execution Routines) is an open-source robotics platform that combines hardware telemetry with advanced control systems. It features real-time data collection, wireless communication, and a Svelte-based dashboard for monitoring and control.",
     "tags": [
@@ -28,6 +29,7 @@
   {
     "name": "Stellar",
     "slug": "stellar",
+    "importance": 7,
     "lastUpdated": "2025-07-20",
     "description": "Stellar uses advanced AI to personalize your learning experience. Through personalized questions and lessons, interactive projects, and more, Stellar makes your learning experience just so much better.",
     "tags": [
@@ -47,6 +49,7 @@
   },
   {
     "name": "RISC-V Gesture Controller",
+    "importance": 8,
     "slug": "risc-v-gesture-controller",
     "lastUpdated": "2025-07-18",
     "description": "In this project I take an unused, barely documented Risc-V education board, and turn it into a compass and gesture controller for TRACER.",
@@ -60,6 +63,7 @@
   {
     "name": "GPT-Kitbot",
     "slug": "gpt-kitbot",
+    "importance": 6,
     "lastUpdated": "2025-07-15",
     "description": "GPT-Kitbot is a modified version of the FRC kitbot that includes a web dashboard and backend for AI control. The project uses local LLMs and socketio to provide natural language control of the robot.",
     "tags": [
@@ -81,6 +85,7 @@
   },
   {
     "name": "EventSync",
+    "importance": 4,
     "lastUpdated": "2025-07-10",
     "description": "EventSync makes it easy to plan gatherings, get-togethers or even simple hangouts with your friends. No more confusion and no more getting ghosted by the group chat.",
     "tags": [
@@ -101,6 +106,7 @@
   {
     "name": "Foodlyze",
     "slug": "foodlyze",
+    "importance": 5,
     "lastUpdated": "2025-07-08",
     "description": "Foodlyze is a web app that scans food product barcodes and provides nutritional information, a health score, and a summary. The app uses openfoodfacts, ZXing, and GPT-4o-mini to provide the information. Foodlyze was submitted to the 2025 BISV Hacks hackathon.",
     "tags": ["svelte", "typescript", "tailwindcss", "python", "FastAPI"],
@@ -113,6 +119,7 @@
   },
   {
     "name": "Research Tool",
+    "importance": 3,
     "lastUpdated": "2025-07-01",
     "description": "ResearchTool uses the power of web scraping and AI to speed up the process of researching. Just enter a prompt and ResearchTool will find the most relevant information for you.",
     "tags": ["typescript", "svelte", "flask", "python", "tailwindcss"],
@@ -123,6 +130,7 @@
   },
   {
     "name": "SvelteEditor",
+    "importance": 2,
     "lastUpdated": "2025-06-25",
     "description": "SvelteEditor is a simple code editor built using svelte and highlight.js.",
     "tags": [
@@ -142,6 +150,7 @@
   {
     "name": "TrekTracker",
     "slug": "trek-tracker",
+    "importance": 1,
     "lastUpdated": "2025-06-20",
     "description": "TrekTracker is a simple ios app that uses MapKit and HealthKit to track steps and simple workouts. (It's not that great, but it was my first ios app)",
     "tags": ["swift"],
@@ -152,6 +161,7 @@
   },
   {
     "name": "ProjectNebulus",
+    "importance": 3,
     "lastUpdated": "2025-06-15",
     "shortDescription": "[ARCHIVED] A solution for all your learning needs",
     "description": "Nebulus consolidates all of your learning sites into one easy to use tool. It features a chat in which you can communicate, a study session timer, and many other useful tools.",
@@ -171,6 +181,7 @@
   },
   {
     "name": "NextChat",
+    "importance": 4,
     "lastUpdated": "2025-06-10",
     "description": "NextChat is a chat application that uses the Next.js framework and Socket.io to provide real-time messaging. Users can create chats and invite members through a share code. The app uses MongoDB to store user data and tailwindcss for styling.",
     "tags": [
@@ -190,6 +201,7 @@
   },
   {
     "name": "Curve Path Simulator",
+    "importance": 6,
     "slug": "curve-path-simulator",
     "lastUpdated": "2025-06-05",
     "description": "This simulation uses the Pure Pursuit algorithm to follow paths defined by quintic hermite splines. The GUI allows you to create splines and visualize the path following. Next steps are to implement the path following on a robot.",
@@ -201,6 +213,7 @@
   },
   {
     "name": "Country Bot",
+    "importance": 5,
     "slug": "country-bot",
     "lastUpdated": "2025-05-20",
     "description": "Country Bot is a Discord bot that provides information about countries through fun games using the discord.py library. The bot uses the REST Countries API to get information about countries. Users can also create their own countries and work to increase its population.",
@@ -212,6 +225,7 @@
   },
   {
     "name": "Raspberry Pi Smart Irrigation System",
+    "importance": 6,
     "slug": "raspberry-pi-smart-irrigation",
     "lastUpdated": "2025-05-15",
     "description": "This project uses a Raspberry Pi to control a water pump to automatically water your plants. The system uses a soil moisture sensor to detect when the plants need water and accordingly waters the plants. The system can be controlled through a web interface.",
@@ -223,6 +237,7 @@
   },
   {
     "name": "AI Stocks",
+    "importance": 3,
     "lastUpdated": "2025-05-10",
     "description": "AI Stocks is a stock prediction tool that uses machine learning to predict stock prices. The tool uses historical stock data to train a model and predict future stock prices. The tool uses the Yahoo Finance API to get stock data and runs machine learning models using the TensorFlow library.",
     "tags": ["python", "tensorflow", "numpy"],
@@ -233,6 +248,7 @@
   },
   {
     "name": "Neural Network",
+    "importance": 4,
     "lastUpdated": "2025-05-01",
     "description": "This project is a simple neural network implementation in Python. The neural network is trained on the MNIST dataset and can recognize handwritten digits. The neural network uses the numpy library for matrix operations.",
     "tags": ["python", "numpy"],
@@ -243,6 +259,7 @@
   },
   {
     "name": "Pycolor",
+    "importance": 1,
     "lastUpdated": "2025-04-15",
     "shortDescription": "Colors made simple",
     "description": "Pycolor is a Python library that provides easy access to color codes and names. It is a simple wrapper around thecolorapi.com",
@@ -254,6 +271,7 @@
   },
   {
     "name": "WorldInfo",
+    "importance": 1,
     "lastUpdated": "2025-04-01",
     "shortDescription": "Get information about any country",
     "description": "WorldInfo is a web app that provides information about any country. Users can search for a country and get information such as population, area, and more. This was my first hackathon project, submitted to GunHacks 8.0",
@@ -264,6 +282,7 @@
   },
   {
     "name": "Portfolio v3",
+    "importance": 0,
     "lastUpdated": "2025-07-30",
     "shortDescription": "The website you're looking at right now!",
     "description": "My personal portfolio website built with Next.js 14, TypeScript, and Tailwind CSS. Features server-side rendering, a markdown blog engine, dynamic project showcase, and a modern, responsive design.",
