@@ -1,6 +1,7 @@
 import { MetadataRoute } from "next";
 
 import projects from "./data/projects.json";
+import articles from "./data/articles.json";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // Base URL for your site
@@ -49,9 +50,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     .map((project) => ({
       url: `${baseUrl}/writeups/${project.slug}`,
       lastModified: project.lastUpdated,
-      priority: project.featured ? 0.8 : 0.6,
+      priority: project.importance/10 || 0.5, // Default priority if importance is not set
     }));
 
+  const articlePages = articles
+    .filter((article) => article.slug)
+    .map((article) => ({
+      url: `${baseUrl}/articles/${article.slug}`,
+      lastModified: article.lastUpdated,
+      priority: article.importance/10 || 0.5, // Default priority if importance is not set
+    }));
+  
+  
+
   // Combine static and dynamic pages
-  return [...staticPages, ...writeupPages];
+  return [...staticPages, ...writeupPages, ...articlePages];
 }
