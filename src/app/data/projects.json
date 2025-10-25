@@ -212,6 +212,18 @@
     "image": "/projects/Curve Path Simulator.png"
   },
   {
+    "name": "Emerging Tech Club Attendance Tracker",
+    "importance": 4,
+    "lastUpdated": "2025-10-05",
+    "description": "An attendance tracker web app built for the Emerging Tech Club at my school. Members can sign in with their school email and gain points for attending meetings and winning competitions. The app uses svelte for the frontend and supabase for the backend and db.",
+    "tags": ["svelte", "typescript", "tailwindcss", "supabase"],
+    "colors": "from-emerald-500 to-green-500",
+    "link": "https://emerging-tech-club.vercel.app",
+    "shortDescription": "Attendance tracker for Emerging Tech Club",
+    "github": "https://github.com/CoderN-P/EmergingTech",
+    "image": "/projects/Emerging Tech.png"
+  },
+  {
     "name": "Country Bot",
     "importance": 5,
     "slug": "country-bot",

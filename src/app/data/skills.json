@@ -20,7 +20,8 @@
     ["graphql", "bg-pink-500", "/tech-icons/graphql.svg"],
     ["docker", "bg-blue-500", "/tech-icons/docker-icon.svg"],
     ["next.js", "bg-gray-600", "/tech-icons/nextjs-icon.svg"],
-    ["FastAPI", "bg-green-500", "/tech-icons/fastapi.svg"]
+    ["FastAPI", "bg-green-500", "/tech-icons/fastapi.svg"],
+    ["supabase", "bg-blue-500", "/tech-icons/supabase-logo-icon.svg"]
   ],
   "Frontend Tools/Frameworks": [
     ["svelte", "bg-red-500", "/tech-icons/svelte-icon.svg"],
