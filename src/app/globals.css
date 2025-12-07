@@ -91,7 +91,15 @@ ol {
 }
 
 .home {
-  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif !important;
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+.mdx-content {
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+
+.hide-scrollbar {
+  scrollbar-width: none; /* For Firefox */
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
 }
 
 /* Lists */
@@ -249,12 +257,37 @@ ol {
 
 .info-component p {
   @apply text-sm;
+  font-family: inherit !important;
+  margin-top: 0 !important;
+}
+
+.warning-component p {
+  @apply text-sm;
   margin-top: 0 !important;
 }
 
 .info-component h3 {
   margin-top: 0 !important;
   margin-bottom: 0.25rem !important;
+}
+
+.warning-component h3 {
+  margin-top: 0 !important;
+  margin-bottom: 0.25rem !important;
+}
+
+.info-component {
+  font-family: var(--font-sans), sans-serif !important;
+}
+.info-component .prose {
+  line-height: 1.5 !important;
+}
+
+.warning-component {
+  font-family: var(--font-sans), sans-serif !important;
+}
+.warning-component .prose {
+  line-height: 1.5 !important;
 }
 
 /* ===========================

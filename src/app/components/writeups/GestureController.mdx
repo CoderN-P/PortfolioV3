@@ -61,6 +61,13 @@ Interestingly, 2 USB devices showed up when I plugged in the board, which I real
 
 The ESP32-SOLO-1 is a single-core version of the popular ESP32 chip. It is designed for low-power applications and has a smaller footprint than the dual-core ESP32. However, this also means that the normal arduino cores for the ESP32 do not work with the SOLO-1, and a special core is required. I looked through github issues and other repositories but I could not find any cores for the ESP32-SOLO-1. So that meant I had to code it in C/C++ using the ESP-IDF framework developed by Espressif.
 
+## ESP-IDF
+
+Searching up a simple I2C scanner script and then running it, I found no I2C devices connected to the ESP32. This meant that the accelerometer, magnetometer, and ambient light sensor were all connected to the RISC-V chip. The only other output remaining was the LED matrix, which I didn't know how to control, or where it was connected.
+
+So, I decided on making the ESP32 a simple web server which would request data from the RISC-V chip over UART (serial) and then expose an API endpoint to get that data. This way I could easily access the sensor data for the web dashboard in [TRACER](/writeups/tracer).
+
+Using the PlatformIO extension for VSCode, I set up the ESP-IDF framework
 
 
 

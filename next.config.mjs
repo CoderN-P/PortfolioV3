@@ -3,7 +3,7 @@ import createMDX from "@next/mdx";
 const withMdx = createMDX({
   options: {
     remarkPlugins: [["remark-gfm"], ["remark-math"]],
-    rehypePlugins: [],
+    rehypePlugins: [["rehype-slug"]],
   },
 });
 

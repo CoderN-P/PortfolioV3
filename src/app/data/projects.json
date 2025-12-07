@@ -61,6 +61,19 @@
     "featured": true
   },
   {
+    "name": "Fluid Sim (And more)",
+    "importance": 6,
+    "slug": "fluid-sim-and-more",
+    "lastUpdated": "2025-12-1",
+    "description": "A collection of physics simulations including a 2D eulerian fluid simulator, a soft body simulator, and simple pendulum. Built with C# and Unity",
+    "tags": ["c#", "unity"],
+    "colors": "from-blue-500 to-cyan-500",
+    "shortDescription": "A collection of physics simulations",
+    "github": "https://github.com/CoderN-P/PhysicsSims",
+    "image": "/projects/Fluid Sim.png",
+    "featured": true
+  },
+  {
     "name": "GPT-Kitbot",
     "slug": "gpt-kitbot",
     "importance": 6,
@@ -201,7 +214,7 @@
   },
   {
     "name": "Curve Path Simulator",
-    "importance": 6,
+    "importance": 5,
     "slug": "curve-path-simulator",
     "lastUpdated": "2025-06-05",
     "description": "This simulation uses the Pure Pursuit algorithm to follow paths defined by quintic hermite splines. The GUI allows you to create splines and visualize the path following. Next steps are to implement the path following on a robot.",

@@ -60,7 +60,7 @@ export default function Layout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
         >
           <Navbar />
-          <div className="w-full lg:max-w-[800px] mb-20 mx-auto px-4 sm:px-8 bg-white text-black flex-grow">
+          <div className="w-full lg:max-w-[750px] mb-20 mx-auto px-4 sm:px-8 bg-white text-black flex-grow">
             <div className={"mt-12 mb-8"}>
               <Breadcrumb />
             </div>

@@ -239,17 +239,17 @@ export default function CodeBlock({
         <div
           className={`flex flex-row ${
             consoleOutput ? "border-b border-slate-200" : ""
-          } gap-4 mb-4 mt-4 px-2 pb-2 overflow-hidden `}
+          } gap-1 mb-4 mt-4 px-1 overflow-hidden `}
         >
           <div
             ref={linesDivRef}
             id="lines"
-            className={`${showLines ? "w-10" : "w-0"} max-h-[500px] pl-2 hide-scrollbar overflow-hidden ${lineNumberClass}`}
+            className={`${showLines ? "w-10" : "w-0"} max-h-[400px] mb-1 hide-scrollbar overflow-hidden ${lineNumberClass}`}
           >
             {lineArray.map((_, i) => (
               <div
                 key={i}
-                className="text-gray-600 h-5 pt-0.5 flex items-end relative justify-center px-1 text-sm"
+                className="text-gray-600 h-5 pb-0.5 flex items-end relative justify-center px-1 text-xs"
               >
                 {i + 1}
               </div>
@@ -260,7 +260,7 @@ export default function CodeBlock({
             <pre
               ref={editorRef}
               id="editorView"
-              className="editor z-0 hide-scrollbar max-h-[500px] overscroll-contain overflow-y-scroll absolute text-lg top-0 left-0 overflow-x-scroll px-2 max-w-full w-full min-h-12 bg-transparent"
+              className="editor z-0 hide-scrollbar max-h-[400px] overscroll-contain overflow-y-scroll absolute text-xs top-0 left-0 overflow-x-scroll px-2 max-w-full w-full min-h-12 bg-transparent"
               dangerouslySetInnerHTML={{ __html: highlightCode(value) }}
             />
           </div>
@@ -269,7 +269,7 @@ export default function CodeBlock({
         {consoleOutput && (
           <div className="bg-white p-2 rounded-b-sm  border-slate-200">
             <p className="font-semibold mb-2">Output</p>
-            <pre className="text-sm p-2 overflow-x-scroll rounded-sm bg-slate-100 ">
+            <pre className="text-xs p-2 overflow-x-scroll rounded-sm bg-slate-100 ">
               {consoleOutput}
             </pre>
           </div>
@@ -279,7 +279,7 @@ export default function CodeBlock({
       <style jsx>{`
         .editor {
           align-items: center;
-          font-size: 0.875rem !important;
+          font-size: 0.75rem !important;
           line-height: 1.25rem !important;
           font-family: "Source Code Pro", monospace !important;
         }

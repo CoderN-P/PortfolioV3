@@ -4,3 +4,4 @@ export type { default as Photo } from "./Photo";
 export type { default as Skill } from "./Skill";
 export type { default as Idea } from "./Idea";
 export type { default as SkillCategory } from "./SkillCategory";
+export type { ContentHeading } from "./ContentHeading";

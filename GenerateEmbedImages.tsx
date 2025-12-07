@@ -1,23 +1,94 @@
-import { ImageResponse } from "@vercel/og";
+import { ImageResponse } from "next/og";
+import fs from "fs";
+import path from "path";
+import projects from "@/app/data/projects.json";
+import {Project} from "@/app/types";
+import React from "react";
+import {gradientToHexArray} from "@/app/utils";
+import {ReactElement} from "react";
 
-export const runtime = "edge";
+function imageToDataURL(imagePath: string): string {
+    const fullPath = path.join(process.cwd(), imagePath);
+    const imageBuffer = fs.readFileSync(fullPath);
+    const base64 = imageBuffer.toString('base64');
 
-export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url);
+    // Determine mime type from extension
+    const ext = path.extname(imagePath).toLowerCase();
+    const mimeTypes: Record<string, string> = {
+        '.png': 'image/png',
+        '.jpg': 'image/jpeg',
+        '.jpeg': 'image/jpeg',
+        '.gif': 'image/gif',
+        '.webp': 'image/webp',
+    };
+    const mimeType = mimeTypes[ext] || 'image/png';
 
-  const title = searchParams.get("name") || "My Project";
-  const desc = searchParams.get("desc") || "Project Description";
-  const tags = searchParams.get("tags")?.split(",") || [];
-  const version = searchParams.get("v") || "1";
-  const colors = searchParams.get("colors")?.split(",") || [];
+    return `data:${mimeType};base64,${base64}`;
+}
 
-  // Support multiple images: image, image2, image3...
-  const images = [];
-  for (let i = 1; i <= 3; i++) {
-    const img = searchParams.get(i === 1 ? "image" : `image${i}`);
-    if (img) images.push(img);
-  }
+async function generateAllOGImages() {
+    const outputDir = path.join(process.cwd(), 'public', 'og-images');
 
+    // Create directory if it doesn't exist
+    if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir, { recursive: true });
+    }
+
+    console.log(`Generating OG images for ${projects.length} projects...`);
+
+    for (const p of projects) {
+        const project = p as Project;
+        try {
+            const imageBuffer = await generateProjectImage(project);
+            const outputPath = path.join(outputDir, `${project.slug}.png`);
+
+            fs.writeFileSync(outputPath, imageBuffer);
+            console.log(`✓ Generated: ${project.name}.png`);
+        } catch (error) {
+            console.error(`✗ Failed to generate ${project.name}:`, error);
+        }
+    }
+
+    console.log('Done! OG images saved to public/og-images/');
+}
+
+async function generateProjectImage(project: Project) {
+
+
+    const title = project.name;
+    const desc = project.shortDescription || "A project by Neel Parpia";
+    const tags = project.tags || [];
+    const version = new Date(project.lastUpdated).toLocaleDateString() || "";
+    const colors = project.colors ? gradientToHexArray(project.colors) : ['#2563EB', '#1D4ED8']; // Default to blue gradient
+    // Get parent abs path
+    
+    const image = project.image ? [imageToDataURL(`/public${project.image}`)] : [];
+
+    return imageTemplate({
+        title,
+        desc,
+        tags,
+        version,
+        colors,
+        images: image,
+    });
+}
+    
+async function imageTemplate({
+    title,
+    desc,
+    tags,
+    version,
+    colors,
+    images,
+} : {
+    title: string;
+    desc: string;
+    tags: string[];
+    version: string;
+    colors: string[];
+    images: string[];
+}): Promise<Buffer> {
   // Generate gradient based on project name
   let gradientStart, gradientEnd, gradientMiddle;
 
@@ -29,7 +100,7 @@ export async function GET(req: Request) {
 
   // Check if there is a middle color for a three-color gradient
 
-  return new ImageResponse(
+  const imgRes = new ImageResponse(
     (
       <div
         style={{
@@ -303,10 +374,15 @@ export async function GET(req: Request) {
           </div>
         </div>
       </div>
-    ),
+    ) as ReactElement,
     {
       width: 1200,
       height: 630,
     },
   );
+    const arrayBuffer = await imgRes.arrayBuffer();
+    return Buffer.from(arrayBuffer);
 }
+
+// Run the script
+generateAllOGImages().catch(console.error)

@@ -9,7 +9,8 @@
     ["css", "bg-blue-500", "/tech-icons/css-3.svg"],
     ["swift", "bg-orange-500", "/tech-icons/swift.svg"],
     ["node.js", "bg-green-500", "/tech-icons/nodejs-icon.svg"],
-    ["c", "bg-blue-500", "/tech-icons/c.svg"]
+    ["c", "bg-blue-500", "/tech-icons/c.svg"],
+    ["C#", "bg-purple-500", "/tech-icons/c-sharp.svg"]
   ],
   "Backend Tools + DBs": [
     ["flask", "bg-yellow-500", "/tech-icons/flask.svg"],
@@ -43,6 +44,7 @@
   ],
   "Other": [
     ["qt", "bg-green-500", "/tech-icons/qt.svg"],
-    ["git", "bg-red-500", "/tech-icons/git.svg"]
+    ["git", "bg-red-500", "/tech-icons/git.svg"],
+    ["unity", "bg-blue-500", "/tech-icons/unity.svg"]
   ]
 }

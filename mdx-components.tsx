@@ -44,19 +44,19 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     code: (props) => <Code {...props} />,
     p: (props) => (
       <p
-        className="text-lg prose leading-7 max-w-[800px] font-medium"
+        className=" prose leading-7 max-w-[800px] font-medium"
         {...props}
       />
     ),
     ol: (props) => (
       <ol
-        className="prose text-lg font-medium leading-7 max-w-[800px] list-decimal ml-4"
+        className="prose font-medium leading-7 max-w-[800px] list-decimal ml-4"
         {...props}
       />
     ),
     ul: (props) => (
       <ul
-        className="prose text-lg font-medium leading-7 max-w-[800px] list-disc ml-4"
+        className="prose font-medium leading-7 max-w-[800px] list-disc ml-4"
         {...props}
       />
     ),

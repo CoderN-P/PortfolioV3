@@ -14,7 +14,6 @@ export default function Navbar() {
     { name: "Home", href: "/" },
     { name: "Projects", href: "/projects" },
     { name: "Skills", href: "/skills" },
-    { name: "Ideas", href: "/ideas" },
     { name: "Gallery", href: "/gallery" },
     { name: "Writeups", href: "/writeups" },
   ];
@@ -78,9 +77,6 @@ export default function Navbar() {
           </Link>
           <Link href="/writeups" className={getLinkClassName("/writeups")}>
             Writeups
-          </Link>
-          <Link href="/ideas" className={getLinkClassName("/ideas")}>
-            Ideas
           </Link>
           <Link href="/gallery" className={getLinkClassName("/gallery")}>
             Gallery

@@ -1,10 +1,13 @@
 import { pageToComponent } from "@/app/components/writeups";
+import {pageToToc} from "@/app/components/writeups";
 import { notFound } from "next/navigation";
 import { Calendar, Github } from "lucide-react";
 import type { Metadata, ResolvingMetadata } from "next";
 import Image from "next/image";
 import { projects } from "@/app/data";
 import { getTechInfo } from "@/app/utils";
+import TableOfContents from "@/app/components/TableOfContents";
+
 
 // Define the params type for generateMetadata and page function
 type Props = {
@@ -31,6 +34,7 @@ export async function generateMetadata(
   const previousImages = (await parent).openGraph?.images || [];
 
   const url = `https://www.neelparpia.me/writeups/${project.slug}`;
+  const imageUrl = `/og-images/${project.name}`;  
 
   return {
     title: `${project.name} | Neel Parpia`,
@@ -49,7 +53,7 @@ export async function generateMetadata(
       modifiedTime: project.lastUpdated,
       tags: project.tags,
       images: project.image
-        ? [project.image, ...previousImages]
+        ? [imageUrl, ...previousImages]
         : previousImages,
     },
     twitter: {
@@ -57,7 +61,7 @@ export async function generateMetadata(
       title: project.name,
       description: project.shortDescription,
       creator: "@neelparpia",
-      images: project.image ? [project.image] : [],
+      images: project.image ? [imageUrl] : [],
     },
     keywords: project.tags,
     robots: {
@@ -105,9 +109,14 @@ export default async function WriteupPage({ params }: Props) {
   const formattedDate = date.toLocaleDateString("en-US", options);
 
   const WriteupComponent = pageToComponent[name];
+  const toc = pageToToc[name];
+  
+  console.log(toc);
 
   return (
+      
     <div className="max-w-4xl mx-auto">
+      
       {/* Header Section */}
       <div className="mb-16">
         <h1 className="text-6xl font-bold mt-8 mb-8 text-gray-900 leading-tight">
@@ -179,10 +188,16 @@ export default async function WriteupPage({ params }: Props) {
           </div>
         </div>
       </div>
-
       {/* Content */}
-      <div className="mdx-content prose prose-lg prose-gray max-w-none prose-headings:text-gray-900 prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-code:text-gray-800 prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-strong:text-gray-900">
+      {toc &&
+          <div className="fixed left-15 top-32 hidden lg:block w-60">
+            <TableOfContents headings={toc} />
+          </div>
+          
+      }
+      <div id="article-content" className={`mdx-content prose prose-lg prose-gray max-w-none prose-headings:text-gray-900 prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-code:text-gray-800 prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-strong:text-gray-900`}>
         <WriteupComponent />
+        <div className="fixed bottom-0 left-0 w-full h-8 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
       </div>
 
       {/* Bottom padding for better spacing */}

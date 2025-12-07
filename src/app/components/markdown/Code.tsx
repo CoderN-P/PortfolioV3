@@ -32,14 +32,14 @@ export default function Code({ children, className }: Props) {
     const iconSrc = ext ? extToIcon[ext] : undefined;
 
     if (className?.includes("language-math")) {
-      if (className.includes("math-inline")) {
+      if (className?.includes("math-inline")) {
         return <Formula formula={rawCode} />;
       }
       return <Formula block formula={rawCode} />;
     }
     if (language === "plaintext") {
       return (
-        <div className="rounded-md overflow-x-scroll max-h-[400px] code-block border border-gray-300 bg-gray-100 p-4">
+        <div className="rounded-md hide-scrollbar overflow-x-scroll max-h-[400px] code-block border text-sm border-gray-300 bg-gray-100 p-4">
           {rawCode}
         </div>
       );
