@@ -1,12 +1,12 @@
 "use client";
 import {ContentHeading} from "@/app/types";
-import { Menu, ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { useEffect, useState } from 'react';
 
 export default function MobileTableOfContents({ headings } : { headings: ContentHeading[] }) {
     const [activeId, setActiveId] = useState('');
     const [expanded, setExpanded] = useState(false);
-    const [scrollProgress, setScrollProgress] = useState(0);
+    // const [scrollProgress, setScrollProgress] = useState(0);
 
     useEffect(() => {
         // Get all heading elements
@@ -37,8 +37,8 @@ export default function MobileTableOfContents({ headings } : { headings: Content
         headingElements.forEach(element => {
             if (element) observer.observe(element)
         });
-        window.addEventListener('scroll', updateScrollProgress);
-        updateScrollProgress();
+        // window.addEventListener('scroll', updateScrollProgress);
+        // updateScrollProgress();
 
         // Cleanup
         return () => {
@@ -62,7 +62,7 @@ export default function MobileTableOfContents({ headings } : { headings: Content
             });
         }
     };
-
+    /*
     const updateScrollProgress = () => {
         const article = document.getElementById('article-content');
         if (!article) return;
@@ -78,7 +78,7 @@ export default function MobileTableOfContents({ headings } : { headings: Content
         const progress = ((scrollY - scrollStart) / (scrollEnd - scrollStart)) * 100;
 
         setScrollProgress(Math.max(0, Math.min(100, progress)));
-    };
+    };*/
 
     const scrollToHref = (id: string) => (e: React.MouseEvent) => {
         handleClick(e, id);

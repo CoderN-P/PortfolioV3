@@ -7,7 +7,6 @@ import Image from "next/image";
 import { projects } from "@/app/data";
 import { getTechInfo } from "@/app/utils";
 import TableOfContents from "@/app/components/TableOfContents";
-import MobileTableOfContents from "@/app/components/MobileTableOfContents";
 
 
 // Define the params type for generateMetadata and page function
