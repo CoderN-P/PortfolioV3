@@ -4,12 +4,15 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
+import { pageToToc } from "@/app/components/writeups";
 import Link from "next/link";
+import MobileTableOfContents from "@/app/components/MobileTableOfContents";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
+  const toc = pathname.startsWith('/writeups/') ? pageToToc[pathname.replace('/writeups/', '')] : null;
+  
   const links = [
     { name: "Home", href: "/" },
     { name: "Projects", href: "/projects" },
@@ -36,6 +39,7 @@ export default function Navbar() {
       document.body.style.overflow = "unset";
     };
   }, [isMobileMenuOpen]);
+    
 
   const getLinkClassName = (href: string) => {
     const isActive =
@@ -66,7 +70,7 @@ export default function Navbar() {
             />
           </div>
         </a>
-
+        
         {/* Desktop Navigation */}
         <div className="hidden md:flex flex-row gap-4 items-center">
           <Link href="/skills" className={getLinkClassName("/skills")}>
@@ -231,6 +235,7 @@ export default function Navbar() {
           </div>
         </div>
       </div>
+        {toc && <MobileTableOfContents headings={toc} />}
     </>
   );
 }

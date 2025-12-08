@@ -7,6 +7,7 @@ import Image from "next/image";
 import { projects } from "@/app/data";
 import { getTechInfo } from "@/app/utils";
 import TableOfContents from "@/app/components/TableOfContents";
+import MobileTableOfContents from "@/app/components/MobileTableOfContents";
 
 
 // Define the params type for generateMetadata and page function
@@ -116,7 +117,6 @@ export default async function WriteupPage({ params }: Props) {
   return (
       
     <div className="max-w-4xl mx-auto">
-      
       {/* Header Section */}
       <div className="mb-16">
         <h1 className="text-6xl font-bold mt-8 mb-8 text-gray-900 leading-tight">
@@ -190,14 +190,14 @@ export default async function WriteupPage({ params }: Props) {
       </div>
       {/* Content */}
       {toc &&
+          <>
           <div className="fixed left-15 top-32 hidden lg:block w-60">
             <TableOfContents headings={toc} />
           </div>
-          
+          </>
       }
       <div id="article-content" className={`mdx-content prose prose-lg prose-gray max-w-none prose-headings:text-gray-900 prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-code:text-gray-800 prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-strong:text-gray-900`}>
         <WriteupComponent />
-        <div className="fixed bottom-0 left-0 w-full h-8 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
       </div>
 
       {/* Bottom padding for better spacing */}
