@@ -84,7 +84,7 @@ export default function MobileTableOfContents({ headings } : { headings: Content
         handleClick(e, id);
     };
     return (
-        <div className={`w-full lg:max-w-[900px] relative max-h-60 overflow-scroll hide-scrollbar z-40 mx-auto rounded-none lg:rounded-xl flex sticky top-13 lg:top-4 ${expanded ? 'bg-white' : 'backdrop-blur-sm bg-white/30'} border-y lg:border-none border-black/5 lg:ring-1 ring-black/5  flex flex-col gap-2`}>
+        <div className={`w-full block lg:hidden lg:max-w-[900px] relative max-h-60 overflow-scroll hide-scrollbar z-40 mx-auto rounded-none lg:rounded-xl flex sticky top-13 lg:top-4 ${expanded ? 'bg-white' : 'backdrop-blur-sm bg-white/30'} border-y lg:border-none border-black/5 lg:ring-1 ring-black/5  flex flex-col gap-2`}>
             <div className={`flex-row px-4 py-2 justify-between sticky top-0 items-center  w-full flex ${expanded ? 'border-b bg-white border-gray-200' : ''}`}>
                 <p className="font-semibold text-black">Contents</p>
                 {expanded ? 
