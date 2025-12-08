@@ -40,7 +40,7 @@ async function generateAllOGImages() {
         const project = p as Project;
         try {
             const imageBuffer = await generateProjectImage(project);
-            const outputPath = path.join(outputDir, `${project.slug}.png`);
+            const outputPath = path.join(outputDir, `${project.name}.png`);
 
             fs.writeFileSync(outputPath, imageBuffer);
             console.log(`✓ Generated: ${project.name}.png`);
