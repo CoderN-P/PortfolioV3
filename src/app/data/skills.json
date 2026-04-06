@@ -10,7 +10,8 @@
     ["swift", "bg-orange-500", "/tech-icons/swift.svg"],
     ["node.js", "bg-green-500", "/tech-icons/nodejs-icon.svg"],
     ["c", "bg-blue-500", "/tech-icons/c.svg"],
-    ["C#", "bg-purple-500", "/tech-icons/c-sharp.svg"]
+    ["C#", "bg-purple-500", "/tech-icons/c-sharp.svg"],
+    ["hlsl", "bg-green-500", "/tech-icons/hlsl.jpg"]
   ],
   "Backend Tools + DBs": [
     ["flask", "bg-yellow-500", "/tech-icons/flask.svg"],
@@ -22,7 +23,9 @@
     ["docker", "bg-blue-500", "/tech-icons/docker-icon.svg"],
     ["next.js", "bg-gray-600", "/tech-icons/nextjs-icon.svg"],
     ["FastAPI", "bg-green-500", "/tech-icons/fastapi.svg"],
-    ["supabase", "bg-blue-500", "/tech-icons/supabase-logo-icon.svg"]
+    ["supabase", "bg-blue-500", "/tech-icons/supabase-logo-icon.svg"],
+    ["postgresSQL", "bg-blue-500", "/tech-icons/postgres.svg"],
+    ["express.js", "bg-gray-500", "/tech-icons/express.svg"]
   ],
   "Frontend Tools/Frameworks": [
     ["svelte", "bg-red-500", "/tech-icons/svelte-icon.svg"],
@@ -40,11 +43,13 @@
     ["arduino", "bg-blue-500", "/tech-icons/arduino.svg"],
     ["raspberry pi", "bg-red-500", "/tech-icons/raspberry-pi.svg"],
     ["wpilib", "bg-blue-500", "/tech-icons/wpilib.png"],
-    ["risc-v", "bg-green-500", "/tech-icons/risc-v.png"]
+    ["risc-v", "bg-green-500", "/tech-icons/risc-v.png"],
+    ["esp-idf", "bg-red-500", "/tech-icons/espidf.png"]
   ],
   "Other": [
     ["qt", "bg-green-500", "/tech-icons/qt.svg"],
     ["git", "bg-red-500", "/tech-icons/git.svg"],
-    ["unity", "bg-blue-500", "/tech-icons/unity.svg"]
+    ["unity", "bg-blue-500", "/tech-icons/unity.svg"],
+    ["libgdx", "bg-red-500", "/tech-icons/libgdx.png"]
   ]
 }

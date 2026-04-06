@@ -1,7 +1,31 @@
+
+
 import Image from "next/image";
 import { Function } from "@/app/components/markdown";
 
-You have a row of houses in your street and you’ve just measured their square footage and their price. What you have now is a set of data points, and what you really want to do is be able to predict the price of another house from just its square footage. To do this, you need to devise a model, or a function which takes square footage as an input, and calculates the house cost as an output. But this can’t be any random function, it must also accurately predict the prices of the houses down the street.
+export const toc = [
+    { title: "Minimizing the error function", id: "minimizing-the-error-function", level: 1 },
+    { title: "Solving the error function", id: "solving-the-error-function", level: 2 },
+    { title: "Real world example", id: "real-world-example", level:2 },
+    { title: "Generalizing to multiple features", id: "generalizing-to-multiple-features", level: 1 },
+    { title: "Multiple outputs", id: "multiple-outputs", level: 2 },
+    { title: "Neural Networks", id: "neural-networks", level: 1 },
+    { title: "Activation Functions", id: "activation-functions", level: 2 },
+    { title: "The forward pass", id: "the-forward-pass", level: 1 },
+    { title: "Training the neural network", id: "training-the-neural-network", level: 1 },
+    { title: "Gradients and Jacobians", id: "gradients-and-jacobians", level: 2 },
+    { title: "Backpropagation + Gradient Descent", id: "backpropagation-plus-gradient-descent", level: 2 },
+    { title: "The trick", id: "the-trick", level: 3 },
+    { title: "The outer product", id: "the-outer product", level: 3 },
+    { title: "The bias", id: "the-bias", level: 2 },
+    { title: "Continuing Backwards", id: "continuing-backwards", level: 2 },
+    { title: "Backpropagation Algorithm", id: "backpropagation-algorithm", level: 2 },
+    { title: "Iterating over the dataset", id: "iterating-over-the-dataset", level: 2 },
+    { title: "Overfitting and Regularization", id: "overfitting-and-regularization", level: 2 },
+    { title: "Summary", id: "summary", level: 1 },
+];
+
+Imagine yourself as a realtor trying to use math to make your job easier. A new community has been built, but only the square footage and  price of each home has been released. Now, you are looking to use this information to predict the prices of other new houses purely based on the square footage. To do this, you need to devise a model, or a function which takes square footage as an input, and calculates the house cost as an output. But this can’t be any random function, it must also accurately predict the prices of the houses down the street.
 
 For this task, you could choose from a wide variety of function “types” ranging from linear functions all the way to complex trigonometric functions. But for simplicity, you decide on using a linear model. Now the goal is to find the line that best fits your data points.
 

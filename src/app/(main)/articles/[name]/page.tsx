@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { Calendar } from "lucide-react";
 import type { Metadata, ResolvingMetadata } from "next";
 import { articles } from "@/app/data";
+import {pageToArticleToc} from "@/app/components/articles";
+import TableOfContents from "@/app/components/TableOfContents";
 
 // Define the params type for generateMetadata and page function
 type Props = {
@@ -99,6 +101,7 @@ export default async function ArticlePage({ params }: Props) {
   const formattedDate = date.toLocaleDateString("en-US", options);
 
   const ArticleComponent = pageToArticle[name];
+  const toc = pageToArticleToc[name];
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -139,6 +142,13 @@ export default async function ArticlePage({ params }: Props) {
       </div>
 
       {/* Content */}
+      {toc &&
+          <>
+            <div className="fixed left-15 top-32 hidden lg:block w-60">
+              <TableOfContents headings={toc} />
+            </div>
+          </>
+      }
       <div className="mdx-content prose prose-lg prose-gray max-w-none prose-headings:text-gray-900 prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-code:text-gray-800 prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-strong:text-gray-900">
         <ArticleComponent />
       </div>

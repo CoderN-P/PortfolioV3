@@ -4,7 +4,7 @@
     "slug": "tracer",
     "importance": 9,
     "lastUpdated": "2025-07-28",
-    "description": "TRACER (Telemetry-driven Robot with Advanced Control and Execution Routines) is an open-source robotics platform that combines hardware telemetry with advanced control systems. It features real-time data collection, wireless communication, and a Svelte-based dashboard for monitoring and control.",
+    "description": "TRACER (Telemetry-driven Robot with Advanced Control and Execution Routines) is robot tank that features real-time data collection, wireless communication, and a Svelte-based dashboard for monitoring and control.",
     "tags": [
       "robotics",
       "embedded",

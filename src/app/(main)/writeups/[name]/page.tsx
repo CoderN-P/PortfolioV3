@@ -110,8 +110,6 @@ export default async function WriteupPage({ params }: Props) {
 
   const WriteupComponent = pageToComponent[name];
   const toc = pageToToc[name];
-  
-  console.log(toc);
 
   return (
       

@@ -9,6 +9,7 @@ import CountryBot from "./CountryBot.mdx";
 import RaspberryPiSmartIrrigation from "./RaspberryPiSmartIrrigation.mdx";
 import FluidSim from "./FluidSim.mdx";
 import {toc as fluidSimToc} from "./FluidSim.mdx";
+import {toc as riscvGestureControllerToc} from "./GestureController.mdx";
 import React from "react";
 import {ContentHeading} from "@/app/types";
 
@@ -29,4 +30,5 @@ export const pageToComponent: Record<string, React.FC> = {
 export const pageToToc: Record<string, ContentHeading[]> = {
   "tracer": tracerToc,
   "fluid-sim-and-more": fluidSimToc,
+    "risc-v-gesture-controller": riscvGestureControllerToc,
 };

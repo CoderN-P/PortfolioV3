@@ -93,8 +93,55 @@ As a result, many different algorithms and even entire fields of study have emer
 
 # Coding the Simulation
 
-Most fluid simulations used in both research and computer graphics today are based on the Eulerian approach due to its stability and efficiency. In this approach we discretize the simulation space into a grid, and track fluid properties at each grid cell.
+Most fluid simulations used in both research and computer graphics today are based on the Eulerian approach due to its stability and efficiency. In this approach, we discretize the simulation space into a grid, and track fluid properties at each grid cell. I also chose Unity to 
 
 ## The setup
 
-For each fluid property (velocity, density, pressure, etc.) we create a 2D array to represent the grid. 
+For each fluid property (velocity, density, pressure, etc.) we create a 2D array to represent the grid. For all the scalar values, we can interpret each value as being located at the center of each grid cell. However, for velocities, we use a staggered grid approach known as a MAC (Marker-And-Cell) grid. In this approach, we store the horizontal velocity components ($ u $) at the left and right faces of each grid cell, and the vertical velocity components ($ v $) at the top and bottom faces of each grid cell. This arrangement helps to prevent numerical instabilities and ensures that the incompressibility condition is satisfied more accurately.
+
+![](/projects/FluidSim/velocity-grid.png)
+
+Here, the horizontal velocities are labeled ( $ u $ ) and the vertical velocities are labeled ( $ v $ ), and since both are stored **between** cells, there will be one extra row/column for each velocity component. So we store the horizontal velocities in a ( $ (N+1) \times N $ ) array, and the vertical velocities in a ( $ N \times (N+1) $ ) array, where ( $ N $ ) is the number of cells along one dimension.
+
+```csharp:Scripts/FluidSim/FluidSolver.cs
+public float[,] uGrid;
+public float[,] vGrid;
+
+...
+uGrid = new float[gridSize + 1, gridSize];
+vGrid = new float[gridSize, gridSize + 1];
+...
+```
+
+## Solving for incompressibility
+
+To enforce the incompressibility condition, we need to ensure that the divergence of the velocity field is zero at each grid cell. The divergence at a grid cell can be approximated using finite differences:
+
+$$
+\nabla \cdot \mathbf{u} \approx \frac{u_{i+1,j} - u_{i,j}}{\Delta x} + \frac{v_{i,j+1} - v_{i,j}}{\Delta y}
+$$
+Where ( $ \Delta x $ ) and ( $ \Delta y $ ) are the grid cell sizes in the x and y directions, respectively. (In this case, I'm using square cells with size `cellSize`.)
+
+<Info>
+    In the simulation, indices increase upwards and to the right, so ( $ u_{i+1,j} $ ) refers to the velocity on the right face of the cell at $ (i,j) $ , and ( $ u_{i,j} $ ) refers to the velocity on the left face of the same cell. Similarly, ( $ v_{i,j+1} $ ) refers to the velocity on the top face of the cell, and ( $ v_{i,j} $ ) refers to the velocity on the bottom face.
+</Info>
+
+This approximation just calculates the net flow into the cell in both directions, and the goal is to make this value zero for every cell. 
+
+This may seem pretty straightforward; just adjust the velocities of a cell so that the divergence is 0. However, changing the velocities around one cell affects the divergence of the cell's neighbors as well. This means that we need to solve a large system of equations to find the correct velocity adjustments for all cells simultaneously. 
+
+## Lagrange Multipliers
+
+For any velocity field, there are infinitely many ways to adjust the velocities to make the divergence zero. So how do we choose the "best" way to adjust them? In a fluid, pressure 
+
+To achieve this, we can use pressure to correct the velocities. The idea is that pressure gradients cause fluid to accelerate from high-pressure regions to low-pressure regions, which can be used to adjust the velocities to enforce incompressibility. For each cell, we iteratively calculate a pressure value ( $ p_{i,j} $ ) and then update all the surrounding velocities based on the pressure gradient.
+
+The idea is that for each cell, we look up the pressure values of its neighboring cells, then calculate the new pressure of the curent cell as :
+
+$$
+p_{i,j} = \frac{1}{4} ( p_{i+1,j} + p_{i-1,j} + p_{i,j+1} + p_{i,j-1} - \rho \frac{\Delta x^2}{\Delta t} (\nabla \cdot \mathbf{u})_{i,j} )
+$$
+
+This equation states that the pressure at cell ( $ i,j $ ) is the average of the pressures of its four neighboring cells, minus a term that accounts for the current divergence at that cell. The term ( $ \rho \frac{\Delta x^2}{\Delta t} (\nabla \cdot \mathbf{u})_{i,j} $ ) represents how much we need to adjust the pressure to reduce the divergence.
+
+However, there is a key detail we are missing: if we want obstacles, like walls or solid objects, we need to enforce boundary conditions on the velocities and 

@@ -1,6 +1,14 @@
-If you have developed any kind of software which uses an API or runs on some specific hardware, or anything, you would know how important it is to have clear documentation. Trying to program something without docs is like trying to find your way without a map. You can do it, but it will be very difficult, and you will probably give up before you get there.
+export const toc = [
+    { title: "Initial Impressions", id: "initial-impressions", level: 1 }, 
+    { title: "First Roadblock", id: "first-roadblock", level: 2 },
+    { title: "microPython", id: "micropython", level: 1 },
+    { title: "The arduino IDE", id: "the-arduino-ide", level: 1 },
+    { title: "ESP32", id: "esp32", level: 1 },
+    { title: "ESP32-SOLO-1", id: "esp32-solo-1", level: 2 },
+    { title: "ESP-IDF", id: "esp-idf", level: 2 },
+];
 
-This is exactly what I felt while working on this project. I had a Risc-V development board lying around, and I hadn't touched it in around 5 years, so I decided to try to get it to do something cool. 
+I had a Risc-V development board lying around, and I hadn't touched it in around 5 years, so I decided to try to get it to do something cool.
 
 The board itself after some research is called the "SiFive Learn Inventor." It was a micro:bit compatible educational board that apparently was created in partnership with Tynker for teaching kids how to code. From the looks of it, it had a small LED matrix, a few buttons, accelerometer, an ambient light sensor, plus a Segger J-link debugger.
 
@@ -19,7 +27,7 @@ According to this ["Technical User Guide"](https://mm.digikey.com/Volume0/opasda
 - The LTR-329ALS-01 ambient light sensor
 - ESP32-SOLO-1 WiFi/Bluetooth module
 
-Looking at some old Youtube videos, I found that the board could be programmed using block coding on Tynker's website, withou the need for any additional steps. Learners could just plug in the board and start coding, and this worked using the SEGGER J-Link OB interface chip on the board and the WebUSB API in the browser.
+Looking at some old Youtube videos, I found that the board could be programmed using block coding on Tynker's website, without the need for any additional steps. Learners could just plug in the board and start coding, and this worked using the SEGGER J-Link OB interface chip on the board and the WebUSB API in the browser.
 
 This sounded like a really easy way to get started, so I plugged in the board to my computer, and searched for "Tynker BBC Doctor Who HiFive Inventor".
 
@@ -35,7 +43,7 @@ Unfortunately, because they were snapshots, I couldn't actually sign in or use t
 
 # microPython
 
-Micropython is basically python for microcontrollers. It sounded promising since I had a lot of experience with Python and it would be a lot easier to use than C or C++. I searched for sources on how to get started with microPython on the HiFive Inventor board, but I only found 2 sources.
+Micropython is basically python for microcontrollers. It sounded promising since I had a lot of experience with Python and it would be a lot easier to use than C or C++. I searched for sources on how to get started with microPython on the HiFive Inventor board, but I barely found anything useful.
 
 The first source was a blog post from CNX Software: ["BBC Dr. Who HiFive Inventor Coding Kit Review"](https://www.cnx-software.com/2020/12/15/bbc-dr-who-hifive-inventor-coding-kit-review-tynker-visual-programing-and-micropython). In the review the author mentions that micropython can be used through the Tynker website which has the micropython firmware for the board. However, since I couldn't access the Tynker website for the HiFive Inventor and I couldn't find any micropython implementations for the board anywhere else, this was a dead end.
 
@@ -67,7 +75,83 @@ Searching up a simple I2C scanner script and then running it, I found no I2C dev
 
 So, I decided on making the ESP32 a simple web server which would request data from the RISC-V chip over UART (serial) and then expose an API endpoint to get that data. This way I could easily access the sensor data for the web dashboard in [TRACER](/writeups/tracer).
 
-Using the PlatformIO extension for VSCode, I set up the ESP-IDF framework
+Using the PlatformIO extension for VSCode, I set up the ESP-IDF framework and starting working on a simple web server. 
+
+### The web server
+
+I was initially thinking about connecting to my laptop via a websocket connection, as the laptop would be fetching data at a high frequency. However, the esp-32 doesn't support SocketIO (makes it much easier to communicate via websockets), and instead only supports basic websockets, so I continued on with the web server. ESP-IDF has a library called `esp_http_server` which makes it easy to create a web server:
+
+```c:src/server.c
+#include "esp_http_server.h"
+#include "esp_system.h"
+#include "esp_log.h"
+
+httpd_handle_t start_webserver(void)
+{
+      httpd_handle_t server = NULL;
+      httpd_config_t config = HTTPD_DEFAULT_CONFIG();
+      config.lru_purge_enable = true;
+
+      ESP_LOGI(SERVER_TAG, "Starting server on port %d", config.server_port);
+
+      if (httpd_start(&server, &config) == ESP_OK)
+      {
+            // Register URI handlers
+            register_sensor_route(server);
+
+            // Register error handler
+            httpd_register_err_handler(server, HTTPD_404_NOT_FOUND, http_404_error_handler);
+
+            ESP_LOGI(SERVER_TAG, "Server started successfully");
+            return server;
+      }
+
+      ESP_LOGI(SERVER_TAG, "Error starting server");
+      return NULL;
+}
+
+// Stop the HTTP server
+void stop_webserver(httpd_handle_t server)
+{
+      if (server)
+      {
+            httpd_stop(server);
+            ESP_LOGI(SERVER_TAG, "Server stopped");
+      }
+}
+```
+
+To make this useful, I registered a new `/sensor` API endpoint / server route which would return the latest sensor data from the RISC-V chip. But before I could do any of this, I had to figure out several things:
+
+1. What kind of data and components were available on the RISC-V chip?
+2. How to communicate with the RISC-V chip over UART/Serial?
+3. How to run simulataneous tasks on the ESP32?
+
+## Sensor Data on the RISC-V Chip
+
+After seeing the Technical User Guide, I already knew what sensors were available on the RISC-V chip, but to actually understand what data each sensor sent, I had to look at the datasheets for each one.
+
+### The LSM303AGR
+
+From the [datasheet](https://www.st.com/resource/en/datasheet/lsm303agr.pdf) the LSM303AGR is described as an:
+
+> Ultracompact high-performance eCompass module:
+ultralow-power 3-axis accelerometer and 3-axis magnetometer
+
+
+The 3-axis accelerometer measures acceleration in all 3 axes, which can help determine orientation while stable by using gravitational acceleration as a reference. On the other hand, the 3-axis magnetometer serves as a digital compass, measuring the magnetic field strength along each axis. 
+
+Additionally, the sensor contains an I2C serial bus for fast communication.
+
+### The LTR-329 Ambient Light Sensor
+
+
+
+
+
+
+
+
 
 
 

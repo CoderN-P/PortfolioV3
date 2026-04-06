@@ -1,0 +1,34 @@
+After working on [TRACER](/writeups/tracer) I still had many features remaining that I wanted to complete including:
+- Allowing the laptop to connect to the raspberry pi without an internet connection
+- Implementing path following and path planning 
+- Better AI control based on distance not time (eg, drive forward for 5 feet)
+
+I started with the easiest of these 3, which was allowing the laptop to connect without an internet connection.
+
+# No Wi-Fi
+
+Currently, the laptop and raspberry pi create web servers that can communicate with one another via Wi-Fi. This works great inside where there is a Wi-Fi network, but fails outside or whenever there's no Wi-Fi network. 
+
+This can be easily fixed by configuring the raspberry-pi to act as a self-contained access point (AP), so my laptop can connect to the Wi-Fi network produced by the raspberry pi and then communicate with it.
+
+## The setup process
+
+Setting up a Wi-Fi AP on the raspberry pi was relatively simple:
+
+First, I had to install the required packages: `hostapd` and `dnsmasq`:
+```plaintext
+sudo apt update
+sudo apt install hostapd dnsmasq
+```
+
+And initially disable them while I was setting them up:
+
+```plaintext
+sudo systemctl stop hostapd
+sudo systemctl stop dnsmasq
+```
+
+These processes run in the background and are known as [daemons](https://3os.org/linux/services-and-daemons/)
+
+Then, I had to update the configuration of the DHCP daemon which automatically configures network interfaces:
+

@@ -17,5 +17,18 @@
     "importance": 10,
     "image": "/projects/LinesNeuralNetworks/neural-net.png",
     "description": "A comprehensive guide and implementation of neural networks from scratch using Python, focusing on understanding the underlying mathematics and algorithms."
+  },
+  {
+    "name": "TRACER V2",
+    "slug": "tracerv2",
+    "lastUpdated": "2026-02-15",
+    "shortDescription": "Version 2 of TRACER",
+    "tags": [
+      "robotics",
+      "control systems"
+    ],
+    "importance": 9,
+    "image": "/projects/TRACER.jpg",
+    "description": ""
   }
 ]
