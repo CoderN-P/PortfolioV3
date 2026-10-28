@@ -14,7 +14,7 @@
       "Gradient Descent",
       "Backpropagation"
     ],
-    "importance": 10,
+    "importance": 9,
     "image": "/projects/LinesNeuralNetworks/neural-net.png",
     "description": "A comprehensive guide and implementation of neural networks from scratch using Python, focusing on understanding the underlying mathematics and algorithms."
   },
@@ -25,10 +25,15 @@
     "shortDescription": "Version 2 of TRACER",
     "tags": [
       "robotics",
-      "control systems"
+      "control systems",
+      "python",
+      "esp32",
+      "lidar",
+      "pcb",
+      "slam"
     ],
-    "importance": 9,
-    "image": "/projects/TRACER.jpg",
-    "description": ""
+    "importance": 10,
+    "image": "/projects/TRACERV2/Dashboard.png",
+    "description": "An autonomous tank robot built fully from scratch"
   }
 ]

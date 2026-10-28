@@ -5,6 +5,8 @@ import type { Metadata, ResolvingMetadata } from "next";
 import { articles } from "@/app/data";
 import {pageToArticleToc} from "@/app/components/articles";
 import TableOfContents from "@/app/components/TableOfContents";
+import MediaGallery from "@/app/components/MediaGallery";
+import Image from "next/image";
 
 // Define the params type for generateMetadata and page function
 type Props = {
@@ -113,7 +115,20 @@ export default async function ArticlePage({ params }: Props) {
         <p className="text-xl text-gray-600 leading-relaxed mb-12 max-w-3xl">
           {article.shortDescription}
         </p>
-
+        {article.image && (
+            <div className="mb-12">
+              <div className="relative w-full h-96 rounded-2xl overflow-hidden shadow-lg border border-gray-200">
+                <Image
+                    src={article.image}
+                    alt={`${article.name} screenshot`}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+                    priority
+                />
+              </div>
+            </div>
+        )}
         {/* Metadata and Actions */}
         <div className="space-y-6 py-8 border-y border-gray-200">
           <div className="flex flex-wrap items-center gap-6">
@@ -121,6 +136,7 @@ export default async function ArticlePage({ params }: Props) {
               <Calendar className="h-5 w-5" />
               <span className="font-medium text-lg">{formattedDate}</span>
             </div>
+            <MediaGallery />
           </div>
 
           {/* Tags */}
@@ -149,7 +165,7 @@ export default async function ArticlePage({ params }: Props) {
             </div>
           </>
       }
-      <div className="mdx-content prose prose-lg prose-gray max-w-none prose-headings:text-gray-900 prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-code:text-gray-800 prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-strong:text-gray-900">
+      <div id="article-content" className="mdx-content prose prose-lg prose-gray max-w-none prose-headings:text-gray-900 prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-code:text-gray-800 prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-strong:text-gray-900">
         <ArticleComponent />
       </div>
 

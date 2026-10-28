@@ -12,8 +12,9 @@ import {
   TD,
   THead,
   Function,
+  Button,
 } from "@/app/components/markdown";
-import Image from "next/image";
+import ClickableImage from "@/app/components/ClickableImage";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -32,21 +33,18 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <h5 className="prose text-black text-lg font-semibold" {...props} />
     ),
     img: (props) => (
-      <Image
+      <ClickableImage
         {...props}
-        width={800}
-        height={600}
-        sizes="(max-width: 768px) 50vw, 400px"
-        className="max-w-1/2 h-auto mt-4 mx-auto object-contain rounded-lg"
+        width={Number(props.width) || 800}
+        height={Number(props.height) || 600}
+        sizes="(max-width: 768px) 85vw, 700px"
+        className="mt-4 mx-auto max-w-1/2 h-auto  rounded-lg object-contain"
       />
     ),
 
     code: (props) => <Code {...props} />,
     p: (props) => (
-      <p
-        className=" prose leading-7 max-w-[800px] font-medium"
-        {...props}
-      />
+      <p className=" prose leading-7 max-w-[800px] font-medium" {...props} />
     ),
     ol: (props) => (
       <ol
@@ -71,5 +69,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     th: TH,
     td: TD,
     Function,
+    Button,
   };
 }

@@ -1,3 +1,5 @@
+import type { ImageAnnotation } from "./Annotation";
+
 export default interface Photo {
   id: number;
   src: string;
@@ -6,4 +8,5 @@ export default interface Photo {
   location: string;
   date: string;
   description: string;
+  annotations?: ImageAnnotation[];
 }

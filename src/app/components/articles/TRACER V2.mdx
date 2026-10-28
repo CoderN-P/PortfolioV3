@@ -1,34 +1,428 @@
-After working on [TRACER](/writeups/tracer) I still had many features remaining that I wanted to complete including:
-- Allowing the laptop to connect to the raspberry pi without an internet connection
-- Implementing path following and path planning 
-- Better AI control based on distance not time (eg, drive forward for 5 feet)
+export const toc = [
+  { level: 1, title: "What changed since V1", id: "what-changed-since-v1" },
+  {
+    level: 2,
+    title: "A robot made of cooperating loops",
+    id: "a-robot-made-of-cooperating-loops",
+  },
+  {
+    level: 2,
+    title: "ESP32: deterministic low-level control",
+    id: "esp32-deterministic-low-level-control",
+  },
+  {
+    level: 2,
+    title: "Raspberry Pi: navigation as a pipeline",
+    id: "raspberry-pi-navigation-as-a-pipeline",
+  },
+  {
+    level: 3,
+    title: "Config is where robot differences live",
+    id: "config-is-where-robot-differences-live",
+  },
+  {
+    level: 1,
+    title: "The dashboard is now a command surface",
+    id: "the-dashboard-is-now-a-command-surface",
+  },
+  {
+    level: 1,
+    title: "From a drawn line to wheel commands",
+    id: "from-a-drawn-line-to-wheel-commands",
+  },
+  {
+    level: 2,
+    title: "Pure pursuit for freehand paths",
+    id: "pure-pursuit-for-freehand-paths",
+  },
+  {
+    level: 2,
+    title: "Smooth trajectories and RAMSETE",
+    id: "smooth-trajectories-and-ramsete",
+  },
+  { level: 2, title: "DWA for point goals", id: "dwa-for-point-goals" },
+  {
+    level: 1,
+    title: "Knowing where the robot is",
+    id: "knowing-where-the-robot-is",
+  },
+  {
+    level: 2,
+    title: "From lidar returns to a static map",
+    id: "from-lidar-returns-to-a-static-map",
+  },
+  {
+    level: 1,
+    title: "Building the robot around the software",
+    id: "building-the-robot-around-the-software",
+  },
+  {
+    level: 2,
+    title: "Sensors and the custom board",
+    id: "sensors-and-the-custom-board",
+  },
+  { level: 3, title: "RPLIDAR C1", id: "rplidar-c1" },
+  { level: 3, title: "ESP32-S3", id: "esp32-s3" },
+  { level: 3, title: "LSM6DSO IMU", id: "lsm6dso-imu" },
+  { level: 1, title: "What made V2 difficult", id: "what-made-v2-difficult" },
+  {
+    level: 1,
+    title: "Trying the software on other robots",
+    id: "trying-the-software-on-other-robots",
+  },
+  { level: 1, title: "What V2 means to me", id: "what-v2-means-to-me" },
+];
 
-I started with the easiest of these 3, which was allowing the laptop to connect without an internet connection.
+import { ImageGallery } from "@/app/components/markdown";
+import ClickableVideo from "@/app/components/ClickableVideo";
+import Button from "@/app/components/markdown/Button";
 
-# No Wi-Fi
+TRACER V2 grew out of the same question that drove the first version: how much of a robot can I build myself, from the firmware up? [TRACER V1](/writeups/tracer) was already more than a remote-control car. It had an Arduino Uno, a Raspberry Pi, a laptop relay, a browser dashboard, Xbox input, sensor telemetry, basic obstacle and cliff responses, and an early natural-language command flow. I learned a lot by getting those parts to talk to each other. I also learned how quickly timed motor commands stop being a good way to describe where a robot should go.
 
-Currently, the laptop and raspberry pi create web servers that can communicate with one another via Wi-Fi. This works great inside where there is a Wi-Fi network, but fails outside or whenever there's no Wi-Fi network. 
+V2 is my attempt to address that problem. Instead of asking the robot to run each motor for a while and hoping the result is close, I can send a point or draw a path. The Raspberry Pi estimates the robot's pose and runs navigation code; an ESP32 handles the timing-sensitive motor and sensor work; a separate backend relays dashboard and controller traffic. The robot still has plenty of rough edges, but the software now has a way to compare the intended motion with what the sensors say actually happened.
 
-This can be easily fixed by configuring the raspberry-pi to act as a self-contained access point (AP), so my laptop can connect to the Wi-Fi network produced by the raspberry pi and then communicate with it.
+<ImageGallery
+  images={[
+    {
+      src: "/projects/TRACERV2/Completed%20robot%20front%20view.HEIC",
+      alt: "Front view of the completed TRACER V2 robot",
+    },
+    {
+      src: "/projects/TRACERV2/Completed%20top%20down%20view.HEIC",
+      alt: "Top-down view of the completed TRACER V2 robot",
+    },
+    {
+      src: "/projects/TRACERV2/Completed%20robot%20topdown%202.HEIC",
+      alt: "Second top-down view showing TRACER V2's sensor and electronics layout",
+    },
+  ]}
+/>
 
-## The setup process
+# What changed since V1
 
-Setting up a Wi-Fi AP on the raspberry pi was relatively simple:
+The original project was a full-stack build too, but its control contract was mostly a pair of motor values and a duration. Sensor data could trigger a backup or stop, and the AI feature could turn a sentence into a sequence of those timed actions. That was a fun first milestone; it was also fragile. “Drive forward for two seconds” does not say where the robot ended up, and a small difference in floor friction, battery voltage, or wheel slip changes the answer.
 
-First, I had to install the required packages: `hostapd` and `dnsmasq`:
-```plaintext
-sudo apt update
-sudo apt install hostapd dnsmasq
+V2 changes the contract. A path or goal is the input, measured pose is part of the feedback, and motor velocity is the output of a controller that runs repeatedly. The repository now has distinct frontend, relay backend, Raspberry Pi, and ESP32 firmware projects, with managers and models separating communication, estimation, sensing, mapping, and navigation. That means more code and more interfaces to keep consistent, but it also gives each part a clearer job.
+
+The V2 repository replaces that assumption with several feedback loops:
+
+- The ESP32 reads encoders and sensors, regulates wheel velocity with PID, and transmits a structured sensor packet.
+- The Raspberry Pi combines wheel, IMU, magnetometer, time-of-flight, ultrasonic, and lidar data.
+- A state estimator provides the current pose and velocity to the navigation code.
+- A live world model stores lidar obstacles, static maps, and virtual obstacles.
+- The path manager selects pure pursuit, RAMSETE, or dynamic window approach (DWA) depending on the command.
+- The dashboard can draw a freehand path, create a spline, send a point goal, inspect the map, and watch the robot's telemetry.
+
+That is the important difference for me: V1 taught me how to connect the pieces and make the robot react. V2 is an attempt to close the loop between **what I asked it to do**, **what the sensors observed**, and **how the motors should respond**.
+
+## A robot made of cooperating loops
+
+The hardware and software are split by responsibility. The ESP32 is the deterministic controller close to the motors. The Raspberry Pi is the higher-level computer that owns navigation, estimation, and mapping, then shares robot state with the dashboard.
+
+## ESP32: deterministic low-level control
+
+V2 moves the embedded controller from the Arduino Uno to an ESP32 and uses the Arduino core's FreeRTOS primitives directly. The entrypoint declares separate handles for the ultrasonic, main loop, serial, telemetry, OLED, and command-processing tasks. Shared data is protected with queues, semaphores, and atomics rather than being passed through one blocking loop.
+
+The important improvement is not simply “more CPU.” It is that each part of the controller now has a cadence:
+
+- `mainLoopTask` reads the IMU and encoders, runs the motor-control path, and assembles sensor state.
+- `serialTask` receives packets and places commands into the command queue.
+- `commandProcessorTask` applies queued commands without making serial parsing responsible for motor behavior.
+- `ultrasonicTask` and `tofTask` acquire range data independently.
+- `sensorTransmitTask` sends telemetry at its own rate.
+- `oledTask` reports state locally on the robot.
+
+The low-level controller also supports more than raw PWM. The command handler can switch between open-loop PWM, velocity PID, and closed-loop chassis control. That gives the higher-level code a stable interface: it can request a twist (linear and angular velocity), while the ESP32 converts that request into left and right wheel behavior.
+
+For velocity control, feedforward gives the motor a useful starting command before the PID correction is applied. I measured motor output at different target velocities and stored those values in a lookup table (LUT). At runtime, the controller looks up or interpolates the feedforward command for the requested speed; PID then uses the difference between requested and measured velocity to correct what the table missed. The LUT handles the motor's nonlinear response and dead zone better than assuming one perfect straight-line voltage-to-speed relationship, while PID handles changing load and small modeling errors. I calibrated the two sides separately because the motors and drivetrain do not respond identically.
+
+```cpp:arduino/main/main.ino:github.com/CoderN-P/TRACER/blob/V2/arduino/main/main.ino#L1-L200
+// arduino/main/main.ino
+TaskHandle_t ultrasonicTaskHandle;
+TaskHandle_t mainLoopHandle;
+TaskHandle_t serialTaskHandle;
+TaskHandle_t sensorTransmitHandle;
+TaskHandle_t oledTaskHandle;
+TaskHandle_t commandProcessorTaskHandle;
+
+QueueHandle_t commandQueue;
+SemaphoreHandle_t sensorDataMutex;
 ```
 
-And initially disable them while I was setting them up:
+This separation gives V2 a foundation that the V1 architecture did not have: a delayed lidar update on the Pi does not have to become a delayed motor-control update on the microcontroller.
 
-```plaintext
-sudo systemctl stop hostapd
-sudo systemctl stop dnsmasq
+## Raspberry Pi: navigation as a pipeline
+
+The Pi side is organized around a `Robot` object that composes managers instead of putting every responsibility in one main loop. That shift is visible in the repository structure: serial I/O, socket events, lidar reading, state estimation, sensor processing, mapping, manual control, path following, and state transitions each have a distinct place. It is a lot more code than the original Pi `Robot` class, and I had to be much more deliberate about the boundaries between those pieces. A manager can be easier to reason about in isolation, but only if the data and timing assumptions match at the interfaces.
+
+The communication boundaries are deliberately different:
+
+- `SerialManager` talks to the ESP32 at 921600 baud and translates binary packets and commands.
+- `LidarReader` runs the lidar scan loop.
+- `SocketManager` and `EmitManager` expose state to the dashboard.
+- The event bus reports path completion, path errors, and state changes without hard-wiring those events into every subsystem.
+
+This lets the system handle telemetry, dashboard input, and navigation as concurrent work instead of one blocking “read, decide, move” chain. The laptop relay is still part of that picture: the browser and controller connect through it, while the Pi owns robot state and sends low-level commands over serial. Keeping those connections straight has been one of the less glamorous, but very real, parts of building V2.
+
+### Config is where robot differences live
+
+The `ROBOT_CONFIG` values are the bridge between general navigation code and a particular physical robot. The [V2 Pi source](https://github.com/CoderN-P/TRACER/tree/V2/rpi) uses configuration values for things such as wheel and track geometry, encoder conversion, speed and acceleration limits, controller tuning, and sensor offsets. For example, the path follower reads limits such as `MAX_LINEAR_VEL_POS` and `MAX_LATERAL_ACCEL`, while RAMSETE uses `BETA` and `ZETA` to set how aggressively it corrects trajectory error. These values describe the robot and how it behaves; they are not details that should be buried inside every path-following algorithm.
+
+That separation is what makes it plausible to try the software on another differential-drive base. For a normal wheeled robot, I would make a new configuration with its wheel dimensions, encoder scale, track width, motor response LUT/PID values, sensor mounting offsets, and safe velocity/acceleration limits, then recalibrate it. I would still need to verify the assumptions against the actual hardware, but I would not have to rewrite the spline or path-following math just because the chassis changed. The [repository's `ROBOT_CONFIG` references](https://github.com/CoderN-P/TRACER/search?q=ROBOT_CONFIG&type=code) show where those settings are consumed.
+
+At a glance, the repository is split by the machine or responsibility each part serves:
+
+```plaintext:README.md:github.com/CoderN-P/TRACER/blob/V2/README.md#L240-L247
+TRACER/
+├── frontend/   SvelteKit dashboard, path editor, telemetry UI
+├── backend/    Flask + Socket.IO relay and controller input
+├── rpi/        FastAPI/asyncio robot brain, estimation, path following
+├── arduino/    ESP32 firmware, motor control, sensor packets
+├── docs/       Architecture notes and demos
+└── calibration_files/
 ```
 
-These processes run in the background and are known as [daemons](https://3os.org/linux/services-and-daemons/)
+# The dashboard is now a command surface
 
-Then, I had to update the configuration of the DHCP daemon which automatically configures network interfaces:
+The V2 dashboard is not just a remote control. It is the interface for describing intent and observing the control system while it runs.
 
+The main view can show the robot's pose, planned path, lidar points, occupancy data, and live motion values. The general page exposes configuration and state. The path editor supports freehand paths and quintic Hermite spline paths, while point goals can be handed to the obstacle-aware local planner.
+
+<ImageGallery
+  images={[
+    {
+      src: "/projects/TRACERV2/Dashboard.png",
+      alt: "TRACER V2 dashboard with robot pose, path, and sensor visualization",
+    },
+    {
+      src: "/projects/TRACERV2/Dashboard%20General%20Page.png",
+      alt: "TRACER V2 dashboard general page with robot controls and configuration",
+    },
+    {
+      src: "/projects/TRACERV2/Dashboard%20Spline%20Path.png",
+      alt: "TRACER V2 dashboard spline path editor",
+    },
+    {
+      src: "/projects/TRACERV2/Initial%20Lidar%20Scan.png",
+      alt: "Lidar scan displayed by the TRACER V2 dashboard",
+    },
+  ]}
+/>
+
+<ClickableVideo
+  src="/projects/TRACERV2/DrawingSplinePath.mov"
+  title="Drawing a spline path in the TRACER V2 dashboard"
+  className="mx-auto max-w-[700px]"
+/>
+
+The path editor changes the interaction completely. Instead of repeatedly tuning “turn left for 0.8 seconds,” I can draw the route I want and send the geometry to the robot. The Pi then chooses how to follow it based on the robot's current pose, velocity, and environment.
+
+# From a drawn line to wheel commands
+
+V2 supports three distinct navigation cases in `PathManager`:
+
+1. **Freehand paths** become a `PurePursuit` controller over the submitted XY points.
+2. **Spline paths** become a time-parameterized trajectory followed by RAMSETE.
+3. **Point goals** become a DWA controller that searches for a safe local velocity.
+
+The same state machine handles all three. It clears the previous controller when a new path arrives, validates spline input, sends safe stop commands when a path finishes or fails, and publishes `PathCompleted` or `PathError` events back to the rest of the system. That is a much more mature behavior than having the dashboard fire a motor command and assume success.
+
+The velocity-profile video below is from testing the low-level PID: I gave the robot a target velocity profile and watched how closely the measured velocity tracked it. It is a controller tuning check, not a recording of the robot following a spline.
+
+At each control step, the controller compares the target velocity with the encoder-measured velocity and computes an error. **Proportional** control reacts to the current error, **integral** control accumulates error over time to correct a persistent offset, and **derivative** control reacts to how quickly the error is changing to help damp oscillation. Their weighted corrections update the motor command continuously. The feedforward LUT described above supplies the expected command for a target speed; PID adds the correction needed when the actual wheels do not match that target. In the video, the target velocity changes over time, so I can see where tracking lags, overshoots, or settles and tune the controller from that response.
+
+<ClickableVideo
+    src="/projects/TRACERV2/velocity%20profile.mov"
+    title="TRACER V2 velocity profile test"
+    className="mx-auto max-w-[500px]"
+/>
+
+## Pure pursuit for freehand paths
+
+Pure pursuit is a good fit for a hand-drawn route because it does not require the user to provide a velocity profile. The implementation searches forward along the path for the first intersection with a lookahead circle, transforms that point into the robot's local frame, and calculates curvature from its lateral offset.
+
+```python:rpi/src/models/PathFollowing/PurePursuit.py:github.com/CoderN-P/TRACER/blob/V2/rpi/src/models/PathFollowing/PurePursuit.py#L1-L200
+local_target = get_local_target(robot_state, goal_point)
+lateral_y = local_target[1]
+curvature = 2 * lateral_y / (math.hypot(*local_target) ** 2)
+
+w_eff = get_planning_track_width(abs(curvature))
+v_motor_cap = ROBOT_CONFIG.MAX_LINEAR_VEL_POS / (
+    1 + abs(curvature) * w_eff / 2
+)
+v_lateral_cap = (
+    ROBOT_CONFIG.MAX_LINEAR_VEL_POS
+    if abs(curvature) < 1e-6
+    else np.sqrt(ROBOT_CONFIG.MAX_LATERAL_ACCEL / abs(curvature))
+)
+
+linear_velocity = min(
+    ROBOT_CONFIG.MAX_LINEAR_VEL_POS,
+    v_motor_cap,
+    v_lateral_cap,
+)
+angular_velocity = curvature * linear_velocity
+```
+
+The velocity is reduced as curvature increases. As a result, the robot does not try to take a tight corner at its maximum straight-line speed. It uses the geometry of the path to produce a feasible twist (linear and angular velocity pair) for the differential-drive chassis.
+
+The clip below comes from my earlier [CurvePathSimulator project](https://github.com/CoderN-P/CurvePathSimulator), a small C++ desktop app for creating paths from quintic Hermite splines and visualizing robot motion. In this simulation, Pure Pursuit repeatedly finds a lookahead point on the curve and steers the robot toward it. I used the simulator to get an intuitive view of how path shape and lookahead distance affect tracking before tuning on hardware. It is useful for visualizing controller behavior, but it cannot reproduce all the slip, sensor noise, and timing problems of the physical tank.
+<ClickableVideo
+    src="https://github.com/CoderN-P/CurvePathSimulator/assets/76001641/9800521a-db16-4178-a5ce-f87d58e95ef8"
+    title="CurvePathSimulator PurePursuit on a spline path"
+    className="mx-auto max-w-[500px]"
+/>
+
+## Smooth trajectories and RAMSETE
+
+For spline paths, V2 goes further than chasing the nearest point. `QuinticHermiteSpline` produces smooth position and heading changes, `Path` samples those splines into trajectory states, and `RAMSETE` tracks the resulting reference over time.
+
+RAMSETE compares the target trajectory state with the robot's current state in the robot frame. It interpolates between trajectory samples, computes position and heading error, and returns a linear/angular velocity command:
+
+```python:rpi/src/models/PathFollowing/RAMSETE.py:github.com/CoderN-P/TRACER/blob/V2/rpi/src/models/PathFollowing/RAMSETE.py#L1-L200
+error_x, error_y, error_theta = self.get_error(
+    current_state,
+    target_state,
+)
+
+k = 2 * ROBOT_CONFIG.ZETA * np.sqrt(
+    target_state.omega**2
+    + ROBOT_CONFIG.BETA * target_state.v**2
+)
+
+v_command = target_state.v * np.cos(error_theta) + k * error_x
+
+sinc = np.sin(error_theta) / error_theta if error_theta > 1e-6 else 1
+omega_command = (
+    target_state.omega
+    + k * error_theta
+    + ROBOT_CONFIG.BETA * target_state.v * sinc * error_y
+)
+```
+
+This is why the spline demo is more than a visual flourish. The dashboard provides geometry, but the robot follows a timed trajectory with continuous corrections rather than treating the path as a collection of abrupt turns.
+
+## DWA for point goals
+
+Point navigation uses `DWA`, the dynamic window approach. Instead of blindly steering toward the goal, the controller samples reachable linear and angular velocities, predicts the short motion each pair would produce, and scores those options for progress and collision risk. The [DWA and world-model code in the Pi source](https://github.com/CoderN-P/TRACER/tree/V2/rpi/src) are where I am building that connection between motion choices and obstacle data.
+
+The next step is to make the static map a dependable input to those DWA scores, alongside the live lidar layer and virtual obstacles. That way, a candidate velocity can be rejected or penalized if its predicted path crosses a mapped wall, even when the lidar is not currently returning a point from that exact surface. Live lidar can still represent something new that was not in the saved map. I want the robot to combine both: use the map for known structure, and use current scans to react to changes and newly seen obstacles.
+
+# Knowing where the robot is
+
+All of these controllers depend on a useful pose estimate. I ended up with two EKF stages, each with a fairly focused job. The **heading EKF** combines the gyro's fast angular-rate measurements with the change in heading implied by the wheel encoders. Gyro integration reacts quickly but drifts; encoder heading is useful over time but gets noisy when the wheels slip. Fusing them gives the rest of the software a smoother heading estimate.
+
+The **pose EKF** uses that smoothed heading along with encoder motion to update the robot's x/y position and orientation. At the moment, this is still dead reckoning: small wheel-distance and heading errors accumulate as the robot moves. I have left scan matching as a future correction source, so it is important not to confuse lidar deskewing with lidar-based localization. Deskewing makes a moving scan geometrically more consistent; scan matching would compare scans to estimate and correct the robot's pose.
+
+Deskewing was its own timing problem. A lidar scan is not captured all at once: each point was measured at a slightly different time, and if the robot is moving, the points are expressed from slightly different robot poses. To correct that, I needed a timestamp for each point (or its offset within the scan) and timestamps for the incoming sensor packets in the same monotonic time domain. I used `time.perf_counter_ns()` for those local timestamps so clock adjustments would not make the measurements jump backward or forward.
+
+I also had to keep a **pose history**, rather than only the latest pose. As encoder and IMU data arrive, the estimator records timestamped pose samples. For every lidar point, the deskewing code finds the pose samples immediately before and after that point's measurement time, interpolates between them, and estimates where the robot was when that point was scanned. It can then transform the point into a common reference pose for the scan. Without synchronized timestamps and enough history to bracket the scan, deskewing has no reliable motion estimate to work with. This was one of those features where the geometry was straightforward on paper and the time alignment took the real debugging.
+
+## From lidar returns to a static map
+
+Deskewing fixes the shape of an individual scan, but a map also needs scans to line up with each other. As the robot drives, I can transform deskewed lidar points from the robot frame into the world frame using the pose estimate associated with each scan, then accumulate those points in a fixed grid. Each lidar measurement gives both an endpoint and a ray from the sensor to that endpoint. **Raycasting** walks the cells along that ray: cells before the return are evidence of free space, while the endpoint cell is evidence of an obstacle. Combining those free and occupied updates over multiple scans produces a map of the surfaces the robot has observed.
+
+In the live `LidarLayer`, raycasting also lets the map distinguish “I saw through this cell” from “a return landed here.” Costs are accumulated and clamped, and old live observations can decay so yesterday's transient return does not remain an obstacle forever. A static map keeps the accumulated environment as a persistent layer; the [V2 lidar and world-model implementation](https://github.com/CoderN-P/TRACER/tree/V2/rpi/src) is in the Pi source tree. The quality of this map still depends on pose quality: dead-reckoning drift can smear walls or place the same surface in multiple nearby cells, which is one reason scan-matching correction is a future improvement I want to add.
+
+The current/future distinction matters here. I have lidar scans and world-model layers, and DWA can reason about current obstacle data. My next integration step is to make the saved static map participate directly and consistently in DWA's predicted-path collision costs, together with live lidar and virtual obstacles, then test how it handles mapped walls and new obstacles.
+
+<ImageGallery
+  images={[
+    {
+      src: "/projects/TRACERV2/Initial%20Lidar%20Scan.png",
+      alt: "Initial TRACER V2 lidar scan used for mapping and obstacle reasoning",
+    },
+    {
+      src: "/projects/TRACERV2/Dashboard.png",
+      alt: "TRACER V2 dashboard showing the robot and its mapped environment",
+    },
+  ]}
+/>
+
+# Building the robot around the software
+
+The software redesign also forced a hardware redesign. The final robot has the sensor placement, wiring, and board layout needed to support repeatable measurements instead of a prototype that only worked when its cables happened to be in the right position.
+
+<ImageGallery
+  images={[
+    {
+      src: "/projects/TRACERV2/BreadboardVersion.HEIC",
+      alt: "Early TRACER V2 breadboard prototype",
+    },
+    {
+      src: "/projects/TRACERV2/PCB.HEIC",
+      alt: "TRACER V2 custom PCB before assembly",
+    },
+    {
+      src: "/projects/TRACERV2/Assebled%20PCB.HEIC",
+      alt: "Assembled TRACER V2 custom PCB",
+    },
+    {
+      src: "/projects/TRACERV2/Completed%20robot%20front%20view.HEIC",
+      alt: "Completed TRACER V2 robot showing the finished hardware",
+    },
+  ]}
+/>
+
+I designed the PCB in KiCad and used a four-layer stackup: signal layers on the outside, with dedicated ground and power planes inside. JST connectors made the sensor and motor connections repeatable, while the board reduced the loose-wire problem that made early debugging difficult. The board is not separate from the software story; cleaner power and signal routing make the encoder, IMU, and range measurements more trustworthy.
+
+<ImageGallery
+  images={[
+    { src: "/projects/TRACERV2/Layer1.png", alt: "TRACER V2 PCB layer 1" },
+    { src: "/projects/TRACERV2/Layer2.png", alt: "TRACER V2 PCB layer 2" },
+    { src: "/projects/TRACERV2/Layer3.png", alt: "TRACER V2 PCB layer 3" },
+    { src: "/projects/TRACERV2/Layer4.png", alt: "TRACER V2 PCB layer 4" },
+    { src: "/projects/TRACERV2/Schematic.png", alt: "TRACER V2 PCB schematic" },
+  ]}
+/>
+
+## Sensors and the custom board
+
+### RPLIDAR C1
+
+For the 2D scans, I used the SLAMTEC RPLIDAR C1. It spins to sample a full 360° around the robot; SLAMTEC lists a typical 10 Hz scan rate, 5,000 samples per second, and 0.72° angular resolution. The advertised range depends on the target: up to 12 m for a white target with 70% reflectivity and 6 m for a black target with 10% reflectivity. Those numbers help explain why lidar is useful for mapping, while also setting expectations for dark or weakly reflecting surfaces. [SLAMTEC's C1 specifications](https://www.slamtec.com/en/c1/spec) have the full operating details.
+
+Each measurement also carries a **quality** value. In SLAMTEC's packet protocol, quality is related to the strength of the reflected laser pulse. I can use it as an indication that a return is weak or strong, but it is not a direct distance-accuracy score and should not be treated as one by itself. This is useful context when inspecting a scan: a distant or dark surface can produce a weaker return even though the point still has an angle and range. See SLAMTEC's [measurement packet description](https://wiki.slamtec.com/download/attachments/83066883/LR001_SLAMTEC_rplidar_S%26C%20series_protocol_v2.8_en.pdf?api=v2&modificationDate=1700623760126&version=1).
+
+![RPLIDAR C1](/projects/TRACERV2/rplidarc1.jpg)
+
+### ESP32-S3
+
+I used the ESP32-S3 on the custom board because the chip has native USB support. I could route USB D− and D+ from the chip (GPIO19 and GPIO20) to a connector and use the USB Serial/JTAG interface for firmware download, logs, and debugging, without adding a separate USB-to-UART bridge for that path. The USB pins are shared with GPIO functions, so the board pin plan had to keep them available. Espressif documents the integrated [USB Serial/JTAG and USB pin assignments](https://docs.espressif.com/projects/esp-hardware-design-guidelines/en/latest/esp32s3/schematic-checklist.html#usb). Here is a [photo of the ESP32-S3 chip](https://opendtu-onbattery.net/assets/images/hardware/esp32_chip.png).
+
+### LSM6DSO IMU
+
+The IMU on the board is the **LSM6DSO**. It combines a three-axis accelerometer and a three-axis gyroscope in one small package. In TRACER, the gyro supplies fast angular-rate measurements for the heading estimate, while encoder-derived heading helps constrain gyro drift. The accelerometer gives another view of linear motion and orientation, though the heading fusion described above is based on gyro and encoders.
+
+![LSM6DSO](/projects/TRACERV2/LSM6DSO.png)
+
+# What made V2 difficult
+
+The difficult part was not writing one clever controller. It was making every layer agree about time, units, and reality. One bug that took me a while to track down was on the ESP32: one RTOS task acquired the lock protecting shared sensor data and failed to release it on a code path. Other tasks then could not update or read the measurements, and the values I was seeing stayed at zero. At first that looked like a sensor or packet problem. The actual problem was synchronization. I traced which task owned the lock, checked every exit path, and made sure the protected section was released so the sensor task and telemetry task could make progress again.
+
+Calibration was another large part of the work. There are enough coupled variables that a plausible-looking number in one place can make the whole robot behave strangely:
+
+- **Motion geometry:** wheel radius or diameter, track width, encoder counts per wheel revolution, and encoder direction determine how counts translate into distance and turn angle.
+- **Motor response:** left/right feedforward values, PID gains, output limits, and motor dead zones determine whether the wheels reach and hold a requested speed without excessive oscillation.
+- **Chassis limits:** maximum linear and angular speed, acceleration limits, and the velocity-profile constraints determine which paths are physically feasible. The pursuit controller, for example, reduces speed when curvature or lateral acceleration would make a turn too aggressive.
+- **Estimation:** gyro bias, magnetometer offsets/scales, heading conventions, and sensor mounting offsets affect how encoder, IMU, and lidar measurements line up.
+- **Navigation and sensing:** lookahead distance, spline sampling, RAMSETE tuning values, DWA velocity ranges and obstacle costs, lidar/map resolution, sensor thresholds, and stale-cell timing all influence how the robot responds to a route or obstacle.
+
+I used a Linux VM and separate calibration programs for feedforward, maximum speed, and magnetometer data so I could exercise parts of the system without always having the full robot connected. The velocity-profile recording is one example of that process: command a target profile, compare it with measured wheel/chassis velocity, then adjust the PID and feedforward until tracking is reasonable. That shortened the tuning loop, but the final check still had to be physical. Wheel slip, uneven floors, reflections, noisy sensors, and a battery that is not perfectly charged all show up on the actual robot.
+
+# Trying the software on other robots
+
+TRACER's current chassis is a tank, and tank tracks scrub sideways when turning. That makes it easier to lose the relationship between encoder movement and actual ground movement, especially during tight turns. A conventional two-wheel differential-drive robot with wheels should scrub less in many situations, so it would be a useful way to find out how much of the estimation and path-following behavior is specific to my current chassis.
+
+My goal is to treat the Pi software as a reusable robot brain and try it on other compatible robots. The managers, estimators, map, dashboard, and path controllers should stay mostly the same; the hardware-facing configuration, motor interface, sensor transforms, and calibration data would change for each base. A different chassis is not plug-and-play: it needs its own wheel/track geometry, encoder scaling, feedforward LUT, PID gains, sensor offsets, and velocity limits. But keeping those differences in configuration gives me a concrete way to port the stack and compare how the same path controller behaves on a robot that slips less.
+
+# What V2 means to me
+
+V1 proved I could connect an Arduino, a Pi, a laptop service, and a dashboard into one working project. It gave me the base to build on, including a first pass at obstacle response and AI-generated command sequences. V2 is a much larger software and hardware effort because I wanted to move beyond issuing timed actions: the Pi now has managers for the robot's state, sensors, maps, paths, and communications, and the ESP32 has separate tasks for control and sensor work.
+
+The finished robot is still an experiment. Pose estimates drift, sensors need calibration, and a path that looks clean in the dashboard still has to survive a real floor and real wheels. But I can draw a route, send it through the software stack, watch the estimated pose and lidar data update, and have a controller continuously adjust the requested motion. That is a more useful foundation than V1's timed commands, and it gives me a lot more room to keep improving TRACER.
+
+
+<Button href="https://github.com/CoderN-P/TRACER">
+  Explore TRACER V2 on GitHub
+</Button>

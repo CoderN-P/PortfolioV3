@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { X, MapPin, Calendar, ChevronLeft, ChevronRight } from "lucide-react";
 import type { Photo } from "@/app/types";
+import AnnotatedImage from "@/app/components/AnnotatedImage";
 
 interface GalleryClientProps {
   photos: Photo[];
@@ -151,12 +152,10 @@ export default function GalleryClient({ photos }: GalleryClientProps) {
           >
             {/* Image */}
             <div className="relative flex-grow h-3/4 lg:h-full">
-              <Image
+              <AnnotatedImage
                 src={selectedPhoto.src}
                 alt={selectedPhoto.alt}
-                fill
-                className="object-contain"
-                priority
+                annotations={selectedPhoto.annotations}
               />
             </div>
 

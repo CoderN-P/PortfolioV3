@@ -1,7 +1,102 @@
-This is a placeholder for the Stellar project writeup. More details will be added soon.
+import { ImageGallery } from "@/app/components/markdown";
+import Button from "@/app/components/markdown/Button";
+import { ArrowRight } from "lucide-react";
+export const toc = [
+  {
+    level: 1,
+    title: "A study system I helped build",
+    id: "a-study-system-i-helped-build",
+  },
+  { level: 1, title: "Infinite Practice", id: "infinite-practice" },
+  { level: 1, title: "Meet Nova", id: "meet-nova" },
+  {
+    level: 1,
+    title: "The software behind the learning loop",
+    id: "the-software-behind-the-learning-loop",
+  },
+  {
+    level: 1,
+    title: "A year away, and a much bigger Stellar",
+    id: "a-year-away-and-a-much-bigger-stellar",
+  },
+  { level: 1, title: "Try Stellar", id: "try-stellar" },
+];
 
-Stellar is an AI-powered learning platform designed to create a personalized educational experience.
+About a year ago, I stepped away from Stellar to focus on hardware projects. Before that, I worked on some of the platform's core software: **Nova**, **Infinite Practice**, Stellar's backend and database, and the front-end framework used to build interactive learning experiences.
 
-- **Personalized Learning Paths:** Adapts to your learning style.
-- **Interactive Projects:** Engage with hands-on projects.
-- **AI-driven Insights:** Get feedback and suggestions powered by AI.
+Since then, Stellar has grown well beyond 20,000 users. The site now reports **40,000+ learners**. I wasn't around for all of that growth, which makes it especially satisfying to see something I helped build still being used and expanded by the team.
+
+Stellar is a free study platform for AP, IB, SAT, and competitive math. Lessons, interactive exercises, practice questions, exam-style work, and support tools live together, so you can learn a topic and practice it without having to piece together a study plan from several different sites. [Try it at stellarlearning.app](https://stellarlearning.app).
+
+<ImageGallery
+  images={[
+    {
+      src: "/projects/Stellar/PracticeSessions.png",
+      alt: "Stellar's practice sessions page, showing question history and progress",
+    },
+      {
+          src: "/projects/Stellar/CourseUI.png",
+          alt: "The AP Physics C: Mechanics course on Stellar"
+      },
+      {
+          src: "/projects/Stellar/PracticeUI.png",
+          alt: "An infinite practice session"
+      },
+      {
+          src: "/projects/Stellar/Nova.png",
+          alt: "Nova, Stellar's AI tutor, answering a student's question"
+      }
+  ]}
+/>
+
+# A study system I helped build
+
+I worked on Stellar as a product, not just a collection of isolated features. A lesson should lead naturally into practice. Practice should give useful feedback. A student's work should still be there when they come back. And if they get stuck, Nova should be close at hand.
+
+That means the app has to coordinate several layers. The front end presents lessons and different kinds of interactive exercises. The backend connects those experiences to accounts, course material, practice generation, and other services. The database gives the platform somewhere to keep the information that makes a study session feel continuous. I contributed across those layers, as well as to the front-end framework that made it possible to create richer exercises than a page of text and multiple-choice buttons.
+
+The exact work is often invisible when it goes well. You answer a question, get feedback, leave, and come back later to continue. But that simple flow depends on the interface, server, and stored state agreeing about what course you're in and what you just did.
+
+# Infinite Practice
+
+Finite worksheets are useful, but it is easy to run out of questions before a concept feels comfortable. Infinite Practice gives students more AI-generated questions to work through, so they can keep practicing a subject or skill instead of repeating the same small set.
+
+I worked on the system behind that experience. The hard part is not simply producing another question; it is making practice fit into the course experience and giving the student a clear way to answer, check their work, and continue. Stellar pairs practice with interactive lessons, curated exam-style questions, and mock exams, so generated questions are one tool in a broader study loop.
+
+If you want to see what that feels like, [open Stellar](https://stellarlearning.app), choose a course or practice topic, and try a short session. You can keep going for as long as you need; the platform is free, with no paywall hiding the next set of questions.
+
+# Meet Nova
+
+Nova is Stellar's AI tutor. Students can ask for help when a lesson or problem stops making sense, and Nova can use the surrounding Stellar learning material as context. The goal is to make help available in the moment it is needed, without making the student leave the course and start over somewhere else.
+
+I worked on Nova as part of the platform, including how it fits into the rest of Stellar. It needs to feel like a study tool rather than a disconnected chatbot: students should be able to ask a follow-up, get an explanation, then return to the lesson or practice they were working on. Nova is useful when it helps a student understand the next step; it does not replace doing the work or checking the answer.
+
+# The software behind the learning loop
+
+The work I did spanned three connected pieces:
+
+- **The front-end framework** supports interactive learning interfaces and exercises, from graphing and labeling activities to coding and guided problems.
+- **The backend** connects those interfaces to the platform's learning features and services.
+- **The database** supports the accounts, course and practice data, and continuity that make the experience useful from one session to the next.
+
+I also worked directly on Infinite Practice and Nova, which sit on top of that foundation. Building them meant thinking about what a student sees, but also how the interface, backend, and stored data fit together. I won't pretend that every part was perfect on the first try; educational software has to work for lots of subjects and lots of different ways of learning, and there is always another edge case to handle.
+
+# A year away, and a much bigger Stellar
+
+I left about a year ago to put more of my time into hardware. While I was focused on robots and embedded systems, Stellar kept moving. Its current site describes a much broader study platform, with 80+ courses, interactive lessons, unlimited practice, mock exams, flashcards, and Nova. It now reports more than 40,000 learners.
+
+Seeing that growth changed how I think about the software I worked on. A front-end framework or a practice system can sound like infrastructure work, but infrastructure shapes what students can actually do. The work is worthwhile when it helps someone get unstuck, find another useful problem, or keep studying without hitting a subscription wall.
+
+# Try Stellar
+
+If you're studying for an AP or IB class, the SAT, or a math competition, give Stellar a try. Pick a course, work through an interactive lesson, and use Infinite Practice to keep going. If you get stuck, ask Nova for help with the concept you're studying.
+
+<Button href="https://stellarlearning.app" className="mt-4">
+  <img
+    src="/projects/Stellar/stellarlogo.png"
+    alt="Stellar logo"
+    className="mr-2 h-4 w-4"
+  />
+  Start learning for free at Stellar
+  <ArrowRight className="mr-2 h-4 w-4" />
+</Button>

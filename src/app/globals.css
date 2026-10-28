@@ -90,6 +90,12 @@ ol {
   margin-top: 1rem; /* 16px */
 }
 
+/* 2xs text size */
+.t2xs {
+  font-size: 0.625rem !important; /* 10px */
+  line-height: 1rem; /* 16px */
+}
+
 .home {
   font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
 }

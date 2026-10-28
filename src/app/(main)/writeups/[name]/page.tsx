@@ -7,6 +7,7 @@ import Image from "next/image";
 import { projects } from "@/app/data";
 import { getTechInfo } from "@/app/utils";
 import TableOfContents from "@/app/components/TableOfContents";
+import MediaGallery from "@/app/components/MediaGallery";
 
 
 // Define the params type for generateMetadata and page function
@@ -146,6 +147,7 @@ export default async function WriteupPage({ params }: Props) {
               <Calendar className="h-5 w-5" />
               <span className="font-medium text-lg">{formattedDate}</span>
             </div>
+            <MediaGallery />
             {project.github && (
               <a
                 href={project.github}

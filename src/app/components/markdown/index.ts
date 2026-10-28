@@ -14,3 +14,5 @@ export {
   TBody,
 } from "@/app/components/markdown/Table";
 export { default as Function } from "@/app/components/markdown/Function";
+export { default as ImageGallery } from "@/app/components/markdown/ImageGallery";
+export { default as Button } from "@/app/components/markdown/Button";

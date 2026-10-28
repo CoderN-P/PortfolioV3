@@ -1,5 +1,6 @@
 import NeuralNetwork from "./NeuralNetwork.mdx";
 import TRACERV2 from "./TRACER V2.mdx";
+import {toc as TRACERV2Toc} from "./TRACER V2.mdx";
 import {toc as NeuralNetworkToc} from "./NeuralNetwork.mdx";
 import React from "react";
 import {ContentHeading} from "@/app/types";
@@ -12,4 +13,5 @@ export const pageToArticle: Record<string, React.FC> = {
 
 export const pageToArticleToc: Record<string, ContentHeading[]> = {
   "lines-to-neural-networks": NeuralNetworkToc,
+  "tracerv2": TRACERV2Toc,
 };

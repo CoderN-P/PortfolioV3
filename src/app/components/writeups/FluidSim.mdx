@@ -1,147 +1,238 @@
-
 export const toc = [
-    {level: 1, title: "The Navier-Stokes Equations", id: "the-navier-stokes-equations"},
-    {level: 2, title: "The Material Derivative", id: "the-material-derivative"},
-    {level: 2, title: "Forces Acting on the Fluid", id: "forces-acting-on-the-fluid"},
-    {level: 2, title: "The Incompressibility Condition", id: "the-incompressibility-condition"},
-    {level: 1, title: "Simulation Approaches", id: "simulation-approaches"},
-    {level: 1, title: "Coding the Simulation", id: "coding-the-simulation"},
+  {
+    level: 1,
+    title: "The Navier-Stokes Equations",
+    id: "the-navier-stokes-equations",
+  },
+  { level: 2, title: "The Material Derivative", id: "the-material-derivative" },
+  {
+    level: 2,
+    title: "Forces Acting on the Fluid",
+    id: "forces-acting-on-the-fluid",
+  },
+  {
+    level: 2,
+    title: "The Incompressibility Condition",
+    id: "the-incompressibility-condition",
+  },
+  { level: 1, title: "Simulation Approaches", id: "simulation-approaches" },
+  { level: 1, title: "Coding the Simulation", id: "coding-the-simulation" },
+  { level: 2, title: "The Setup", id: "the-setup" },
+  {
+    level: 2,
+    title: "Solving for Incompressibility",
+    id: "solving-for-incompressibility",
+  },
+  { level: 3, title: "Lagrange Multipliers", id: "lagrange-multipliers" },
+  { level: 3, title: "Boundary Conditions", id: "boundary-conditions" },
+  { level: 2, title: "Advecting the Fluid", id: "advecting-the-fluid" },
+  { level: 2, title: "The Simulation Loop", id: "the-simulation-loop" },
+  { level: 2, title: "Rendering the Result", id: "rendering-the-result" },
+  { level: 1, title: "Results and Limitations", id: "results-and-limitations" },
 ];
 
+import { Info } from "@/app/components/markdown";
+import ClickableVideo from "@/app/components/ClickableVideo";
 
-How are computers even able to simulate and render fluids? With so many molecules and extremely complex looking patterns, how is it possible for a computer with digital logic to even attempt this task?
+# Demo
 
-A fluid itself is made up of an enormous number of molecules interacting with one another in the microscopic scale. Tracking the behavior of each and every molecule is basically impossible due to the sheer number of them, but we can still describe the behavior of a fluid as a whole using mathematical equations. 
+<ClickableVideo
+  src="/projects/FluidSim/trimmed_vortex_shedding.mov"
+  title="Vortex shedding fluid simulation"
+  className="mx-auto max-w-[600px]"
+/>
 
-The first step is to let go of the idea of there being discrete molecules, and instead think of the fluid as a continuous substance that fills up space. By thinking of the fluid as a continuum, we can use vector and scalar fields to describe the properties of the fluid at every point in space. 
+How are computers able to simulate and render fluids? With so many molecules and extremely complex-looking patterns, how can a computer with digital logic even attempt this task?
+
+A fluid is made up of an enormous number of molecules interacting at the microscopic scale. Tracking the behavior of every molecule is effectively impossible, but we can describe the behavior of a fluid as a whole using mathematical equations.
+
+The first step is to let go of the idea of discrete molecules and instead think of the fluid as a continuous substance that fills space. By treating the fluid as a continuum, we can use vector and scalar fields to describe its properties at every point.
 
 As with most physical systems, these fields are governed by differential equations that describe how they change over time and space. The fundamental equations that govern fluid dynamics are known as the Navier-Stokes equations.
 
 # The Navier-Stokes Equations
 
-We start with the most fundamental law of Newtonian mechanics:
+We start with Newton's second law:
 
 $$
 \mathbf{F} = m \mathbf{a}
 $$
 
-<Info>Note that the bolded terms are vectors. In this case, force and acceleration are both vectors.</Info>
+<Info>
+  Bold terms are vectors. In this case, force and acceleration both have a
+  direction.
+</Info>
 
-Since we are dealing with fluids, we need to express this equation in terms of fluid properties. We can start by expressing mass ($ m $) as the product of density ($ \rho $) and volume ($ V $), and acceleration ($ \mathbf{a} $) as the material derivative of velocity ($ \frac{D \mathbf{u}}{D t} $):
+Since we are dealing with fluids, we can express the mass ($m$) as density ($\rho$) times volume ($V$), and acceleration ($\mathbf{a}$) as the material derivative of velocity ($\frac{D\mathbf{u}}{Dt}$):
 
 $$
-\mathbf{F} = \rho V \frac{D \mathbf{u}}{D t}
+\mathbf{F} = \rho V \frac{D\mathbf{u}}{Dt}
 $$
 
 ## The Material Derivative
 
-What is the material derivative? Consider a tiny packet moving through the fluid's velocity field. As the packet moves, it experiences acceleration due to forces applied on it over time. However, if it enters a new region of the fluid which is moving at a different velocity, it will also experience acceleration due to this change in velocity as it moves through space. The key is understanding that for the packets to experience the correct forces we need to account for the acceleration due to both time and space changes in velocity. Moreover, we will soon see how these packets represent quantities that form the fluid and are affected by its velocity such as dye, smoke density, or temperature. 
-
-The material derivative is written as follows:
+Imagine a tiny packet moving through a velocity field. It can accelerate because the velocity at its current position changes over time, but it can also accelerate by moving into a region where the velocity is different. The material derivative accounts for both effects:
 
 $$
-\frac{D \mathbf{u}}{D t} = \frac{\partial \mathbf{u}}{\partial t} + (\mathbf{u} \cdot \nabla) \mathbf{u}
+\frac{D\mathbf{u}}{Dt} = \frac{\partial\mathbf{u}}{\partial t} + (\mathbf{u}\cdot\nabla)\mathbf{u}
 $$
 
-The first term ($ \frac{\partial \mathbf{u}}{\partial t} $) represents the local change in velocity over time at a fixed point. The second term ($ (\mathbf{u} \cdot \nabla) \mathbf{u} $) represents the convective change in velocity as the fluid packet moves through space. Specifically, the ($\nabla$) operator returns the gradient of the velocity field (a matrix describing the velocity vector changes in each direction). Then, we multiply this gradient matrix by the velocity vector at our point ($\mathbf{u}$) to get a new vector that describes how the velocity changes in the direction of the fluid's motion. Finally, applying this operation on ($\mathbf{u}$) gives us the convective acceleration.
+The first term is the local change in velocity at a fixed point. The second is the convective change experienced as the packet travels through space. The same idea applies to quantities carried by the fluid, such as dye, smoke density, or temperature.
 
 ## Forces Acting on the Fluid
 
-Now that we have described the acceleration of a fluid packet, we can express the forces acting on it. In fluid dynamics, the main forces we consider are pressure forces, viscous forces, and external forces (like gravity).
+The main forces in this model are pressure, viscosity, and external forces such as gravity.
 
-Physically, as fluid molecules move around, they collide with one another. Taking into account the average effect of these collisions, it's clear that particles will spread out from regions with a lot of particles to regions with fewer particles due to the sheer fact that more particles = more collisions. To describe this in our continuum model, we introduce the concept of pressure. Pressure is a scalar field that represents the force exerted 
-
-To actually calculate this force, we need the gradient of the pressure field ($ \nabla p $) which describes how the pressure changes in space. Pressure is a force applied over an area, so taking the gradient of pressure, we get units of pressure per distance or force over volume. Then, to get force, we multiply the pressure gradient by the volume. Since we want the fluid to accelerate from regions of high pressure to low pressure, we take the negative of the pressure gradient. This yields the pressure force as $ -V\nabla p $, where $ V $ is the area. 
-
-Viscous forces arise due to the internal friction between fluid layers as they move past one another. This frictional force tends to resist motion and smooth out velocity differences within the fluid. The viscous force can be modeled using the Laplacian of the velocity field ($ \nabla^2 \mathbf{u} $). The laplacian operator sums the second spatial derivatives of the velocity fields, giving us a vector that describes how our velocity differs from the neighboring velocities. This captures the idea that viscosity acts to reduce velocity differences between adjacent fluid layers. Kinematic viscosity ($ \nu $) quantifies the fluid's resistance to flow. With units of $ \frac{m^2}{s} $, multiplying it by the laplacian (which has units of velocity per meter squared $\frac{1}{s \cdot m}$) gives us acceleration due to viscous forces. To get force from acceleration, we multiply by mass ($ \rho V $), yielding the viscous force as $ \rho V \nu \nabla^2 \mathbf{u} $.
-
-Finally, we have external forces such as gravity that act on the fluid. We write these forces as $ \rho V \mathbf{f} $, where $ \mathbf{f} $ is the external force per unit mass (acceleration).
-
-Combining all these forces and applying Newton's second law, we get:
-
+Pressure is a scalar field. Its gradient describes how pressure changes through space, and the resulting force points from high pressure toward low pressure:
 
 $$
-\rho V \frac{D \mathbf{u}}{D t} = -V \nabla p + \rho V \nu \nabla^2 \mathbf{u} + \rho V \mathbf{f}
+\mathbf{F}_{pressure} = -V\nabla p
 $$
 
-Then dividing through by the mass ($ \rho V $) and expanding the material derivative, we arrive at the Navier-Stokes equation for incompressible fluids:
+Viscous forces represent internal friction between layers of fluid. They smooth out differences in velocity and are modeled with the Laplacian of the velocity field:
 
-$$ 
-\frac{\partial \mathbf{u}}{\partial t} + (\mathbf{u} \cdot \nabla) \mathbf{u} = -\frac{1}{\rho} \nabla p + \nu \nabla^2 \mathbf{u} + \mathbf{f}
+$$
+\mathbf{F}_{viscosity} = \rho V \nu \nabla^2\mathbf{u}
+$$
+
+Here, $\nu$ is the kinematic viscosity. Finally, an external acceleration $\mathbf{f}$ contributes the force $\rho V\mathbf{f}$. Combining these forces with Newton's second law gives:
+
+$$
+\rho V \frac{D\mathbf{u}}{Dt} = -V\nabla p + \rho V\nu\nabla^2\mathbf{u} + \rho V\mathbf{f}
+$$
+
+After dividing by $\rho V$ and expanding the material derivative, we obtain the Navier-Stokes equation for an incompressible, Newtonian fluid:
+
+$$
+\frac{\partial\mathbf{u}}{\partial t} + (\mathbf{u}\cdot\nabla)\mathbf{u}
+= -\frac{1}{\rho}\nabla p + \nu\nabla^2\mathbf{u} + \mathbf{f}
 $$
 
 ## The Incompressibility Condition
 
-In addition to this, we also have the incompressibility condition for incompressible fluids:
+The velocity field must also satisfy:
+
 $$
-\nabla \cdot \mathbf{u} = 0
+\nabla\cdot\mathbf{u} = 0
 $$
 
-This equation states that the divergence of the velocity field is zero, meaning that the fluid's volume does not change as it flows. Intuitively, it means that we can't have any points where fluid is either being created or destroyed; the amount of fluid entering a region must equal the amount leaving it.
-
+The divergence measures the net flow out of a point. A zero divergence means that fluid is not being created or destroyed: the amount entering a region equals the amount leaving it. This is a useful approximation for liquids and for many graphics simulations where changes in density are not important.
 
 # Simulation Approaches
 
-These equations are notoriously complex and difficult to solve, especially for turbulent flows. Although they describe how fluids behave, they don't really help us actually simulate and solve fluid dynamics problems practically.
+These equations are difficult to solve directly, especially for turbulent flows. Practical simulations therefore discretize the equations and solve an approximation at each time step. Most approaches fall into three categories:
 
-As a result, many different algorithms and even entire fields of study have emerged to tackle the challenge of simulating fluids. Most of the current approaches lie in 3 main categories:
+1. **Eulerian methods** divide space into a grid and store fluid properties at fixed locations. Finite Difference, Finite Volume, and Finite Element methods are examples.
+2. **Lagrangian methods** track particles as they move through space. Smoothed Particle Hydrodynamics (SPH) is a common example.
+3. **Hybrid methods** combine both representations. Fluid-Implicit Particle (FLIP), for example, uses particles to represent the fluid while using a grid to enforce incompressibility.
 
-1. **Eulerian-Methods**: These methods divide the simulation space into a discrete grid or mesh, and track fluid properties (velocity, density, pressure) at each grid point. The fluid flows through the grid, and the equations are solved at each grid cell. Examples include Finite Difference Methods (FDM), Finite Volume Methods (FVM), and Finite Element Methods (FEM).
-2. **Lagrangian-Methods**: These methods track individual fluid particles as they move through space. Each particle carries its own properties, and the equations are solved for each particle. Examples include Smoothed Particle Hydrodynamics (SPH). 
-3. **Hybrid-Methods**: These methods combine elements of both Eulerian and Lagrangian approaches. For example, the Fluid-Implicit Particle (FLIP) method uses particles to represent the fluid, but also employs a grid to solve the incompressibility constraint. This allows for more accurate simulations of complex fluid behavior.
-
+For this project I chose an Eulerian solver. A grid makes it straightforward to apply finite differences, and it gives predictable memory and computation costs. Unity then provides a convenient way to visualize the result in real time.
 
 # Coding the Simulation
 
-Most fluid simulations used in both research and computer graphics today are based on the Eulerian approach due to its stability and efficiency. In this approach, we discretize the simulation space into a grid, and track fluid properties at each grid cell. I also chose Unity to 
+## The Setup
 
-## The setup
-
-For each fluid property (velocity, density, pressure, etc.) we create a 2D array to represent the grid. For all the scalar values, we can interpret each value as being located at the center of each grid cell. However, for velocities, we use a staggered grid approach known as a MAC (Marker-And-Cell) grid. In this approach, we store the horizontal velocity components ($ u $) at the left and right faces of each grid cell, and the vertical velocity components ($ v $) at the top and bottom faces of each grid cell. This arrangement helps to prevent numerical instabilities and ensures that the incompressibility condition is satisfied more accurately.
+I represent the simulation domain as a square grid. Density, pressure, and obstacle information are stored at cell centers. Velocity uses a staggered grid, also called a MAC (Marker-And-Cell) grid: horizontal velocity is stored on vertical cell faces and vertical velocity on horizontal faces.
 
 ![](/projects/FluidSim/velocity-grid.png)
 
-Here, the horizontal velocities are labeled ( $ u $ ) and the vertical velocities are labeled ( $ v $ ), and since both are stored **between** cells, there will be one extra row/column for each velocity component. So we store the horizontal velocities in a ( $ (N+1) \times N $ ) array, and the vertical velocities in a ( $ N \times (N+1) $ ) array, where ( $ N $ ) is the number of cells along one dimension.
+Because face velocities sit between cells, each component has one extra entry in its corresponding direction. For an $N \times N$ grid:
 
 ```csharp:Scripts/FluidSim/FluidSolver.cs
 public float[,] uGrid;
 public float[,] vGrid;
 
-...
 uGrid = new float[gridSize + 1, gridSize];
 vGrid = new float[gridSize, gridSize + 1];
-...
 ```
 
-## Solving for incompressibility
+This layout makes the divergence calculation local: the four face velocities surrounding a cell are exactly the values needed for that cell's net flow.
 
-To enforce the incompressibility condition, we need to ensure that the divergence of the velocity field is zero at each grid cell. The divergence at a grid cell can be approximated using finite differences:
+## Solving for Incompressibility
+
+For a square cell with side length $\Delta x$, the divergence can be approximated with finite differences:
 
 $$
-\nabla \cdot \mathbf{u} \approx \frac{u_{i+1,j} - u_{i,j}}{\Delta x} + \frac{v_{i,j+1} - v_{i,j}}{\Delta y}
+\nabla\cdot\mathbf{u} \approx
+\frac{u_{i+1,j}-u_{i,j}}{\Delta x}
++ \frac{v_{i,j+1}-v_{i,j}}{\Delta x}
 $$
-Where ( $ \Delta x $ ) and ( $ \Delta y $ ) are the grid cell sizes in the x and y directions, respectively. (In this case, I'm using square cells with size `cellSize`.)
 
 <Info>
-    In the simulation, indices increase upwards and to the right, so ( $ u_{i+1,j} $ ) refers to the velocity on the right face of the cell at $ (i,j) $ , and ( $ u_{i,j} $ ) refers to the velocity on the left face of the same cell. Similarly, ( $ v_{i,j+1} $ ) refers to the velocity on the top face of the cell, and ( $ v_{i,j} $ ) refers to the velocity on the bottom face.
+  The indices increase upward and to the right. Thus, $u_{(i, j)}$ is the left
+  face, $u_{(i + 1, j)}$ is the right face, $v_{(i, j)}$ is the bottom face, and
+  $v_{(i, j + 1)}$ is the top face of cell $(i,j)$.
 </Info>
 
-This approximation just calculates the net flow into the cell in both directions, and the goal is to make this value zero for every cell. 
+The goal is to make this value zero for every fluid cell. Adjusting one face velocity changes the divergence of its neighboring cells too, so this is not a collection of independent fixes. It is a coupled system of equations.
 
-This may seem pretty straightforward; just adjust the velocities of a cell so that the divergence is 0. However, changing the velocities around one cell affects the divergence of the cell's neighbors as well. This means that we need to solve a large system of equations to find the correct velocity adjustments for all cells simultaneously. 
+### Lagrange Multipliers
 
-## Lagrange Multipliers
-
-For any velocity field, there are infinitely many ways to adjust the velocities to make the divergence zero. So how do we choose the "best" way to adjust them? In a fluid, pressure 
-
-To achieve this, we can use pressure to correct the velocities. The idea is that pressure gradients cause fluid to accelerate from high-pressure regions to low-pressure regions, which can be used to adjust the velocities to enforce incompressibility. For each cell, we iteratively calculate a pressure value ( $ p_{i,j} $ ) and then update all the surrounding velocities based on the pressure gradient.
-
-The idea is that for each cell, we look up the pressure values of its neighboring cells, then calculate the new pressure of the curent cell as :
+Pressure provides the correction that selects a physically useful velocity field. A pressure gradient changes velocity according to:
 
 $$
-p_{i,j} = \frac{1}{4} ( p_{i+1,j} + p_{i-1,j} + p_{i,j+1} + p_{i,j-1} - \rho \frac{\Delta x^2}{\Delta t} (\nabla \cdot \mathbf{u})_{i,j} )
+\mathbf{u}^{new} = \mathbf{u}^{old} - \frac{\Delta t}{\rho}\nabla p
 $$
 
-This equation states that the pressure at cell ( $ i,j $ ) is the average of the pressures of its four neighboring cells, minus a term that accounts for the current divergence at that cell. The term ( $ \rho \frac{\Delta x^2}{\Delta t} (\nabla \cdot \mathbf{u})_{i,j} $ ) represents how much we need to adjust the pressure to reduce the divergence.
+Substituting this correction into the incompressibility condition produces a Poisson equation for pressure. I solve it iteratively with a Jacobi-style relaxation step:
 
-However, there is a key detail we are missing: if we want obstacles, like walls or solid objects, we need to enforce boundary conditions on the velocities and 
+$$
+p_{i,j} = \frac{1}{4}
+\left(
+p_{i+1,j}+p_{i-1,j}+p_{i,j+1}+p_{i,j-1}
+- \rho\frac{\Delta x^2}{\Delta t}(\nabla\cdot\mathbf{u})_{i,j}
+\right)
+$$
+
+After several iterations, I subtract the pressure gradient from the face velocities. More iterations reduce the remaining divergence, while fewer iterations are cheaper but produce a more compressible-looking result.
+
+### Boundary Conditions
+
+Obstacles need their own boundary conditions. For a solid wall, the normal component of velocity must be zero: fluid cannot pass through the wall. In the solver, faces adjacent to an obstacle are therefore assigned a zero normal velocity before pressure projection.
+
+For a no-slip wall, tangential velocity is zero as well. A less restrictive free-slip boundary keeps tangential motion but still prevents fluid from crossing the obstacle. Choosing between these conditions changes how much the fluid appears to stick to the surface.
+
+## Advecting the Fluid
+
+Projection makes the velocity field divergence-free, but it does not move dye or smoke through the field. For a scalar quantity $q$, the advection equation is:
+
+$$
+\frac{\partial q}{\partial t}+\mathbf{u}\cdot\nabla q=0
+$$
+
+I use semi-Lagrangian advection. For each cell, I trace a point backward through the velocity field:
+
+$$
+\mathbf{x}_{previous} = \mathbf{x} - \Delta t\,\mathbf{u}(\mathbf{x})
+$$
+
+The value at the current cell is then sampled from that previous position, using bilinear interpolation between neighboring cells. Tracing backward is stable even when the time step is relatively large, although it introduces numerical dissipation and gradually blurs sharp features.
+
+The same backtracing idea can be used to sample a velocity field when calculating advection of velocity itself. I also apply viscosity as a diffusion step; this intentionally smooths the flow and helps keep the simulation stable.
+
+## The Simulation Loop
+
+Each frame advances the solver in a consistent order:
+
+1. Apply external forces and user input to the face velocities.
+2. Enforce obstacle boundary conditions.
+3. Advect velocity through the current velocity field.
+4. Diffuse velocity according to the viscosity.
+5. Compute divergence and iteratively solve for pressure.
+6. Subtract the pressure gradient to project the velocity field.
+7. Advect density or dye using the projected velocity.
+8. Upload the density field to a texture for rendering.
+
+The order matters. In particular, pressure projection must happen before density is advected; otherwise the density would be transported by a field that still contains artificial sources and sinks.
+
+## Rendering the Result
+
+The simulation data is a grid, so it can be visualized as a texture. Each cell's density becomes a grayscale or color value, and a shader samples that texture across a quad. Higher density can represent more dye or smoke, while the velocity field controls how that pattern moves.
+
+The video above shows vortex shedding: as the flow passes an obstacle, alternating vortices form behind it. The simulation is not intended to match a particular physical experiment exactly, but the result demonstrates how pressure, advection, viscosity, and boundaries combine to produce recognizable fluid behavior.
+
+# Results and Limitations
+
+The finished solver produces real-time two-dimensional effects with a small amount of code and a fixed memory cost. The MAC grid keeps the pressure projection well behaved, and semi-Lagrangian advection makes the simulation robust enough to run interactively.
+
+There are still important trade-offs. A larger grid captures smaller vortices but costs more every frame. More pressure iterations improve incompressibility but reduce performance. Semi-Lagrangian advection is stable but dissipative, so energetic details fade over time. The solver is also two-dimensional and assumes constant density; it cannot reproduce every effect of a three-dimensional, compressible fluid.

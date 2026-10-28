@@ -63,9 +63,9 @@ export const metadata: Metadata = {
 export default function Home() {
   const combinedItems = [...projects.map(item => ({ ...item, type: 'project' })), 
                          ...articles.map(item => ({ ...item, type: 'article' }))];
-  
-  combinedItems.sort((a, b) => b.importance - a.importance);
+ 
 
+  combinedItems.sort((a, b) => b.importance - a.importance);
   return (
       <div className="lg:border-t border-gray-200 w-full">
           <div className="grid grid-cols-1 md:grid-cols-8 lg:grid-cols-12 p-2">
@@ -80,7 +80,7 @@ export default function Home() {
             </Link>
             
             <div className="md:row-span-2 md:col-span-4 lg:col-span-6 flex items-center border-b border-gray-200 md:border-0 flex-col h-full  pt-0 px-4 pb-4 md:p-4 ">
-              <div className="w-full shrink-0 relative rounded-lg overflow-hidden">
+              <div className="w-full max-h-[400px] shrink-0 relative rounded-lg overflow-hidden">
                 <Image
                     src={combinedItems[0].image || "/default_project_image.png"}
                     alt={combinedItems[0].name}
@@ -93,11 +93,12 @@ export default function Home() {
               </div>
             </div>
 
-            <Link href={`/${combinedItems[0].type === "project" ? 'writeups' : 'articles'}/${combinedItems[5].slug}`} className=" group flex-col lg:flex hidden  lg:col-span-2 lg:row-span-2 ">
+            <Link href={`/${combinedItems[5].type === "project" ? 'writeups' : 'articles'}/${combinedItems[5].slug}`} className=" group flex-col lg:flex hidden  lg:col-span-2 lg:row-span-2 ">
               <div className="my-4 pl-4 h-full border-l border-gray-200">
                 <p className="uppercase  text-sm font-semibold">{combinedItems[5].type} &bull; <span className="text-gray-700">{new Date(combinedItems[5].lastUpdated).toLocaleDateString()}</span></p>
                 <p className="decoration-2 group-hover:underline text-3xl font-bold mb-4">{combinedItems[5].name}</p>
                 <p className="text-gray-700 mb-6 text-sm">{combinedItems[5].description}</p>
+                <Image src={combinedItems[5].image || "/default_project_image.png"} alt={combinedItems[5].name} width={0} height={0} sizes="100vw" style={{ height: "auto", width: "100%" }} className="rounded-lg object-cover" />
               </div>
             </Link>
 

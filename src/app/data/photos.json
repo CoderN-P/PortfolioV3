@@ -6,7 +6,37 @@
     "title": "Angel's Landing Chains",
     "location": "Zion National Park, UT",
     "date": "2024-07-20",
-    "description": "The final, thrilling ascent of Angel's Landing, relying on chains bolted into the rock to navigate the narrow spine."
+    "description": "The final, thrilling ascent of Angel's Landing, relying on chains bolted into the rock to navigate the narrow spine.",
+    "annotations": [
+      {
+        "id": "safety-chain",
+        "x": 51,
+        "y": 43,
+        "arrowCoord": {
+          "x": 47,
+          "y": 58
+        },
+        "title": "Safety chain",
+        "description": "Chains bolted into the rock provide handholds along the exposed section of the route.",
+        "metadata": {
+          "feature": "Hand-over-hand ascent"
+        }
+      },
+      {
+        "id": "rock-spine",
+        "style": "label",
+        "x": 68,
+        "y": 66,
+        "arrowCoord": {
+          "x": 70,
+          "y": 74
+        },
+        "title": "Narrow rock spine",
+        "metadata": {
+          "trail": "Angel's Landing"
+        }
+      }
+    ]
   },
   {
     "id": 2,
@@ -51,7 +81,82 @@
     "title": "Sierra Nevada Vista",
     "location": "Sequoia National Park, CA",
     "date": "2024-11-10",
-    "description": "A breathtaking landscape showing the rugged, snow-dusted peaks of the Sierra Nevada mountain range."
+    "description": "View from Moro Rock trail, looking east",
+    "annotations": [
+      {
+        "id": "sawtooth",
+        "style": "label",
+        "arrowCoord": {
+          "x": 56.8,
+          "y": 27.3
+        },
+        "x": 56.8,
+        "y": 25,
+        "title": "Sawtooth Peak",
+        "metadata": {
+          "Elevation": "12,343 ft"
+        }
+      },
+      {
+        "id": "mt.eisen",
+        "x": 42,
+        "y": 24.5,
+        "title": "Mt. Eisen",
+        "metadata": {
+          "Elevation": "12,160 ft"
+        }
+      },
+      {
+        "id": "lippincott-mountain",
+        "x": 31.5,
+        "y": 24,
+        "title": "Lippincott Mountain",
+        "metadata": {
+          "Elevation": "12,260 ft"
+        }
+      },
+      {
+        "id": "black-kaweah",
+        "x": 19.5,
+        "y": 23,
+        "title": "Black Kaweah",
+        "metadata": {
+          "Elevation": "13,765 ft"
+        }
+      },
+      {
+        "id": "kaweah-queen",
+        "x": 16.5,
+        "y": 23.5,
+        "title": "Kaweah Queen",
+        "metadata": {
+          "Elevation": "13,382 ft"
+        }
+      },
+      {
+        "id": "castle-rocks-north",
+        "style": "label",
+        "arrowCoord": {
+          "x": 79,
+          "y": 25
+        },
+        "x": 79,
+        "y": 22,
+        "title": "Castle Rocks North",
+        "metadata": {
+          "Elevation": "13,382 ft"
+        }
+      },
+      {
+        "id": "paradise-peak",
+        "x": 91,
+        "y": 24,
+        "title": "Paradise Peak",
+        "metadata": {
+          "Elevation": "13,382 ft"
+        }
+      }
+    ]
   },
   {
     "id": 7,
@@ -78,15 +183,184 @@
     "title": "Sierras from Above",
     "location": "Above California",
     "date": "2025-07-21",
-    "description": "Flying over the vast and rugged Sierra Nevada range, with snow-capped peaks stretching as far as the eye can see."
+    "description": "Flying over the Sierra Nevadas looking south.",
+    "annotations": [
+      {
+        "id": "North Palisade",
+        "x": 46,
+        "y": 49.5,
+        "arrowCoord": {
+          "x": 45,
+          "y": 50
+        },
+        "title": "North Palisade",
+        "metadata": {
+          "elevation": "14,242 ft"
+        }
+      }
+    ]
   },
   {
     "id": 10,
-    "src": "/photos/SF - Plane.JPG",
-    "alt": "The city of San Francisco and the Bay Bridge viewed from an airplane window",
-    "title": "Approach to SFO",
+    "src": "/photos/BayBridge.JPG",
+    "alt": "View of Bay Bridge looking towards Oakland",
+    "title": "Bay Bridge",
     "location": "San Francisco, CA",
     "date": "2025-04-11",
-    "description": "Flying into San Francisco, with a clear view of the city skyline and the Bay Bridge from the plane."
+    "description": "A view of the Bay Bridge looking towards Oakland"
+  },
+  {
+    "id": 11,
+    "src": "/photos/Angel's Landing - Looking back on chains.JPG",
+    "alt": "Looking back along the chains on Angel's Landing",
+    "title": "Looking Back on the Chains",
+    "location": "Zion National Park, UT",
+    "date": "2025-07-23",
+    "description": "Looking back along the exposed chain section of the Angel's Landing hike."
+  },
+  
+  {
+    "id": 13,
+    "src": "/photos/BigBen.JPG",
+    "alt": "Big Ben",
+    "title": "Big Ben",
+    "location": "London, UK",
+    "date": "2026-08-13",
+    "description": "A photograph of Big Ben in London."
+  },
+  {
+    "id": 14,
+    "src": "/photos/BrokeoffMountain.JPG",
+    "alt": "Brokeoff Mountain",
+    "title": "Brokeoff Mountain",
+    "location": "Lassen Volcanic National Park, CA",
+    "date": "2026-06-13",
+    "description": "A view of Brokeoff Mountain in the Lassen volcanic landscape."
+  },
+  {
+    "id": 15,
+    "src": "/photos/IMG_3086.HEIC",
+    "alt": "Times Square",
+    "title": "Times Square",
+    "location": "New York City, NY",
+    "date": "2024-04-03",
+    "description": "View of Times Square"
+  },
+  {
+    "id": 17,
+    "src": "/photos/IMG_3535.JPG",
+    "alt": "Angel's Landing",
+    "title": "Angel's Landing",
+    "location": "Zion National Park, UT",
+    "date": "2024-08-04",
+    "description": "View from the top of Angel's Landing"
+  },
+  {
+    "id": 18,
+    "src": "/photos/IMG_5365.JPG",
+    "alt": "Golden Gate",
+    "title": "Golden Gate Bridge",
+    "location": "San Francisco",
+    "date": "2025-08-13",
+    "description": "View of the Golden Gate Bridge looking north."
+  },
+  {
+    "id": 19,
+    "src": "/photos/IMG_5367.JPG",
+    "alt": "SF Skyline",
+    "title": "SF Skyline",
+    "location": "San Francisco",
+    "date": "2025-08-13",
+    "description": "View of San Francisco from the Golden Gate bridge."
+  },
+  {
+    "id": 20,
+    "src": "/photos/LassenPeak.JPG",
+    "alt": "Lassen Peak",
+    "title": "Lassen Peak",
+    "location": "Lassen Volcanic National Park, CA",
+    "date": "2026-06-13",
+    "description": "A view of Lassen Peak rising above the surrounding volcanic landscape."
+  },
+  {
+    "id": 21,
+    "src": "/photos/LassenPeak2.JPG",
+    "alt": "Lassen Peak from a second viewpoint",
+    "title": "Lassen Peak",
+    "location": "Lassen Volcanic National Park, CA",
+    "date": "2026-06-13",
+    "description": "A second view of Lassen Peak and the surrounding landscape."
+  },
+  {
+    "id": 22,
+    "src": "/photos/Mission Peak 2.HEIC",
+    "alt": "Mission Peak from a second viewpoint",
+    "title": "Mission Peak",
+    "location": "Fremont, CA",
+    "date": "2024-12-20",
+    "description": "A second view from the Mission Peak hike."
+  },
+  {
+    "id": 23,
+    "src": "/photos/MtShasta.JPG",
+    "alt": "Mount Shasta",
+    "title": "Mount Shasta",
+    "location": "Mount Shasta, CA",
+    "date": "2026-06-13",
+    "description": "A view of Mount Shasta and its surrounding landscape."
+  },
+  {
+    "id": 24,
+    "src": "/photos/MtShasta2.JPG",
+    "alt": "Mount Shasta from a second viewpoint",
+    "title": "Mount Shasta",
+    "location": "Mount Shasta, CA",
+    "date": "2026-01-09",
+    "description": "Aeriel view of Mount Shasta."
+  },
+  {
+    "id": 25,
+    "src": "/photos/SF.JPG",
+    "alt": "San Francisco cityscape",
+    "title": "San Francisco",
+    "location": "San Francisco, CA",
+    "date": "2026-01-09",
+    "description": "A view of San Francisco."
+  },
+  {
+    "id": 26,
+    "src": "/photos/SFView.JPG",
+    "alt": "View of San Francisco",
+    "title": "San Francisco View",
+    "location": "San Francisco, CA",
+    "date": "2026-01-09",
+    "description": "A view across the San Francisco landscape."
+  },
+  {
+    "id": 28,
+    "src": "/photos/Udaipur.HEIC",
+    "alt": "Udaipur cityscape",
+    "title": "Udaipur",
+    "location": "Udaipur, India",
+    "date": "2025-12-30",
+    "description": "A photograph from Udaipur."
+  },
+  {
+    "id": 29,
+    "src": "/photos/Zagros.JPG",
+    "alt": "Zagros Mountains",
+    "title": "Zagros Mountains",
+    "location": "Zagros Mountains",
+    "date": "2026-01-08",
+    "description": "A view of the Zagros Mountains."
+  },
+  {
+    "id": 30,
+    "src": "/photos/SF - Plane.JPG",
+    "alt": "San Francisco viewed from an airplane",
+    "title": "San Francisco from Above",
+    "location": "Above San Francisco, CA",
+    "date": "2025-07-23",
+    "description": "Aerial view of San Francisco from an airplane."
   }
 ]
