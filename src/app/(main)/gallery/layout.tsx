@@ -5,12 +5,12 @@ export const metadata: Metadata = {
   description:
     "A collection of photographs from my travels and hikes, showcasing moments I've captured in nature.",
   alternates: {
-    canonical: "https://www.neelparpia.me/gallery",
+    canonical: "https://www.neelparpia.dev/gallery",
   },
   openGraph: {
     title: "Gallery | Neel Parpia",
     description: "A collection of photographs from my travels and hikes.",
-    url: "https://www.neelparpia.me/gallery",
+    url: "https://www.neelparpia.dev/gallery",
     type: "website",
     locale: "en_US",
     siteName: "Neel Parpia's Portfolio",

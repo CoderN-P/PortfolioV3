@@ -1,3 +1,3 @@
 # My Portfolio
 
-Available at https://www.neelparpia.me
+Available at https://www.neelparpia.dev

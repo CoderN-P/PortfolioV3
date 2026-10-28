@@ -34,7 +34,7 @@ export async function generateMetadata(
   // Get the base metadata from parent
   const previousImages = (await parent).openGraph?.images || [];
 
-  const url = `https://www.neelparpia.me/writeups/${project.slug}`;
+  const url = `https://www.neelparpia.dev/writeups/${project.slug}`;
   const imageUrl = `/og-images/${project.name}.png`;  
 
   return {

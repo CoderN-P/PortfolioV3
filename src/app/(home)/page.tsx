@@ -21,13 +21,13 @@ export const metadata: Metadata = {
   authors: [{ name: "Neel Parpia", url: "https://github.com/CoderN-P" }],
   creator: "Neel Parpia",
   alternates: {
-    canonical: "https://www.neelparpia.me",
+    canonical: "https://www.neelparpia.dev",
   },
   openGraph: {
     title: "Neel Parpia - High School Developer",
     description:
       "I'm a passionate high school developer specializing in AI, Web Development, Robotics, and innovative technology solutions.",
-    url: "https://www.neelparpia.me",
+    url: "https://www.neelparpia.dev",
     siteName: "Neel Parpia\'s Portfolio",
     images: [
       {

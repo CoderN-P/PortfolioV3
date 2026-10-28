@@ -32,8 +32,9 @@ export async function generateMetadata(
   // Get the base metadata from parent
   const previousImages = (await parent).openGraph?.images || [];
 
-  const url = `https://www.neelparpia.me/articles/${article.slug}`;
-
+  const url = `https://www.neelparpia.dev/articles/${article.slug}`;
+  const imageUrl = `/og-images/${article.name}.png`;
+  
   return {
     title: `${article.name} | Neel Parpia`,
     description: article.shortDescription,
@@ -51,7 +52,7 @@ export async function generateMetadata(
       modifiedTime: article.lastUpdated,
       tags: article.tags,
       images: article.image
-        ? [article.image, ...previousImages]
+        ? [imageUrl, ...previousImages]
         : previousImages,
     },
     twitter: {
@@ -59,7 +60,7 @@ export async function generateMetadata(
       title: article.name,
       description: article.shortDescription,
       creator: "@neelparpia",
-      images: article.image ? [article.image] : [],
+      images: [imageUrl]
     },
     keywords: article.tags,
     robots: {

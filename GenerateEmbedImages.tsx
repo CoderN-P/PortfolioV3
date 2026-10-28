@@ -2,7 +2,8 @@ import { ImageResponse } from "next/og";
 import fs from "fs";
 import path from "path";
 import projects from "@/app/data/projects.json";
-import {Project} from "@/app/types";
+import articles from "@/app/data/articles.json"
+import {Article, Project} from "@/app/types";
 import React from "react";
 import {gradientToHexArray} from "@/app/utils";
 import {ReactElement} from "react";
@@ -34,7 +35,7 @@ async function generateAllOGImages() {
         fs.mkdirSync(outputDir, { recursive: true });
     }
 
-    console.log(`Generating OG images for ${projects.length} projects...`);
+    console.log(`Generating OG images for ${projects.length} projects and ${articles.length} articles...`);
 
     for (const p of projects) {
         const project = p as Project;
@@ -48,8 +49,41 @@ async function generateAllOGImages() {
             console.error(`✗ Failed to generate ${project.name}:`, error);
         }
     }
+    
+    for (const a of articles) {
+        const article = a as Article;
+        try {
+            const imageBuffer = await generateArticleImage(article);
+            const outputPath = path.join(outputDir, `${article.name}.png`);
+
+            fs.writeFileSync(outputPath, imageBuffer);
+            console.log(`✓ Generated: ${article.name}.png`);
+        } catch (error) {
+            console.error(`✗ Failed to generate ${article.name}:`, error);
+        }
+    }
 
     console.log('Done! OG images saved to public/og-images/');
+}
+
+async function generateArticleImage(article: Article) {
+    const title = article.name;
+    const desc = article.shortDescription || "An article by Neel Parpia";
+    const tags = article.tags || [];
+    const version = new Date(article.lastUpdated).toLocaleDateString() || "";
+    const colors = ['#2563EB', '#1D4ED8']; // Default to blue gradient
+
+    const image = article.image ? [imageToDataURL(`/public${article.image}`)] : [];
+
+    return imageTemplate({
+        title,
+        desc,
+        tags,
+        version,
+        colors,
+        images: image,
+        type: 'ARTICLE'
+    });
 }
 
 async function generateProjectImage(project: Project) {
@@ -71,6 +105,7 @@ async function generateProjectImage(project: Project) {
         version,
         colors,
         images: image,
+        type: 'PROJECT'
     });
 }
     
@@ -81,6 +116,7 @@ async function imageTemplate({
     version,
     colors,
     images,
+    type
 } : {
     title: string;
     desc: string;
@@ -88,6 +124,7 @@ async function imageTemplate({
     version: string;
     colors: string[];
     images: string[];
+    type: 'PROJECT' | 'ARTICLE'
 }): Promise<Buffer> {
   // Generate gradient based on project name
   let gradientStart, gradientEnd, gradientMiddle;
@@ -177,7 +214,7 @@ async function imageTemplate({
                   letterSpacing: "1px",
                 }}
               >
-                PROJECT
+                {type}
               </span>
             </div>
 
@@ -359,7 +396,7 @@ async function imageTemplate({
                 color: "#4B5563",
               }}
             >
-              neelparpia.me
+              neelparpia.dev
             </div>
           </div>
 

@@ -3,7 +3,7 @@
     "name": "Lines to Neural Networks",
     "slug": "lines-to-neural-networks",
     "lastUpdated": "2025-09-04",
-    "shortDescription": " ",
+    "shortDescription": "Deriving backpropagation in neural networks",
     "tags": [
       "Machine Learning",
       "Neural Networks",
@@ -15,8 +15,8 @@
       "Backpropagation"
     ],
     "importance": 9,
-    "image": "/projects/LinesNeuralNetworks/neural-net.png",
-    "description": "A comprehensive guide and implementation of neural networks from scratch using Python, focusing on understanding the underlying mathematics and algorithms."
+    "image": "/projects/LinesNeuralNetworks/illustration-of-a-neural-net.png",
+    "description": "A detailed dive into backpropagation in neural networks, focusing on understanding the underlying mathematics and algorithms."
   },
   {
     "name": "TRACER V2",

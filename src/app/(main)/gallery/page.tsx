@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     "national parks",
   ],
   alternates: {
-    canonical: "https://www.neelparpia.me/gallery",
+    canonical: "https://www.neelparpia.dev/gallery",
   },
   openGraph: {
     title: "Gallery | Neel Parpia",
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "Neel Parpia's Portfolio",
-    url: "https://www.neelparpia.me/gallery",
+    url: "https://www.neelparpia.dev/gallery",
     images: ["/photos/Angel's Landing Chains.JPG"],
   },
   twitter: {

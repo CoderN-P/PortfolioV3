@@ -313,7 +313,7 @@
     "description": "My personal portfolio website built with Next.js 14, TypeScript, and Tailwind CSS. Features server-side rendering, a markdown blog engine, dynamic project showcase, and a modern, responsive design.",
     "tags": ["nextjs", "typescript", "tailwindcss", "react", "mdx"],
     "github": "https://github.com/CoderN-P/portfolio-v3",
-    "colors": "from-gray-800 to-black",
+    "colors": "from-gray-800 to-gray-950",
     "link": null,
     "featured": false
   }

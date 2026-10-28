@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   creator: "Neel Parpia",
   publisher: "Neel Parpia",
   alternates: {
-    canonical: "https://www.neelparpia.me/skills",
+    canonical: "https://www.neelparpia.dev/skills",
   },
   openGraph: {
     title: "Skills & Technologies | Neel Parpia",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "Neel Parpia' Portfolio",
-    url: "https://www.neelparpia.me/skills",
+    url: "https://www.neelparpia.dev/skills",
   },
   twitter: {
     card: "summary",
