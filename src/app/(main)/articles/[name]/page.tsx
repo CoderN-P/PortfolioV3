@@ -3,10 +3,11 @@ import { notFound } from "next/navigation";
 import { Calendar } from "lucide-react";
 import type { Metadata, ResolvingMetadata } from "next";
 import { articles } from "@/app/data";
-import {pageToArticleToc} from "@/app/components/articles";
+import { pageToArticleToc } from "@/app/components/articles";
 import TableOfContents from "@/app/components/TableOfContents";
 import MediaGallery from "@/app/components/MediaGallery";
 import Image from "next/image";
+import { getArticleStructuredData } from "@/app/utils/structuredData";
 
 // Define the params type for generateMetadata and page function
 type Props = {
@@ -34,7 +35,7 @@ export async function generateMetadata(
 
   const url = `https://www.neelparpia.dev/articles/${article.slug}`;
   const imageUrl = `/og-images/${article.name}.png`;
-  
+
   return {
     title: `${article.name} | Neel Parpia`,
     description: article.shortDescription,
@@ -51,16 +52,14 @@ export async function generateMetadata(
       publishedTime: article.lastUpdated,
       modifiedTime: article.lastUpdated,
       tags: article.tags,
-      images: article.image
-        ? [imageUrl, ...previousImages]
-        : previousImages,
+      images: article.image ? [imageUrl, ...previousImages] : previousImages,
     },
     twitter: {
       card: "summary_large_image",
       title: article.name,
       description: article.shortDescription,
       creator: "@neelparpia",
-      images: [imageUrl]
+      images: [imageUrl],
     },
     keywords: article.tags,
     robots: {
@@ -107,71 +106,82 @@ export default async function ArticlePage({ params }: Props) {
   const toc = pageToArticleToc[name];
 
   return (
-    <div className="max-w-4xl mx-auto">
-      {/* Header Section */}
-      <div className="mb-16">
-        <h1 className="text-6xl font-bold mt-8 mb-8 text-gray-900 leading-tight">
-          {article.name}
-        </h1>
-        <p className="text-xl text-gray-600 leading-relaxed mb-12 max-w-3xl">
-          {article.shortDescription}
-        </p>
-        {article.image && (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(getArticleStructuredData(article)),
+        }}
+      />
+      <div className="max-w-4xl mx-auto">
+        {/* Header Section */}
+        <div className="mb-16">
+          <h1 className="text-6xl font-bold mt-8 mb-8 text-gray-900 leading-tight">
+            {article.name}
+          </h1>
+          <p className="text-xl text-gray-600 leading-relaxed mb-12 max-w-3xl">
+            {article.shortDescription}
+          </p>
+          {article.image && (
             <div className="mb-12">
               <div className="relative w-full h-96 rounded-2xl overflow-hidden shadow-lg border border-gray-200">
                 <Image
-                    src={article.image}
-                    alt={`${article.name} screenshot`}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
-                    priority
+                  src={article.image}
+                  alt={`${article.name} screenshot`}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+                  priority
                 />
               </div>
             </div>
-        )}
-        {/* Metadata and Actions */}
-        <div className="space-y-6 py-8 border-y border-gray-200">
-          <div className="flex flex-wrap items-center gap-6">
-            <div className="flex items-center gap-3 text-gray-600">
-              <Calendar className="h-5 w-5" />
-              <span className="font-medium text-lg">{formattedDate}</span>
+          )}
+          {/* Metadata and Actions */}
+          <div className="space-y-6 py-8 border-y border-gray-200">
+            <div className="flex flex-wrap items-center gap-6">
+              <div className="flex items-center gap-3 text-gray-600">
+                <Calendar className="h-5 w-5" />
+                <span className="font-medium text-lg">{formattedDate}</span>
+              </div>
+              <MediaGallery />
             </div>
-            <MediaGallery />
-          </div>
 
-          {/* Tags */}
-          <div className="flex flex-wrap gap-2 max-w-full">
-            {article.tags.map((tag: string, index: number) => {
-              return (
-                <div
-                  key={index}
-                  className="flex items-center gap-1.5 bg-white border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all px-3 py-1.5 rounded-full group"
-                >
-                  <span className="text-xs font-medium text-gray-700">
-                    {tag}
-                  </span>
-                </div>
-              );
-            })}
+            {/* Tags */}
+            <div className="flex flex-wrap gap-2 max-w-full">
+              {article.tags.map((tag: string, index: number) => {
+                return (
+                  <div
+                    key={index}
+                    className="flex items-center gap-1.5 bg-white border border-gray-200 hover:border-gray-300 hover:shadow-sm transition-all px-3 py-1.5 rounded-full group"
+                  >
+                    <span className="text-xs font-medium text-gray-700">
+                      {tag}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Content */}
-      {toc &&
+        {/* Content */}
+        {toc && (
           <>
             <div className="fixed left-15 top-32 hidden lg:block w-60">
               <TableOfContents headings={toc} />
             </div>
           </>
-      }
-      <div id="article-content" className="mdx-content prose prose-lg prose-gray max-w-none prose-headings:text-gray-900 prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-code:text-gray-800 prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-strong:text-gray-900">
-        <ArticleComponent />
-      </div>
+        )}
+        <div
+          id="article-content"
+          className="mdx-content prose prose-lg prose-gray max-w-none prose-headings:text-gray-900 prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-code:text-gray-800 prose-code:bg-gray-100 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-strong:text-gray-900"
+        >
+          <ArticleComponent />
+        </div>
 
-      {/* Bottom padding for better spacing */}
-      <div className="h-24"></div>
-    </div>
+        {/* Bottom padding for better spacing */}
+        <div className="h-24"></div>
+      </div>
+    </>
   );
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import GalleryClient from "./GalleryClient";
 import { photos } from "@/app/data";
+import { getGalleryStructuredData } from "@/app/utils/structuredData";
 
 export const metadata: Metadata = {
   title: "Gallery | Neel Parpia",
@@ -38,5 +39,15 @@ export const metadata: Metadata = {
 };
 
 export default function GalleryPage() {
-  return <GalleryClient photos={photos} />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(getGalleryStructuredData(photos)),
+        }}
+      />
+      <GalleryClient photos={photos} />
+    </>
+  );
 }

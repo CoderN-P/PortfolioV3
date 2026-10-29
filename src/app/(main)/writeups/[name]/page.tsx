@@ -1,6 +1,7 @@
 import { pageToComponent } from "@/app/components/writeups";
 import {pageToToc} from "@/app/components/writeups";
 import { notFound } from "next/navigation";
+import getJSONLD from "./getJSONLD";
 import { Calendar, Github } from "lucide-react";
 import type { Metadata, ResolvingMetadata } from "next";
 import Image from "next/image";
@@ -113,7 +114,13 @@ export default async function WriteupPage({ params }: Props) {
   const toc = pageToToc[name];
 
   return (
-      
+      <>
+        <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(getJSONLD(project)),
+            }}
+        />
     <div className="max-w-4xl mx-auto">
       {/* Header Section */}
       <div className="mb-16">
@@ -202,5 +209,6 @@ export default async function WriteupPage({ params }: Props) {
       {/* Bottom padding for better spacing */}
       <div className="h-24"></div>
     </div>
+      </>
   );
 }

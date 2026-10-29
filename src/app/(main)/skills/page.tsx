@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import SkillsClient from "./SkillsClient";
 import { skillCategories } from "@/app/data";
+import { getSkillsStructuredData } from "@/app/utils/structuredData";
 
 export const metadata: Metadata = {
   title: "Skills & Technologies | Neel Parpia",
@@ -49,5 +50,15 @@ export const metadata: Metadata = {
 export default function Skills() {
   // Transform skills data on server
 
-  return <SkillsClient initialCategories={skillCategories} />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(getSkillsStructuredData(skillCategories)),
+        }}
+      />
+      <SkillsClient initialCategories={skillCategories} />
+    </>
+  );
 }
